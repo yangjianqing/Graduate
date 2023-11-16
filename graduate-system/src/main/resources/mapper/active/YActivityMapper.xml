@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.graduate.active.mapper.YActivityMapper">
+
+    <resultMap type="YActivity" id="YActivityResult">
+        <result property="id"    column="id"    />
+        <result property="activityCost"    column="activity_cost"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="activityLocation"    column="activity_location"    />
+        <result property="activityName"    column="activity_name"    />
+        <result property="activityIntroduce"    column="activity_introduce"    />
+        <result property="activityNotice"    column="activity_notice"    />
+        <result property="creatTime"    column="creat_time"    />
+        <result property="imgurl"    column="imgUrl"    />
+    </resultMap>
+
+    <sql id="selectYActivityVo">
+        select id, activity_cost, start_time, end_time, activity_location, activity_name, activity_introduce, activity_notice, creat_time, imgUrl from y_activity
+    </sql>
+
+    <select id="selectYActivityList" parameterType="YActivity" resultMap="YActivityResult">
+        <include refid="selectYActivityVo"/>
+        <where>
+            <if test="activityCost != null "> and activity_cost = #{activityCost}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="activityLocation != null  and activityLocation != ''"> and activity_location = #{activityLocation}</if>
+            <if test="activityName != null  and activityName != ''"> and activity_name like concat('%', #{activityName}, '%')</if>
+            <if test="activityIntroduce != null  and activityIntroduce != ''"> and activity_introduce = #{activityIntroduce}</if>
+            <if test="activityNotice != null  and activityNotice != ''"> and activity_notice = #{activityNotice}</if>
+            <if test="creatTime != null "> and creat_time = #{creatTime}</if>
+            <if test="imgurl != null  and imgurl != ''"> and imgUrl = #{imgurl}</if>
+        </where>
+    </select>
+
+    <select id="selectYActivityById" parameterType="Long" resultMap="YActivityResult">
+        <include refid="selectYActivityVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertYActivity" parameterType="YActivity" useGeneratedKeys="true" keyProperty="id">
+        insert into y_activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="activityCost != null">activity_cost,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="activityLocation != null">activity_location,</if>
+            <if test="activityName != null">activity_name,</if>
+            <if test="activityIntroduce != null">activity_introduce,</if>
+            <if test="activityNotice != null">activity_notice,</if>
+            <if test="creatTime != null">creat_time,</if>
+            <if test="imgurl != null">imgUrl,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="activityCost != null">#{activityCost},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="activityLocation != null">#{activityLocation},</if>
+            <if test="activityName != null">#{activityName},</if>
+            <if test="activityIntroduce != null">#{activityIntroduce},</if>
+            <if test="activityNotice != null">#{activityNotice},</if>
+            <if test="creatTime != null">#{creatTime},</if>
+            <if test="imgurl != null">#{imgurl},</if>
+        </trim>
+    </insert>
+
+    <update id="updateYActivity" parameterType="YActivity">
+        update y_activity
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="activityCost != null">activity_cost = #{activityCost},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="activityLocation != null">activity_location = #{activityLocation},</if>
+            <if test="activityName != null">activity_name = #{activityName},</if>
+            <if test="activityIntroduce != null">activity_introduce = #{activityIntroduce},</if>
+            <if test="activityNotice != null">activity_notice = #{activityNotice},</if>
+            <if test="creatTime != null">creat_time = #{creatTime},</if>
+            <if test="imgurl != null">imgUrl = #{imgurl},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteYActivityById" parameterType="Long">
+        delete from y_activity where id = #{id}
+    </delete>
+
+    <delete id="deleteYActivityByIds" parameterType="String">
+        delete from y_activity where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
