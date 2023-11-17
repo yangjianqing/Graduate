@@ -3,5 +3,6 @@ public class weichun {
         System.out.println("韦春第一次提交测试代码");
         System.out.println("雷神来啦");
         System.out.println("小马哥来了");
+        System.out.println("川川来了！！！");
     }
 }
