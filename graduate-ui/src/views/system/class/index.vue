@@ -1,34 +1,18 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="学生学号" prop="sNumber">
+      <el-form-item label="班级编号" prop="cNumber">
         <el-input
-          v-model="queryParams.sNumber"
-          placeholder="请输入学生学号"
+          v-model="queryParams.cNumber"
+          placeholder="请输入班级编号"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="sName">
+      <el-form-item label="班级名称" prop="cName">
         <el-input
-          v-model="queryParams.sName"
-          placeholder="请输入${comment}"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="学校id(fkey)" prop="schoolId">
-        <el-input
-          v-model="queryParams.schoolId"
-          placeholder="请输入学校id(fkey)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="公司id(fkey)" prop="compenyId">
-        <el-input
-          v-model="queryParams.compenyId"
-          placeholder="请输入公司id(fkey)"
+          v-model="queryParams.cName"
+          placeholder="请输入班级名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -41,18 +25,26 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="班级id(fkey)" prop="classId">
+      <el-form-item label="手机号码" prop="cPhone">
         <el-input
-          v-model="queryParams.classId"
-          placeholder="请输入班级id(fkey)"
+          v-model="queryParams.cPhone"
+          placeholder="请输入手机号码"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="虚拟删除(0:未删除，1:删除)" prop="sIsdelete">
+      <el-form-item label="班级人数" prop="cCount">
         <el-input
-          v-model="queryParams.sIsdelete"
-          placeholder="请输入虚拟删除(0:未删除，1:删除)"
+          v-model="queryParams.cCount"
+          placeholder="请输入班级人数"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="虚拟删(0:未删除，1:删除)" prop="cIsdelete">
+        <el-input
+          v-model="queryParams.cIsdelete"
+          placeholder="请输入虚拟删(0:未删除，1:删除)"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -71,7 +63,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['system:student:add']"
+          v-hasPermi="['system:class:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -82,7 +74,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['system:student:edit']"
+          v-hasPermi="['system:class:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -93,7 +85,7 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system:student:remove']"
+          v-hasPermi="['system:class:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -103,23 +95,21 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['system:student:export']"
+          v-hasPermi="['system:class:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="studentList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="classList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="学生id(key)" align="center" prop="sId" />
-      <el-table-column label="学生学号" align="center" prop="sNumber" />
-      <el-table-column label="${comment}" align="center" prop="sName" />
-      <el-table-column label="学校id(fkey)" align="center" prop="schoolId" />
-      <el-table-column label="公司id(fkey)" align="center" prop="compenyId" />
-      <el-table-column label="就业状态(0,1)" align="center" prop="cStatus" />
+      <el-table-column label="班级id(key)" align="center" prop="cId" />
+      <el-table-column label="班级编号" align="center" prop="cNumber" />
+      <el-table-column label="班级名称" align="center" prop="cName" />
       <el-table-column label="辅导员id(fkey)" align="center" prop="teacherId" />
-      <el-table-column label="班级id(fkey)" align="center" prop="classId" />
-      <el-table-column label="虚拟删除(0:未删除，1:删除)" align="center" prop="sIsdelete" />
+      <el-table-column label="手机号码" align="center" prop="cPhone" />
+      <el-table-column label="班级人数" align="center" prop="cCount" />
+      <el-table-column label="虚拟删(0:未删除，1:删除)" align="center" prop="cIsdelete" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -127,19 +117,19 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:student:edit']"
+            v-hasPermi="['system:class:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:student:remove']"
+            v-hasPermi="['system:class:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -148,29 +138,26 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改学生对话框 -->
+    <!-- 添加或修改班级对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="学生学号" prop="sNumber">
-          <el-input v-model="form.sNumber" placeholder="请输入学生学号" />
+        <el-form-item label="班级编号" prop="cNumber">
+          <el-input v-model="form.cNumber" placeholder="请输入班级编号" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="sName">
-          <el-input v-model="form.sName" placeholder="请输入${comment}" />
-        </el-form-item>
-        <el-form-item label="学校id(fkey)" prop="schoolId">
-          <el-input v-model="form.schoolId" placeholder="请输入学校id(fkey)" />
-        </el-form-item>
-        <el-form-item label="公司id(fkey)" prop="compenyId">
-          <el-input v-model="form.compenyId" placeholder="请输入公司id(fkey)" />
+        <el-form-item label="班级名称" prop="cName">
+          <el-input v-model="form.cName" placeholder="请输入班级名称" />
         </el-form-item>
         <el-form-item label="辅导员id(fkey)" prop="teacherId">
           <el-input v-model="form.teacherId" placeholder="请输入辅导员id(fkey)" />
         </el-form-item>
-        <el-form-item label="班级id(fkey)" prop="classId">
-          <el-input v-model="form.classId" placeholder="请输入班级id(fkey)" />
+        <el-form-item label="手机号码" prop="cPhone">
+          <el-input v-model="form.cPhone" placeholder="请输入手机号码" />
         </el-form-item>
-        <el-form-item label="虚拟删除(0:未删除，1:删除)" prop="sIsdelete">
-          <el-input v-model="form.sIsdelete" placeholder="请输入虚拟删除(0:未删除，1:删除)" />
+        <el-form-item label="班级人数" prop="cCount">
+          <el-input v-model="form.cCount" placeholder="请输入班级人数" />
+        </el-form-item>
+        <el-form-item label="虚拟删(0:未删除，1:删除)" prop="cIsdelete">
+          <el-input v-model="form.cIsdelete" placeholder="请输入虚拟删(0:未删除，1:删除)" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -182,10 +169,10 @@
 </template>
 
 <script>
-import { listStudent, getStudent, delStudent, addStudent, updateStudent } from "@/api/system/student";
+import { listClass, getClass, delClass, addClass, updateClass } from "@/api/system/class";
 
 export default {
-  name: "Student",
+  name: "Class",
   data() {
     return {
       // 遮罩层
@@ -200,8 +187,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 学生表格数据
-      studentList: [],
+      // 班级表格数据
+      classList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -210,14 +197,12 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        sNumber: null,
-        sName: null,
-        schoolId: null,
-        compenyId: null,
-        cStatus: null,
+        cNumber: null,
+        cName: null,
         teacherId: null,
-        classId: null,
-        sIsdelete: null
+        cPhone: null,
+        cCount: null,
+        cIsdelete: null
       },
       // 表单参数
       form: {},
@@ -230,11 +215,11 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询学生列表 */
+    /** 查询班级列表 */
     getList() {
       this.loading = true;
-      listStudent(this.queryParams).then(response => {
-        this.studentList = response.rows;
+      listClass(this.queryParams).then(response => {
+        this.classList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -247,17 +232,15 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        sId: null,
-        sNumber: null,
-        sName: null,
-        schoolId: null,
-        compenyId: null,
-        cStatus: 0,
+        cId: null,
+        cNumber: null,
+        cName: null,
         teacherId: null,
-        classId: null,
+        cPhone: null,
+        cCount: null,
         createTime: null,
         updateTime: null,
-        sIsdelete: null
+        cIsdelete: null
       };
       this.resetForm("form");
     },
@@ -273,7 +256,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.sId)
+      this.ids = selection.map(item => item.cId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -281,30 +264,30 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加学生";
+      this.title = "添加班级";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const sId = row.sId || this.ids
-      getStudent(sId).then(response => {
+      const cId = row.cId || this.ids
+      getClass(cId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改学生";
+        this.title = "修改班级";
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.sId != null) {
-            updateStudent(this.form).then(response => {
+          if (this.form.cId != null) {
+            updateClass(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addStudent(this.form).then(response => {
+            addClass(this.form).then(response => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -315,9 +298,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const sIds = row.sId || this.ids;
-      this.$modal.confirm('是否确认删除学生编号为"' + sIds + '"的数据项？').then(function() {
-        return delStudent(sIds);
+      const cIds = row.cId || this.ids;
+      this.$modal.confirm('是否确认删除班级编号为"' + cIds + '"的数据项？').then(function() {
+        return delClass(cIds);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
@@ -325,9 +308,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('system/student/export', {
+      this.download('system/class/export', {
         ...this.queryParams
-      }, `student_${new Date().getTime()}.xlsx`)
+      }, `class_${new Date().getTime()}.xlsx`)
     }
   }
 };

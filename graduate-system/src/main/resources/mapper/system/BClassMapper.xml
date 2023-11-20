@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.graduate.system.mapper.BClassMapper">
+    
+    <resultMap type="BClass" id="BClassResult">
+        <result property="cId"    column="c_id"    />
+        <result property="cNumber"    column="c_number"    />
+        <result property="cName"    column="c_name"    />
+        <result property="teacherId"    column="teacher_id"    />
+        <result property="cPhone"    column="c_phone"    />
+        <result property="cCount"    column="c_count"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="cIsdelete"    column="c_isdelete"    />
+    </resultMap>
+
+    <sql id="selectBClassVo">
+        select c_id, c_number, c_name, teacher_id, c_phone, c_count, create_time, update_time, c_isdelete from b_class
+    </sql>
+
+    <select id="selectBClassList" parameterType="BClass" resultMap="BClassResult">
+        <include refid="selectBClassVo"/>
+        <where>  
+            <if test="cNumber != null  and cNumber != ''"> and c_number = #{cNumber}</if>
+            <if test="cName != null  and cName != ''"> and c_name like concat('%', #{cName}, '%')</if>
+            <if test="teacherId != null "> and teacher_id = #{teacherId}</if>
+            <if test="cPhone != null  and cPhone != ''"> and c_phone = #{cPhone}</if>
+            <if test="cCount != null "> and c_count = #{cCount}</if>
+            <if test="cIsdelete != null "> and c_isdelete = #{cIsdelete}</if>
+        </where>
+    </select>
+    
+    <select id="selectBClassByCId" parameterType="Long" resultMap="BClassResult">
+        <include refid="selectBClassVo"/>
+        where c_id = #{cId}
+    </select>
+        
+    <insert id="insertBClass" parameterType="BClass" useGeneratedKeys="true" keyProperty="cId">
+        insert into b_class
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cNumber != null">c_number,</if>
+            <if test="cName != null">c_name,</if>
+            <if test="teacherId != null">teacher_id,</if>
+            <if test="cPhone != null">c_phone,</if>
+            <if test="cCount != null">c_count,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="cIsdelete != null">c_isdelete,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cNumber != null">#{cNumber},</if>
+            <if test="cName != null">#{cName},</if>
+            <if test="teacherId != null">#{teacherId},</if>
+            <if test="cPhone != null">#{cPhone},</if>
+            <if test="cCount != null">#{cCount},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="cIsdelete != null">#{cIsdelete},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBClass" parameterType="BClass">
+        update b_class
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cNumber != null">c_number = #{cNumber},</if>
+            <if test="cName != null">c_name = #{cName},</if>
+            <if test="teacherId != null">teacher_id = #{teacherId},</if>
+            <if test="cPhone != null">c_phone = #{cPhone},</if>
+            <if test="cCount != null">c_count = #{cCount},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="cIsdelete != null">c_isdelete = #{cIsdelete},</if>
+        </trim>
+        where c_id = #{cId}
+    </update>
+
+    <delete id="deleteBClassByCId" parameterType="Long">
+        delete from b_class where c_id = #{cId}
+    </delete>
+
+    <delete id="deleteBClassByCIds" parameterType="String">
+        delete from b_class where c_id in 
+        <foreach item="cId" collection="array" open="(" separator="," close=")">
+            #{cId}
+        </foreach>
+    </delete>
+</mapper>

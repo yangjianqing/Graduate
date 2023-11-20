@@ -1,4 +1,4 @@
-package org.graduate.web.controller.system;
+package org.graduate.web.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -16,89 +16,89 @@ import org.graduate.common.annotation.Log;
 import org.graduate.common.core.controller.BaseController;
 import org.graduate.common.core.domain.AjaxResult;
 import org.graduate.common.enums.BusinessType;
-import org.graduate.system.domain.Student;
-import org.graduate.system.service.IStudentService;
+import org.graduate.system.domain.BStudent;
+import org.graduate.system.service.IBStudentService;
 import org.graduate.common.utils.poi.ExcelUtil;
 import org.graduate.common.core.page.TableDataInfo;
 
 /**
- * 学生管理Controller
- * 
+ * 学生Controller
+ *
  * @author ruoyi
- * @date 2023-11-14
+ * @date 2023-11-20
  */
 @RestController
 @RequestMapping("/system/student")
-public class StudentController extends BaseController
+public class BStudentController extends BaseController
 {
     @Autowired
-    private IStudentService studentService;
+    private IBStudentService bStudentService;
 
     /**
-     * 查询学生管理列表
+     * 查询学生列表
      */
     @PreAuthorize("@ss.hasPermi('system:student:list')")
     @GetMapping("/list")
-    public TableDataInfo list(Student student)
+    public TableDataInfo list(BStudent bStudent)
     {
         startPage();
-        List<Student> list = studentService.selectStudentList(student);
+        List<BStudent> list = bStudentService.selectBStudentList(bStudent);
         return getDataTable(list);
     }
 
     /**
-     * 导出学生管理列表
+     * 导出学生列表
      */
     @PreAuthorize("@ss.hasPermi('system:student:export')")
-    @Log(title = "学生管理", businessType = BusinessType.EXPORT)
+    @Log(title = "学生", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, Student student)
+    public void export(HttpServletResponse response, BStudent bStudent)
     {
-        List<Student> list = studentService.selectStudentList(student);
-        ExcelUtil<Student> util = new ExcelUtil<Student>(Student.class);
-        util.exportExcel(response, list, "学生管理数据");
+        List<BStudent> list = bStudentService.selectBStudentList(bStudent);
+        ExcelUtil<BStudent> util = new ExcelUtil<BStudent>(BStudent.class);
+        util.exportExcel(response, list, "学生数据");
     }
 
     /**
-     * 获取学生管理详细信息
+     * 获取学生详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:student:query')")
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    @GetMapping(value = "/{sId}")
+    public AjaxResult getInfo(@PathVariable("sId") Long sId)
     {
-        return AjaxResult.success(studentService.selectStudentById(id));
+        return AjaxResult.success(bStudentService.selectBStudentBySId(sId));
     }
 
     /**
-     * 新增学生管理
+     * 新增学生
      */
     @PreAuthorize("@ss.hasPermi('system:student:add')")
-    @Log(title = "学生管理", businessType = BusinessType.INSERT)
+    @Log(title = "学生", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Student student)
+    public AjaxResult add(@RequestBody BStudent bStudent)
     {
-        return toAjax(studentService.insertStudent(student));
+        return toAjax(bStudentService.insertBStudent(bStudent));
     }
 
     /**
-     * 修改学生管理
+     * 修改学生
      */
     @PreAuthorize("@ss.hasPermi('system:student:edit')")
-    @Log(title = "学生管理", businessType = BusinessType.UPDATE)
+    @Log(title = "学生", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Student student)
+    public AjaxResult edit(@RequestBody BStudent bStudent)
     {
-        return toAjax(studentService.updateStudent(student));
+        return toAjax(bStudentService.updateBStudent(bStudent));
     }
 
     /**
-     * 删除学生管理
+     * 删除学生
      */
     @PreAuthorize("@ss.hasPermi('system:student:remove')")
-    @Log(title = "学生管理", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
+    @Log(title = "学生", businessType = BusinessType.DELETE)
+	@DeleteMapping("/{sIds}")
+    public AjaxResult remove(@PathVariable Long[] sIds)
     {
-        return toAjax(studentService.deleteStudentByIds(ids));
+        return toAjax(bStudentService.deleteBStudentBySIds(sIds));
     }
 }
