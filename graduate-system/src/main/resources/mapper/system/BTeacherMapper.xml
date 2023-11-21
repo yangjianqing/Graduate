@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.graduate.system.mapper.BTeacherMapper">
+    
+    <resultMap type="BTeacher" id="BTeacherResult">
+        <result property="tchrId"    column="tchr_id"    />
+        <result property="tchrNum"    column="tchr_num"    />
+        <result property="schoolName"    column="school_name"    />
+        <result property="tchrName"    column="tchr_name"    />
+        <result property="tchrGender"    column="tchr_gender"    />
+        <result property="tchrAge"    column="tchr_age"    />
+        <result property="tchrImg"    column="tchr_img"    />
+        <result property="tchrPhone"    column="tchr_phone"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="tchrStatus"    column="tchr_status"    />
+    </resultMap>
+
+    <sql id="selectBTeacherVo">
+        select tchr_id, tchr_num, school_name, tchr_name, tchr_gender, tchr_age, tchr_img, tchr_phone, create_time, update_time, tchr_status from b_teacher
+    </sql>
+
+    <select id="selectBTeacherList" parameterType="BTeacher" resultMap="BTeacherResult">
+        <include refid="selectBTeacherVo"/>
+        <where>  
+            <if test="schoolName != null  and schoolName != ''"> and school_name = #{schoolName}</if>
+            <if test="tchrName != null  and tchrName != ''"> and tchr_name like concat('%', #{tchrName}, '%')</if>
+            <if test="tchrStatus != null  and tchrStatus != ''"> and tchr_status = #{tchrStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectBTeacherByTchrId" parameterType="Long" resultMap="BTeacherResult">
+        <include refid="selectBTeacherVo"/>
+        where tchr_id = #{tchrId}
+    </select>
+        
+    <insert id="insertBTeacher" parameterType="BTeacher" useGeneratedKeys="true" keyProperty="tchrId">
+        insert into b_teacher
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tchrNum != null">tchr_num,</if>
+            <if test="schoolName != null">school_name,</if>
+            <if test="tchrName != null">tchr_name,</if>
+            <if test="tchrGender != null">tchr_gender,</if>
+            <if test="tchrAge != null">tchr_age,</if>
+            <if test="tchrImg != null">tchr_img,</if>
+            <if test="tchrPhone != null">tchr_phone,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="tchrStatus != null">tchr_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tchrNum != null">#{tchrNum},</if>
+            <if test="schoolName != null">#{schoolName},</if>
+            <if test="tchrName != null">#{tchrName},</if>
+            <if test="tchrGender != null">#{tchrGender},</if>
+            <if test="tchrAge != null">#{tchrAge},</if>
+            <if test="tchrImg != null">#{tchrImg},</if>
+            <if test="tchrPhone != null">#{tchrPhone},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="tchrStatus != null">#{tchrStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBTeacher" parameterType="BTeacher">
+        update b_teacher
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tchrNum != null">tchr_num = #{tchrNum},</if>
+            <if test="schoolName != null">school_name = #{schoolName},</if>
+            <if test="tchrName != null">tchr_name = #{tchrName},</if>
+            <if test="tchrGender != null">tchr_gender = #{tchrGender},</if>
+            <if test="tchrAge != null">tchr_age = #{tchrAge},</if>
+            <if test="tchrImg != null">tchr_img = #{tchrImg},</if>
+            <if test="tchrPhone != null">tchr_phone = #{tchrPhone},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="tchrStatus != null">tchr_status = #{tchrStatus},</if>
+        </trim>
+        where tchr_id = #{tchrId}
+    </update>
+
+    <delete id="deleteBTeacherByTchrId" parameterType="Long">
+        delete from b_teacher where tchr_id = #{tchrId}
+    </delete>
+
+    <delete id="deleteBTeacherByTchrIds" parameterType="String">
+        delete from b_teacher where tchr_id in 
+        <foreach item="tchrId" collection="array" open="(" separator="," close=")">
+            #{tchrId}
+        </foreach>
+    </delete>
+</mapper>

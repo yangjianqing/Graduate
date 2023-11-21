@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.graduate.system.mapper.BEmpinfoMapper">
+    
+    <resultMap type="BEmpinfo" id="BEmpinfoResult">
+        <result property="empId"    column="emp_id"    />
+        <result property="cName"    column="c_name"    />
+        <result property="empName"    column="emp_name"    />
+        <result property="empDes"    column="emp_des"    />
+        <result property="empQuantity"    column="emp_quantity"    />
+        <result property="empPay"    column="emp_pay"    />
+        <result property="empBonus"    column="emp_bonus"    />
+        <result property="empConten"    column="emp_conten"    />
+        <result property="empReq"    column="emp_req"    />
+        <result property="cPhone"    column="c_phone"    />
+        <result property="cAddress"    column="c_address"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="empInfo"    column="emp_info"    />
+        <result property="empStatus"    column="emp_status"    />
+    </resultMap>
+
+    <sql id="selectBEmpinfoVo">
+        select emp_id, c_name, emp_name, emp_des, emp_quantity, emp_pay, emp_bonus, emp_conten, emp_req, c_phone, c_address, create_time, update_time, emp_info, emp_status from b_empinfo
+    </sql>
+
+    <select id="selectBEmpinfoList" parameterType="BEmpinfo" resultMap="BEmpinfoResult">
+        <include refid="selectBEmpinfoVo"/>
+        <where>  
+            <if test="cName != null  and cName != ''"> and c_name = #{cName}</if>
+            <if test="empName != null  and empName != ''"> and emp_name like concat('%', #{empName}, '%')</if>
+            <if test="empQuantity != null "> and emp_quantity &gt;= #{empQuantity}</if>
+            <if test="empPay != null "> and emp_pay &gt;= #{empPay}</if>
+            <if test="cAddress != null  and cAddress != ''"> and c_address = #{cAddress}</if>
+            <if test="empStatus != null  and empStatus != ''"> and emp_status = #{empStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectBEmpinfoByEmpId" parameterType="Long" resultMap="BEmpinfoResult">
+        <include refid="selectBEmpinfoVo"/>
+        where emp_id = #{empId}
+    </select>
+        
+    <insert id="insertBEmpinfo" parameterType="BEmpinfo" useGeneratedKeys="true" keyProperty="empId">
+        insert into b_empinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cName != null">c_name,</if>
+            <if test="empName != null">emp_name,</if>
+            <if test="empDes != null">emp_des,</if>
+            <if test="empQuantity != null">emp_quantity,</if>
+            <if test="empPay != null">emp_pay,</if>
+            <if test="empBonus != null">emp_bonus,</if>
+            <if test="empConten != null">emp_conten,</if>
+            <if test="empReq != null">emp_req,</if>
+            <if test="cPhone != null">c_phone,</if>
+            <if test="cAddress != null">c_address,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="empInfo != null">emp_info,</if>
+            <if test="empStatus != null">emp_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cName != null">#{cName},</if>
+            <if test="empName != null">#{empName},</if>
+            <if test="empDes != null">#{empDes},</if>
+            <if test="empQuantity != null">#{empQuantity},</if>
+            <if test="empPay != null">#{empPay},</if>
+            <if test="empBonus != null">#{empBonus},</if>
+            <if test="empConten != null">#{empConten},</if>
+            <if test="empReq != null">#{empReq},</if>
+            <if test="cPhone != null">#{cPhone},</if>
+            <if test="cAddress != null">#{cAddress},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="empInfo != null">#{empInfo},</if>
+            <if test="empStatus != null">#{empStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBEmpinfo" parameterType="BEmpinfo">
+        update b_empinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cName != null">c_name = #{cName},</if>
+            <if test="empName != null">emp_name = #{empName},</if>
+            <if test="empDes != null">emp_des = #{empDes},</if>
+            <if test="empQuantity != null">emp_quantity = #{empQuantity},</if>
+            <if test="empPay != null">emp_pay = #{empPay},</if>
+            <if test="empBonus != null">emp_bonus = #{empBonus},</if>
+            <if test="empConten != null">emp_conten = #{empConten},</if>
+            <if test="empReq != null">emp_req = #{empReq},</if>
+            <if test="cPhone != null">c_phone = #{cPhone},</if>
+            <if test="cAddress != null">c_address = #{cAddress},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="empInfo != null">emp_info = #{empInfo},</if>
+            <if test="empStatus != null">emp_status = #{empStatus},</if>
+        </trim>
+        where emp_id = #{empId}
+    </update>
+
+    <delete id="deleteBEmpinfoByEmpId" parameterType="Long">
+        delete from b_empinfo where emp_id = #{empId}
+    </delete>
+
+    <delete id="deleteBEmpinfoByEmpIds" parameterType="String">
+        delete from b_empinfo where emp_id in 
+        <foreach item="empId" collection="array" open="(" separator="," close=")">
+            #{empId}
+        </foreach>
+    </delete>
+</mapper>
