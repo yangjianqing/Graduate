@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.graduate.system.mapper.BCompanyMapper">
+    
+    <resultMap type="BCompany" id="BCompanyResult">
+        <result property="cId"    column="c_id"    />
+        <result property="cName"    column="c_name"    />
+        <result property="cData"    column="c_data"    />
+        <result property="cType"    column="c_type"    />
+        <result property="cAddress"    column="c_address"    />
+        <result property="cPhone"    column="c_phone"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectBCompanyVo">
+        select c_id, c_name, c_data, c_type, c_address, c_phone, create_time, update_time from b_company
+    </sql>
+
+    <select id="selectBCompanyList" parameterType="BCompany" resultMap="BCompanyResult">
+        <include refid="selectBCompanyVo"/>
+        <where>  
+            <if test="cName != null  and cName != ''"> and c_name like concat('%', #{cName}, '%')</if>
+            <if test="cData != null "> and c_data = #{cData}</if>
+            <if test="cType != null  and cType != ''"> and c_type = #{cType}</if>
+            <if test="cAddress != null  and cAddress != ''"> and c_address = #{cAddress}</if>
+        </where>
+    </select>
+    
+    <select id="selectBCompanyByCId" parameterType="Long" resultMap="BCompanyResult">
+        <include refid="selectBCompanyVo"/>
+        where c_id = #{cId}
+    </select>
+        
+    <insert id="insertBCompany" parameterType="BCompany">
+        insert into b_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cId != null">c_id,</if>
+            <if test="cName != null">c_name,</if>
+            <if test="cData != null">c_data,</if>
+            <if test="cType != null">c_type,</if>
+            <if test="cAddress != null">c_address,</if>
+            <if test="cPhone != null">c_phone,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cId != null">#{cId},</if>
+            <if test="cName != null">#{cName},</if>
+            <if test="cData != null">#{cData},</if>
+            <if test="cType != null">#{cType},</if>
+            <if test="cAddress != null">#{cAddress},</if>
+            <if test="cPhone != null">#{cPhone},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBCompany" parameterType="BCompany">
+        update b_company
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cName != null">c_name = #{cName},</if>
+            <if test="cData != null">c_data = #{cData},</if>
+            <if test="cType != null">c_type = #{cType},</if>
+            <if test="cAddress != null">c_address = #{cAddress},</if>
+            <if test="cPhone != null">c_phone = #{cPhone},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where c_id = #{cId}
+    </update>
+
+    <delete id="deleteBCompanyByCId" parameterType="Long">
+        delete from b_company where c_id = #{cId}
+    </delete>
+
+    <delete id="deleteBCompanyByCIds" parameterType="String">
+        delete from b_company where c_id in 
+        <foreach item="cId" collection="array" open="(" separator="," close=")">
+            #{cId}
+        </foreach>
+    </delete>
+</mapper>

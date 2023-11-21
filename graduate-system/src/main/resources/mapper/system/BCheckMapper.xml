@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.graduate.system.mapper.BCheckMapper">
+    
+    <resultMap type="BCheck" id="BCheckResult">
+        <result property="ckId"    column="ck_id"    />
+        <result property="ckName"    column="ck_name"    />
+        <result property="ckTime"    column="ck_time"    />
+        <result property="ckAddress"    column="ck_address"    />
+        <result property="ckLongitude"    column="ck_longitude"    />
+        <result property="ckLatitude"    column="ck_latitude"    />
+        <result property="sId"    column="s_id"    />
+        <result property="ckTpye"    column="ck_tpye"    />
+    </resultMap>
+
+    <sql id="selectBCheckVo">
+        select ck_id, ck_name, ck_time, ck_address, ck_longitude, ck_latitude, s_id, ck_tpye from b_check
+    </sql>
+
+    <select id="selectBCheckList" parameterType="BCheck" resultMap="BCheckResult">
+        <include refid="selectBCheckVo"/>
+        <where>  
+            <if test="ckName != null  and ckName != ''"> and ck_name like concat('%', #{ckName}, '%')</if>
+            <if test="ckTime != null "> and ck_time = #{ckTime}</if>
+            <if test="ckAddress != null  and ckAddress != ''"> and ck_address = #{ckAddress}</if>
+            <if test="ckTpye != null  and ckTpye != ''"> and ck_tpye = #{ckTpye}</if>
+        </where>
+    </select>
+    
+    <select id="selectBCheckByCkId" parameterType="Long" resultMap="BCheckResult">
+        <include refid="selectBCheckVo"/>
+        where ck_id = #{ckId}
+    </select>
+        
+    <insert id="insertBCheck" parameterType="BCheck" useGeneratedKeys="true" keyProperty="ckId">
+        insert into b_check
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ckName != null">ck_name,</if>
+            <if test="ckTime != null">ck_time,</if>
+            <if test="ckAddress != null">ck_address,</if>
+            <if test="ckLongitude != null">ck_longitude,</if>
+            <if test="ckLatitude != null">ck_latitude,</if>
+            <if test="sId != null">s_id,</if>
+            <if test="ckTpye != null">ck_tpye,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ckName != null">#{ckName},</if>
+            <if test="ckTime != null">#{ckTime},</if>
+            <if test="ckAddress != null">#{ckAddress},</if>
+            <if test="ckLongitude != null">#{ckLongitude},</if>
+            <if test="ckLatitude != null">#{ckLatitude},</if>
+            <if test="sId != null">#{sId},</if>
+            <if test="ckTpye != null">#{ckTpye},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBCheck" parameterType="BCheck">
+        update b_check
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ckName != null">ck_name = #{ckName},</if>
+            <if test="ckTime != null">ck_time = #{ckTime},</if>
+            <if test="ckAddress != null">ck_address = #{ckAddress},</if>
+            <if test="ckLongitude != null">ck_longitude = #{ckLongitude},</if>
+            <if test="ckLatitude != null">ck_latitude = #{ckLatitude},</if>
+            <if test="sId != null">s_id = #{sId},</if>
+            <if test="ckTpye != null">ck_tpye = #{ckTpye},</if>
+        </trim>
+        where ck_id = #{ckId}
+    </update>
+
+    <delete id="deleteBCheckByCkId" parameterType="Long">
+        delete from b_check where ck_id = #{ckId}
+    </delete>
+
+    <delete id="deleteBCheckByCkIds" parameterType="String">
+        delete from b_check where ck_id in 
+        <foreach item="ckId" collection="array" open="(" separator="," close=")">
+            #{ckId}
+        </foreach>
+    </delete>
+</mapper>
