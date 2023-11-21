@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询班级列表
+// 查询班级管理列表
 export function listClass(query) {
   return request({
     url: '/system/class/list',
@@ -9,7 +9,7 @@ export function listClass(query) {
   })
 }
 
-// 查询班级详细
+// 查询班级管理详细
 export function getClass(cId) {
   return request({
     url: '/system/class/' + cId,
@@ -17,7 +17,7 @@ export function getClass(cId) {
   })
 }
 
-// 新增班级
+// 新增班级管理
 export function addClass(data) {
   return request({
     url: '/system/class',
@@ -26,7 +26,7 @@ export function addClass(data) {
   })
 }
 
-// 修改班级
+// 修改班级管理
 export function updateClass(data) {
   return request({
     url: '/system/class',
@@ -35,7 +35,7 @@ export function updateClass(data) {
   })
 }
 
-// 删除班级
+// 删除班级管理
 export function delClass(cId) {
   return request({
     url: '/system/class/' + cId,

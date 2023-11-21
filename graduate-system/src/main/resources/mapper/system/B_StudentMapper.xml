@@ -2,12 +2,13 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.graduate.system.mapper.BStudentMapper">
+<mapper namespace="org.graduate.system.mapper.B_StudentMapper">
     
-    <resultMap type="BStudent" id="BStudentResult">
+    <resultMap type="B_Student" id="B_StudentResult">
         <result property="sId"    column="s_id"    />
         <result property="sNumber"    column="s_number"    />
         <result property="sName"    column="s_name"    />
+        <result property="sGender"    column="s_gender"    />
         <result property="schoolId"    column="school_id"    />
         <result property="compenyId"    column="compeny_id"    />
         <result property="cStatus"    column="c_status"    />
@@ -15,37 +16,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="classId"    column="class_id"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
-        <result property="sIsdelete"    column="s_isdelete"    />
     </resultMap>
 
-    <sql id="selectBStudentVo">
-        select s_id, s_number, s_name, school_id, compeny_id, c_status, teacher_id, class_id, create_time, update_time, s_isdelete from b_student
+    <sql id="selectB_StudentVo">
+        select s_id, s_number, s_name, s_gender, school_id, compeny_id, c_status, teacher_id, class_id, create_time, update_time from b_student
     </sql>
 
-    <select id="selectBStudentList" parameterType="BStudent" resultMap="BStudentResult">
-        <include refid="selectBStudentVo"/>
+    <select id="selectB_StudentList" parameterType="B_Student" resultMap="B_StudentResult">
+        <include refid="selectB_StudentVo"/>
         <where>  
             <if test="sNumber != null  and sNumber != ''"> and s_number = #{sNumber}</if>
             <if test="sName != null  and sName != ''"> and s_name like concat('%', #{sName}, '%')</if>
+            <if test="sGender != null "> and s_gender = #{sGender}</if>
             <if test="schoolId != null "> and school_id = #{schoolId}</if>
-            <if test="compenyId != null "> and compeny_id = #{compenyId}</if>
             <if test="cStatus != null "> and c_status = #{cStatus}</if>
-            <if test="teacherId != null "> and teacher_id = #{teacherId}</if>
             <if test="classId != null "> and class_id = #{classId}</if>
-            <if test="sIsdelete != null "> and s_isdelete = #{sIsdelete}</if>
         </where>
     </select>
     
-    <select id="selectBStudentBySId" parameterType="Long" resultMap="BStudentResult">
-        <include refid="selectBStudentVo"/>
+    <select id="selectB_StudentBySId" parameterType="Long" resultMap="B_StudentResult">
+        <include refid="selectB_StudentVo"/>
         where s_id = #{sId}
     </select>
         
-    <insert id="insertBStudent" parameterType="BStudent" useGeneratedKeys="true" keyProperty="sId">
+    <insert id="insertB_Student" parameterType="B_Student" useGeneratedKeys="true" keyProperty="sId">
         insert into b_student
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="sNumber != null">s_number,</if>
-            <if test="sName != null">s_name,</if>
+            <if test="sName != null and sName != ''">s_name,</if>
+            <if test="sGender != null">s_gender,</if>
             <if test="schoolId != null">school_id,</if>
             <if test="compenyId != null">compeny_id,</if>
             <if test="cStatus != null">c_status,</if>
@@ -53,11 +52,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="classId != null">class_id,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
-            <if test="sIsdelete != null">s_isdelete,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="sNumber != null">#{sNumber},</if>
-            <if test="sName != null">#{sName},</if>
+            <if test="sName != null and sName != ''">#{sName},</if>
+            <if test="sGender != null">#{sGender},</if>
             <if test="schoolId != null">#{schoolId},</if>
             <if test="compenyId != null">#{compenyId},</if>
             <if test="cStatus != null">#{cStatus},</if>
@@ -65,15 +64,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="classId != null">#{classId},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
-            <if test="sIsdelete != null">#{sIsdelete},</if>
          </trim>
     </insert>
 
-    <update id="updateBStudent" parameterType="BStudent">
+    <update id="updateB_Student" parameterType="B_Student">
         update b_student
         <trim prefix="SET" suffixOverrides=",">
             <if test="sNumber != null">s_number = #{sNumber},</if>
-            <if test="sName != null">s_name = #{sName},</if>
+            <if test="sName != null and sName != ''">s_name = #{sName},</if>
+            <if test="sGender != null">s_gender = #{sGender},</if>
             <if test="schoolId != null">school_id = #{schoolId},</if>
             <if test="compenyId != null">compeny_id = #{compenyId},</if>
             <if test="cStatus != null">c_status = #{cStatus},</if>
@@ -81,16 +80,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="classId != null">class_id = #{classId},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
-            <if test="sIsdelete != null">s_isdelete = #{sIsdelete},</if>
         </trim>
         where s_id = #{sId}
     </update>
 
-    <delete id="deleteBStudentBySId" parameterType="Long">
+    <delete id="deleteB_StudentBySId" parameterType="Long">
         delete from b_student where s_id = #{sId}
     </delete>
 
-    <delete id="deleteBStudentBySIds" parameterType="String">
+    <delete id="deleteB_StudentBySIds" parameterType="String">
         delete from b_student where s_id in 
         <foreach item="sId" collection="array" open="(" separator="," close=")">
             #{sId}

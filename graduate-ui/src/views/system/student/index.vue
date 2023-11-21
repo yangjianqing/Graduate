@@ -9,50 +9,38 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="${comment}" prop="sName">
+      <el-form-item label="学生姓名" prop="sName">
         <el-input
           v-model="queryParams.sName"
-          placeholder="请输入${comment}"
+          placeholder="请输入学生姓名"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="学校id(fkey)" prop="schoolId">
-        <el-input
-          v-model="queryParams.schoolId"
-          placeholder="请输入学校id(fkey)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="性别" prop="sGender">
+        <el-select v-model="queryParams.sGender" placeholder="请选择性别" clearable>
+          <el-option
+            v-for="dict in dict.type.b_gender"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
-      <el-form-item label="公司id(fkey)" prop="compenyId">
-        <el-input
-          v-model="queryParams.compenyId"
-          placeholder="请输入公司id(fkey)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="就业状态" prop="cStatus">
+        <el-select v-model="queryParams.cStatus" placeholder="请选择就业状态" clearable>
+          <el-option
+            v-for="dict in dict.type.c_status"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
-      <el-form-item label="辅导员id(fkey)" prop="teacherId">
-        <el-input
-          v-model="queryParams.teacherId"
-          placeholder="请输入辅导员id(fkey)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="班级id(fkey)" prop="classId">
+      <el-form-item label="班级" prop="classId">
         <el-input
           v-model="queryParams.classId"
-          placeholder="请输入班级id(fkey)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="虚拟删除(0:未删除，1:删除)" prop="sIsdelete">
-        <el-input
-          v-model="queryParams.sIsdelete"
-          placeholder="请输入虚拟删除(0:未删除，1:删除)"
+          placeholder="请输入班级"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -111,15 +99,33 @@
 
     <el-table v-loading="loading" :data="studentList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="学生id(key)" align="center" prop="sId" />
+      <el-table-column label="学生" align="center" prop="sId" />
       <el-table-column label="学生学号" align="center" prop="sNumber" />
-      <el-table-column label="${comment}" align="center" prop="sName" />
-      <el-table-column label="学校id(fkey)" align="center" prop="schoolId" />
-      <el-table-column label="公司id(fkey)" align="center" prop="compenyId" />
-      <el-table-column label="就业状态(0,1)" align="center" prop="cStatus" />
-      <el-table-column label="辅导员id(fkey)" align="center" prop="teacherId" />
-      <el-table-column label="班级id(fkey)" align="center" prop="classId" />
-      <el-table-column label="虚拟删除(0:未删除，1:删除)" align="center" prop="sIsdelete" />
+      <el-table-column label="学生姓名" align="center" prop="sName" />
+      <el-table-column label="性别" align="center" prop="sGender">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.b_gender" :value="scope.row.sGender"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="学校" align="center" prop="schoolId" />
+      <el-table-column label="公司" align="center" prop="compenyId" />
+      <el-table-column label="就业状态" align="center" prop="cStatus">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.c_status" :value="scope.row.cStatus"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="辅导员" align="center" prop="teacherId" />
+      <el-table-column label="班级" align="center" prop="classId" />
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="修改时间" align="center" prop="updateTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -139,7 +145,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -148,29 +154,38 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改学生对话框 -->
+    <!-- 添加或修改学生管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="学生学号" prop="sNumber">
-          <el-input v-model="form.sNumber" placeholder="请输入学生学号" />
+        <el-form-item label="学生姓名" prop="sName">
+          <el-input v-model="form.sName" placeholder="请输入学生姓名" />
         </el-form-item>
-        <el-form-item label="${comment}" prop="sName">
-          <el-input v-model="form.sName" placeholder="请输入${comment}" />
+        <el-form-item label="性别">
+          <el-radio-group v-model="form.sGender">
+            <el-radio
+              v-for="dict in dict.type.b_gender"
+              :key="dict.value"
+:label="parseInt(dict.value)"
+            >{{dict.label}}</el-radio>
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="学校id(fkey)" prop="schoolId">
-          <el-input v-model="form.schoolId" placeholder="请输入学校id(fkey)" />
+        <el-form-item label="公司" prop="compenyId">
+          <el-input v-model="form.compenyId" placeholder="请输入公司" />
         </el-form-item>
-        <el-form-item label="公司id(fkey)" prop="compenyId">
-          <el-input v-model="form.compenyId" placeholder="请输入公司id(fkey)" />
+        <el-form-item label="就业状态">
+          <el-radio-group v-model="form.cStatus">
+            <el-radio
+              v-for="dict in dict.type.c_status"
+              :key="dict.value"
+:label="parseInt(dict.value)"
+            >{{dict.label}}</el-radio>
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="辅导员id(fkey)" prop="teacherId">
-          <el-input v-model="form.teacherId" placeholder="请输入辅导员id(fkey)" />
+        <el-form-item label="辅导员" prop="teacherId">
+          <el-input v-model="form.teacherId" placeholder="请输入辅导员" />
         </el-form-item>
-        <el-form-item label="班级id(fkey)" prop="classId">
-          <el-input v-model="form.classId" placeholder="请输入班级id(fkey)" />
-        </el-form-item>
-        <el-form-item label="虚拟删除(0:未删除，1:删除)" prop="sIsdelete">
-          <el-input v-model="form.sIsdelete" placeholder="请输入虚拟删除(0:未删除，1:删除)" />
+        <el-form-item label="班级" prop="classId">
+          <el-input v-model="form.classId" placeholder="请输入班级" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -186,6 +201,7 @@ import { listStudent, getStudent, delStudent, addStudent, updateStudent } from "
 
 export default {
   name: "Student",
+  dicts: ['c_status', 'b_gender'],
   data() {
     return {
       // 遮罩层
@@ -200,7 +216,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 学生表格数据
+      // 学生管理表格数据
       studentList: [],
       // 弹出层标题
       title: "",
@@ -212,17 +228,39 @@ export default {
         pageSize: 10,
         sNumber: null,
         sName: null,
+        sGender: null,
         schoolId: null,
-        compenyId: null,
         cStatus: null,
-        teacherId: null,
         classId: null,
-        sIsdelete: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        sName: [
+          { required: true, message: "学生姓名不能为空", trigger: "blur" }
+        ],
+        sGender: [
+          { required: true, message: "性别不能为空", trigger: "blur" }
+        ],
+        schoolId: [
+          { required: true, message: "学校不能为空", trigger: "change" }
+        ],
+        compenyId: [
+          { required: true, message: "公司不能为空", trigger: "blur" }
+        ],
+        cStatus: [
+          { required: true, message: "就业状态不能为空", trigger: "blur" }
+        ],
+        teacherId: [
+          { required: true, message: "辅导员不能为空", trigger: "blur" }
+        ],
+        classId: [
+          { required: true, message: "班级不能为空", trigger: "blur" }
+        ],
+        createTime: [
+          { required: true, message: "创建时间不能为空", trigger: "blur" }
+        ],
       }
     };
   },
@@ -230,7 +268,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询学生列表 */
+    /** 查询学生管理列表 */
     getList() {
       this.loading = true;
       listStudent(this.queryParams).then(response => {
@@ -250,14 +288,14 @@ export default {
         sId: null,
         sNumber: null,
         sName: null,
+        sGender: 0,
         schoolId: null,
         compenyId: null,
         cStatus: 0,
         teacherId: null,
         classId: null,
         createTime: null,
-        updateTime: null,
-        sIsdelete: null
+        updateTime: null
       };
       this.resetForm("form");
     },
@@ -281,7 +319,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加学生";
+      this.title = "添加学生管理";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -290,7 +328,7 @@ export default {
       getStudent(sId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改学生";
+        this.title = "修改学生管理";
       });
     },
     /** 提交按钮 */
@@ -316,7 +354,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const sIds = row.sId || this.ids;
-      this.$modal.confirm('是否确认删除学生编号为"' + sIds + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除学生管理编号为"' + sIds + '"的数据项？').then(function() {
         return delStudent(sIds);
       }).then(() => {
         this.getList();

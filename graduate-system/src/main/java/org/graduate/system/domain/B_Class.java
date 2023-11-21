@@ -6,16 +6,17 @@ import org.graduate.common.annotation.Excel;
 import org.graduate.common.core.domain.BaseEntity;
 
 /**
- * 班级对象 b_class
+ * 班级管理对象 b_class
  * 
- * @author ruoyi
- * @date 2023-11-20
+ * @author chuan
+ * @date 2023-11-21
  */
-public class BClass extends BaseEntity
+public class B_Class extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 班级id(key) */
+    /** 班级 */
+    @Excel(name = "班级")
     private Long cId;
 
     /** 班级编号 */
@@ -26,8 +27,8 @@ public class BClass extends BaseEntity
     @Excel(name = "班级名称")
     private String cName;
 
-    /** 辅导员id(fkey) */
-    @Excel(name = "辅导员id(fkey)")
+    /** 辅导员 */
+    @Excel(name = "辅导员")
     private Long teacherId;
 
     /** 手机号码 */
@@ -37,10 +38,6 @@ public class BClass extends BaseEntity
     /** 班级人数 */
     @Excel(name = "班级人数")
     private Long cCount;
-
-    /** 虚拟删(0:未删除，1:删除) */
-    @Excel(name = "虚拟删(0:未删除，1:删除)")
-    private Long cIsdelete;
 
     public void setcId(Long cId) 
     {
@@ -96,15 +93,6 @@ public class BClass extends BaseEntity
     {
         return cCount;
     }
-    public void setcIsdelete(Long cIsdelete) 
-    {
-        this.cIsdelete = cIsdelete;
-    }
-
-    public Long getcIsdelete() 
-    {
-        return cIsdelete;
-    }
 
     @Override
     public String toString() {
@@ -117,7 +105,6 @@ public class BClass extends BaseEntity
             .append("cCount", getcCount())
             .append("createTime", getCreateTime())
             .append("updateTime", getUpdateTime())
-            .append("cIsdelete", getcIsdelete())
             .toString();
     }
 }

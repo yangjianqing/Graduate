@@ -6,49 +6,50 @@ import org.graduate.common.annotation.Excel;
 import org.graduate.common.core.domain.BaseEntity;
 
 /**
- * 学生对象 b_student
+ * 学生管理对象 b_student
  * 
- * @author ruoyi
- * @date 2023-11-20
+ * @author chuan
+ * @date 2023-11-21
  */
-public class BStudent extends BaseEntity
+public class B_Student extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 学生id(key) */
+    /** 学生 */
+    @Excel(name = "学生")
     private Long sId;
 
     /** 学生学号 */
     @Excel(name = "学生学号")
     private String sNumber;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    /** 学生姓名 */
+    @Excel(name = "学生姓名")
     private String sName;
 
-    /** 学校id(fkey) */
-    @Excel(name = "学校id(fkey)")
+    /** 性别 */
+    @Excel(name = "性别")
+    private Long sGender;
+
+    /** 学校 */
+    @Excel(name = "学校")
     private Long schoolId;
 
-    /** 公司id(fkey) */
-    @Excel(name = "公司id(fkey)")
+    /** 公司 */
+    @Excel(name = "公司")
     private Long compenyId;
 
-    /** 就业状态(0,1) */
-    @Excel(name = "就业状态(0,1)")
+    /** 就业状态 */
+    @Excel(name = "就业状态")
     private Long cStatus;
 
-    /** 辅导员id(fkey) */
-    @Excel(name = "辅导员id(fkey)")
+    /** 辅导员 */
+    @Excel(name = "辅导员")
     private Long teacherId;
 
-    /** 班级id(fkey) */
-    @Excel(name = "班级id(fkey)")
+    /** 班级 */
+    @Excel(name = "班级")
     private Long classId;
-
-    /** 虚拟删除(0:未删除，1:删除) */
-    @Excel(name = "虚拟删除(0:未删除，1:删除)")
-    private Long sIsdelete;
 
     public void setsId(Long sId) 
     {
@@ -76,6 +77,15 @@ public class BStudent extends BaseEntity
     public String getsName() 
     {
         return sName;
+    }
+    public void setsGender(Long sGender) 
+    {
+        this.sGender = sGender;
+    }
+
+    public Long getsGender() 
+    {
+        return sGender;
     }
     public void setSchoolId(Long schoolId) 
     {
@@ -122,15 +132,6 @@ public class BStudent extends BaseEntity
     {
         return classId;
     }
-    public void setsIsdelete(Long sIsdelete) 
-    {
-        this.sIsdelete = sIsdelete;
-    }
-
-    public Long getsIsdelete() 
-    {
-        return sIsdelete;
-    }
 
     @Override
     public String toString() {
@@ -138,6 +139,7 @@ public class BStudent extends BaseEntity
             .append("sId", getsId())
             .append("sNumber", getsNumber())
             .append("sName", getsName())
+            .append("sGender", getsGender())
             .append("schoolId", getSchoolId())
             .append("compenyId", getCompenyId())
             .append("cStatus", getcStatus())
@@ -145,7 +147,6 @@ public class BStudent extends BaseEntity
             .append("classId", getClassId())
             .append("createTime", getCreateTime())
             .append("updateTime", getUpdateTime())
-            .append("sIsdelete", getsIsdelete())
             .toString();
     }
 }

@@ -17,37 +17,21 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="辅导员id(fkey)" prop="teacherId">
+      <el-form-item label="辅导员" prop="teacherId">
         <el-input
           v-model="queryParams.teacherId"
-          placeholder="请输入辅导员id(fkey)"
+          placeholder="请输入辅导员"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="手机号码" prop="cPhone">
-        <el-input
-          v-model="queryParams.cPhone"
-          placeholder="请输入手机号码"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="班级人数" prop="cCount">
-        <el-input
-          v-model="queryParams.cCount"
-          placeholder="请输入班级人数"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="虚拟删(0:未删除，1:删除)" prop="cIsdelete">
-        <el-input
-          v-model="queryParams.cIsdelete"
-          placeholder="请输入虚拟删(0:未删除，1:删除)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+      <el-form-item label="创建时间" prop="createTime">
+        <el-date-picker clearable
+          v-model="queryParams.createTime"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择创建时间">
+        </el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -103,13 +87,22 @@
 
     <el-table v-loading="loading" :data="classList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="班级id(key)" align="center" prop="cId" />
+      <el-table-column label="班级" align="center" prop="cId" />
       <el-table-column label="班级编号" align="center" prop="cNumber" />
       <el-table-column label="班级名称" align="center" prop="cName" />
-      <el-table-column label="辅导员id(fkey)" align="center" prop="teacherId" />
+      <el-table-column label="辅导员" align="center" prop="teacherId" />
       <el-table-column label="手机号码" align="center" prop="cPhone" />
       <el-table-column label="班级人数" align="center" prop="cCount" />
-      <el-table-column label="虚拟删(0:未删除，1:删除)" align="center" prop="cIsdelete" />
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="修改时间" align="center" prop="updateTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -138,26 +131,20 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改班级对话框 -->
+    <!-- 添加或修改班级管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="班级编号" prop="cNumber">
-          <el-input v-model="form.cNumber" placeholder="请输入班级编号" />
-        </el-form-item>
         <el-form-item label="班级名称" prop="cName">
           <el-input v-model="form.cName" placeholder="请输入班级名称" />
         </el-form-item>
-        <el-form-item label="辅导员id(fkey)" prop="teacherId">
-          <el-input v-model="form.teacherId" placeholder="请输入辅导员id(fkey)" />
+        <el-form-item label="辅导员" prop="teacherId">
+          <el-input v-model="form.teacherId" placeholder="请输入辅导员" />
         </el-form-item>
         <el-form-item label="手机号码" prop="cPhone">
           <el-input v-model="form.cPhone" placeholder="请输入手机号码" />
         </el-form-item>
         <el-form-item label="班级人数" prop="cCount">
           <el-input v-model="form.cCount" placeholder="请输入班级人数" />
-        </el-form-item>
-        <el-form-item label="虚拟删(0:未删除，1:删除)" prop="cIsdelete">
-          <el-input v-model="form.cIsdelete" placeholder="请输入虚拟删(0:未删除，1:删除)" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -187,7 +174,7 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 班级表格数据
+      // 班级管理表格数据
       classList: [],
       // 弹出层标题
       title: "",
@@ -200,14 +187,27 @@ export default {
         cNumber: null,
         cName: null,
         teacherId: null,
-        cPhone: null,
-        cCount: null,
-        cIsdelete: null
+        createTime: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        cName: [
+          { required: true, message: "班级名称不能为空", trigger: "blur" }
+        ],
+        teacherId: [
+          { required: true, message: "辅导员不能为空", trigger: "blur" }
+        ],
+        cPhone: [
+          { required: true, message: "手机号码不能为空", trigger: "blur" }
+        ],
+        cCount: [
+          { required: true, message: "班级人数不能为空", trigger: "blur" }
+        ],
+        createTime: [
+          { required: true, message: "创建时间不能为空", trigger: "blur" }
+        ],
       }
     };
   },
@@ -215,7 +215,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询班级列表 */
+    /** 查询班级管理列表 */
     getList() {
       this.loading = true;
       listClass(this.queryParams).then(response => {
@@ -239,8 +239,7 @@ export default {
         cPhone: null,
         cCount: null,
         createTime: null,
-        updateTime: null,
-        cIsdelete: null
+        updateTime: null
       };
       this.resetForm("form");
     },
@@ -264,7 +263,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加班级";
+      this.title = "添加班级管理";
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -273,7 +272,7 @@ export default {
       getClass(cId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改班级";
+        this.title = "修改班级管理";
       });
     },
     /** 提交按钮 */
@@ -299,7 +298,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const cIds = row.cId || this.ids;
-      this.$modal.confirm('是否确认删除班级编号为"' + cIds + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除班级管理编号为"' + cIds + '"的数据项？').then(function() {
         return delClass(cIds);
       }).then(() => {
         this.getList();
