@@ -16,8 +16,8 @@ import org.graduate.common.annotation.Log;
 import org.graduate.common.core.controller.BaseController;
 import org.graduate.common.core.domain.AjaxResult;
 import org.graduate.common.enums.BusinessType;
-import org.graduate.system.domain.B_Class;
-import org.graduate.system.service.IB_ClassService;
+import org.graduate.system.domain.BClass;
+import org.graduate.system.service.IBClassService;
 import org.graduate.common.utils.poi.ExcelUtil;
 import org.graduate.common.core.page.TableDataInfo;
 
@@ -29,20 +29,20 @@ import org.graduate.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/system/class")
-public class B_ClassController extends BaseController
+public class BClassController extends BaseController
 {
     @Autowired
-    private IB_ClassService b_ClassService;
+    private IBClassService b_ClassService;
 
     /**
      * 查询班级管理列表
      */
     @PreAuthorize("@ss.hasPermi('system:class:list')")
     @GetMapping("/list")
-    public TableDataInfo list(B_Class b_Class)
+    public TableDataInfo list(BClass b_Class)
     {
         startPage();
-        List<B_Class> list = b_ClassService.selectB_ClassList(b_Class);
+        List<BClass> list = b_ClassService.selectB_ClassList(b_Class);
         return getDataTable(list);
     }
 
@@ -52,10 +52,10 @@ public class B_ClassController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:class:export')")
     @Log(title = "班级管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, B_Class b_Class)
+    public void export(HttpServletResponse response, BClass b_Class)
     {
-        List<B_Class> list = b_ClassService.selectB_ClassList(b_Class);
-        ExcelUtil<B_Class> util = new ExcelUtil<B_Class>(B_Class.class);
+        List<BClass> list = b_ClassService.selectB_ClassList(b_Class);
+        ExcelUtil<BClass> util = new ExcelUtil<BClass>(BClass.class);
         util.exportExcel(response, list, "班级管理数据");
     }
 
@@ -75,7 +75,7 @@ public class B_ClassController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:class:add')")
     @Log(title = "班级管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody B_Class b_Class)
+    public AjaxResult add(@RequestBody BClass b_Class)
     {
         return toAjax(b_ClassService.insertB_Class(b_Class));
     }
@@ -86,7 +86,7 @@ public class B_ClassController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:class:edit')")
     @Log(title = "班级管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody B_Class b_Class)
+    public AjaxResult edit(@RequestBody BClass b_Class)
     {
         return toAjax(b_ClassService.updateB_Class(b_Class));
     }

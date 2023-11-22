@@ -10,9 +10,9 @@ import org.graduate.system.domain.BTeacher;
 import org.graduate.system.mapper.BTeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.graduate.system.mapper.B_ClassMapper;
-import org.graduate.system.domain.B_Class;
-import org.graduate.system.service.IB_ClassService;
+import org.graduate.system.mapper.BClassMapper;
+import org.graduate.system.domain.BClass;
+import org.graduate.system.service.IBClassService;
 
 /**
  * 班级管理Service业务层处理
@@ -21,10 +21,10 @@ import org.graduate.system.service.IB_ClassService;
  * @date 2023-11-21
  */
 @Service
-public class B_ClassServiceImpl implements IB_ClassService 
+public class BClassServiceImpl implements IBClassService
 {
     @Autowired
-    private B_ClassMapper b_ClassMapper;
+    private BClassMapper b_ClassMapper;
     @Autowired
     private BTeacherMapper bTeacherMapper;
 
@@ -36,7 +36,7 @@ public class B_ClassServiceImpl implements IB_ClassService
      * @return 班级管理
      */
     @Override
-    public B_Class selectB_ClassByCId(Long cId)
+    public BClass selectB_ClassByCId(Long cId)
     {
         return b_ClassMapper.selectB_ClassByCId(cId);
     }
@@ -48,11 +48,11 @@ public class B_ClassServiceImpl implements IB_ClassService
      * @return 班级管理
      */
     @Override
-    public List<B_Class> selectB_ClassList(B_Class b_Class)
+    public List<BClass> selectB_ClassList(BClass b_Class)
     {
-        List<B_Class> bClasses = b_ClassMapper.selectB_ClassList(b_Class);
+        List<BClass> bClasses = b_ClassMapper.selectB_ClassList(b_Class);
         List<Long> lists = new ArrayList<>();
-        for(B_Class bc:bClasses) {
+        for(BClass bc:bClasses) {
             lists.add(bc.getTeacherId());
         }
         //获取到教师列表
@@ -63,7 +63,7 @@ public class B_ClassServiceImpl implements IB_ClassService
             teacherMap.put(t.getTchrId(),t);
         }
         //将map集合中 教师名称取出 存入到list中
-        for(B_Class bc:bClasses) {
+        for(BClass bc:bClasses) {
             bc.setTeacherName(teacherMap.get(bc.getTeacherId()).getTchrName());
         }
         return bClasses;
@@ -76,7 +76,7 @@ public class B_ClassServiceImpl implements IB_ClassService
      * @return 结果
      */
     @Override
-    public int insertB_Class(B_Class b_Class)
+    public int insertB_Class(BClass b_Class)
     {
         b_Class.setCreateTime(DateUtils.getNowDate());
         return b_ClassMapper.insertB_Class(b_Class);
@@ -89,7 +89,7 @@ public class B_ClassServiceImpl implements IB_ClassService
      * @return 结果
      */
     @Override
-    public int updateB_Class(B_Class b_Class)
+    public int updateB_Class(BClass b_Class)
     {
         b_Class.setUpdateTime(DateUtils.getNowDate());
         return b_ClassMapper.updateB_Class(b_Class);

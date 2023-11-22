@@ -2,7 +2,7 @@ package org.graduate.system.mapper;
 
 import java.util.List;
 
-import org.graduate.system.domain.B_Class;
+import org.graduate.system.domain.BClass;
 
 /**
  * 班级管理Mapper接口
@@ -10,7 +10,7 @@ import org.graduate.system.domain.B_Class;
  * @author chuan
  * @date 2023-11-21
  */
-public interface B_ClassMapper 
+public interface BClassMapper
 {
     /**
      * 查询班级管理
@@ -18,7 +18,7 @@ public interface B_ClassMapper
      * @param cId 班级管理主键
      * @return 班级管理
      */
-    public B_Class selectB_ClassByCId(Long cId);
+    public BClass selectB_ClassByCId(Long cId);
 
     /**
      * 查询班级管理列表
@@ -26,7 +26,7 @@ public interface B_ClassMapper
      * @param b_Class 班级管理
      * @return 班级管理集合
      */
-    public List<B_Class> selectB_ClassList(B_Class b_Class);
+    public List<BClass> selectB_ClassList(BClass b_Class);
 
     /**
      *
@@ -35,7 +35,7 @@ public interface B_ClassMapper
      * @param b_Class 班级管理
      * @return 结果
      */
-    public int insertB_Class(B_Class b_Class);
+    public int insertB_Class(BClass b_Class);
 
     /**
      * 修改班级管理
@@ -43,7 +43,7 @@ public interface B_ClassMapper
      * @param b_Class 班级管理
      * @return 结果
      */
-    public int updateB_Class(B_Class b_Class);
+    public int updateB_Class(BClass b_Class);
 
     /**
      * 删除班级管理
@@ -66,5 +66,5 @@ public interface B_ClassMapper
      * @param ClassIds
      * @return
      */
-    List<B_Class> selectBClassListCIds(List<Long> ClassIds);
+    List<BClass> selectBClassListCIds(List<Long> ClassIds);
 }

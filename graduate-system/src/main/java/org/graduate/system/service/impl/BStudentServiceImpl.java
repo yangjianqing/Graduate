@@ -8,7 +8,7 @@ import java.util.Map;
 import org.graduate.common.utils.DateUtils;
 import org.graduate.system.domain.*;
 import org.graduate.system.mapper.*;
-import org.graduate.system.service.IB_StudentService;
+import org.graduate.system.service.IBStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +19,16 @@ import org.springframework.stereotype.Service;
  * @date 2023-11-21
  */
 @Service
-public class B_StudentServiceImpl implements IB_StudentService
+public class BStudentServiceImpl implements IBStudentService
 {
     @Autowired
-    private B_StudentMapper b_StudentMapper;
+    private BStudentMapper b_StudentMapper;
     @Autowired
     private BCompanyMapper bCompanyMapper;
     @Autowired
     private BTeacherMapper bTeacherMapper;
     @Autowired
-    private B_ClassMapper b_classMapper;
+    private BClassMapper b_classMapper;
     @Autowired
     private BSchoolMapper bSchoolMapper;
     /**
@@ -38,7 +38,7 @@ public class B_StudentServiceImpl implements IB_StudentService
      * @return 学生管理
      */
     @Override
-    public B_Student selectB_StudentBySId(Long sId)
+    public BStudent selectB_StudentBySId(Long sId)
     {
         return b_StudentMapper.selectB_StudentBySId(sId);
     }
@@ -50,14 +50,14 @@ public class B_StudentServiceImpl implements IB_StudentService
      * @return 学生管理
      */
     @Override
-    public List<B_Student> selectB_StudentList(B_Student b_Student)
+    public List<BStudent> selectB_StudentList(BStudent b_Student)
     {
-        List<B_Student> bStudent = b_StudentMapper.selectB_StudentList(b_Student);
+        List<BStudent> bStudent = b_StudentMapper.selectB_StudentList(b_Student);
         List<Long> lists = new ArrayList<>();
         /**
          * 公司姓名
          **/
-        for(B_Student bc:bStudent) {
+        for(BStudent bc:bStudent) {
             lists.add(bc.getCompenyId());
         }
         //获取到公司列表
@@ -71,7 +71,7 @@ public class B_StudentServiceImpl implements IB_StudentService
         /**
          * 教师姓名
          **/
-        for(B_Student bc:bStudent) {
+        for(BStudent bc:bStudent) {
             lists.add(bc.getTeacherId());
         }
         //获取到教师列表
@@ -85,20 +85,20 @@ public class B_StudentServiceImpl implements IB_StudentService
         /**
          * 班级姓名
          **/
-        for(B_Student bc:bStudent) {
+        for(BStudent bc:bStudent) {
             lists.add(bc.getClassId());
         }
         //获取到班级列表
-        List<B_Class> ClassList= b_classMapper.selectBClassListCIds(lists);
+        List<BClass> ClassList= b_classMapper.selectBClassListCIds(lists);
         //将列表转换成集合
-        Map<Long,B_Class> ClassMap = new HashMap<>();
-        for(B_Class c:ClassList) {
+        Map<Long, BClass> ClassMap = new HashMap<>();
+        for(BClass c:ClassList) {
             ClassMap.put(c.getcId(),c);
         }
         /**
          * 学校姓名
          **/
-        for(B_Student bc:bStudent) {
+        for(BStudent bc:bStudent) {
             lists.add(bc.getSchoolId());
         }
         //获取学校到列表
@@ -110,7 +110,7 @@ public class B_StudentServiceImpl implements IB_StudentService
         }
 
         //将map集合中 教师名称取出 存入到list中
-        for(B_Student bc:bStudent) {
+        for(BStudent bc:bStudent) {
             bc.setTeacherName(teacherMap.get(bc.getTeacherId()).getTchrName());
             bc.setCompenyName(bCompanyMap.get(bc.getCompenyId()).getcName());
             bc.setClassName(ClassMap.get(bc.getClassId()).getcName());
@@ -126,7 +126,7 @@ public class B_StudentServiceImpl implements IB_StudentService
      * @return 结果
      */
     @Override
-    public int insertB_Student(B_Student b_Student)
+    public int insertB_Student(BStudent b_Student)
     {
         b_Student.setCreateTime(DateUtils.getNowDate());
         return b_StudentMapper.insertB_Student(b_Student);
@@ -139,7 +139,7 @@ public class B_StudentServiceImpl implements IB_StudentService
      * @return 结果
      */
     @Override
-    public int updateB_Student(B_Student b_Student)
+    public int updateB_Student(BStudent b_Student)
     {
         b_Student.setUpdateTime(DateUtils.getNowDate());
         return b_StudentMapper.updateB_Student(b_Student);

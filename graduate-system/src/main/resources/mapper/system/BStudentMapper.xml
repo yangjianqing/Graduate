@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.graduate.system.mapper.B_StudentMapper">
+<mapper namespace="org.graduate.system.mapper.BStudentMapper">
     
-    <resultMap type="B_Student" id="B_StudentResult">
+    <resultMap type="BStudent" id="B_StudentResult">
         <result property="sId"    column="s_id"    />
         <result property="sNumber"    column="s_number"    />
         <result property="sName"    column="s_name"    />
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select s_id, s_number, s_name, s_gender, school_id, compeny_id, c_status, teacher_id, class_id, create_time, update_time from b_student
     </sql>
 
-    <select id="selectB_StudentList" parameterType="B_Student" resultMap="B_StudentResult">
+    <select id="selectB_StudentList" parameterType="BStudent" resultMap="B_StudentResult">
         <include refid="selectB_StudentVo"/>
         <where>  
             <if test="sNumber != null  and sNumber != ''"> and s_number = #{sNumber}</if>
@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where s_id = #{sId}
     </select>
         
-    <insert id="insertB_Student" parameterType="B_Student" useGeneratedKeys="true" keyProperty="sId">
+    <insert id="insertB_Student" parameterType="BStudent" useGeneratedKeys="true" keyProperty="sId">
         insert into b_student
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="sNumber != null">s_number,</if>
@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateB_Student" parameterType="B_Student">
+    <update id="updateB_Student" parameterType="BStudent">
         update b_student
         <trim prefix="SET" suffixOverrides=",">
             <if test="sNumber != null">s_number = #{sNumber},</if>

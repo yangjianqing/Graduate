@@ -3,8 +3,8 @@ package org.graduate.web.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import org.graduate.system.domain.B_Student;
-import org.graduate.system.service.IB_StudentService;
+import org.graduate.system.domain.BStudent;
+import org.graduate.system.service.IBStudentService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,20 +30,20 @@ import org.graduate.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/system/student")
-public class B_StudentController extends BaseController
+public class BStudentController extends BaseController
 {
     @Autowired
-    private IB_StudentService b_StudentService;
+    private IBStudentService b_StudentService;
 
     /**
      * 查询学生管理列表
      */
     @PreAuthorize("@ss.hasPermi('system:student:list')")
     @GetMapping("/list")
-    public TableDataInfo list(B_Student b_Student)
+    public TableDataInfo list(BStudent b_Student)
     {
         startPage();
-        List<B_Student> list = b_StudentService.selectB_StudentList(b_Student);
+        List<BStudent> list = b_StudentService.selectB_StudentList(b_Student);
         return getDataTable(list);
     }
 
@@ -53,10 +53,10 @@ public class B_StudentController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:student:export')")
     @Log(title = "学生管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, B_Student b_Student)
+    public void export(HttpServletResponse response, BStudent b_Student)
     {
-        List<B_Student> list = b_StudentService.selectB_StudentList(b_Student);
-        ExcelUtil<B_Student> util = new ExcelUtil<B_Student>(B_Student.class);
+        List<BStudent> list = b_StudentService.selectB_StudentList(b_Student);
+        ExcelUtil<BStudent> util = new ExcelUtil<BStudent>(BStudent.class);
         util.exportExcel(response, list, "学生管理数据");
     }
 
@@ -76,7 +76,7 @@ public class B_StudentController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:student:add')")
     @Log(title = "学生管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody B_Student b_Student)
+    public AjaxResult add(@RequestBody BStudent b_Student)
     {
         return toAjax(b_StudentService.insertB_Student(b_Student));
     }
@@ -87,7 +87,7 @@ public class B_StudentController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:student:edit')")
     @Log(title = "学生管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody B_Student b_Student)
+    public AjaxResult edit(@RequestBody BStudent b_Student)
     {
         return toAjax(b_StudentService.updateB_Student(b_Student));
     }

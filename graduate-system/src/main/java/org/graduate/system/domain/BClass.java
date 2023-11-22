@@ -11,7 +11,7 @@ import org.graduate.common.core.domain.BaseEntity;
  * @author chuan
  * @date 2023-11-21
  */
-public class B_Class extends BaseEntity
+public class BClass extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 

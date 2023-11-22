@@ -2,7 +2,6 @@ package org.graduate.system.mapper;
 
 import java.util.List;
 import org.graduate.system.domain.BSchool;
-import org.graduate.system.domain.B_Class;
 
 /**
  * 学校管理Mapper接口

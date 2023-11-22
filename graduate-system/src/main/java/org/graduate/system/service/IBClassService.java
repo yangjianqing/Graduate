@@ -1,7 +1,7 @@
 package org.graduate.system.service;
 
 import java.util.List;
-import org.graduate.system.domain.B_Class;
+import org.graduate.system.domain.BClass;
 
 /**
  * 班级管理Service接口
@@ -9,7 +9,7 @@ import org.graduate.system.domain.B_Class;
  * @author chuan
  * @date 2023-11-21
  */
-public interface IB_ClassService 
+public interface IBClassService
 {
     /**
      * 查询班级管理
@@ -17,7 +17,7 @@ public interface IB_ClassService
      * @param cId 班级管理主键
      * @return 班级管理
      */
-    public B_Class selectB_ClassByCId(Long cId);
+    public BClass selectB_ClassByCId(Long cId);
 
     /**
      * 查询班级管理列表
@@ -25,7 +25,7 @@ public interface IB_ClassService
      * @param b_Class 班级管理
      * @return 班级管理集合
      */
-    public List<B_Class> selectB_ClassList(B_Class b_Class);
+    public List<BClass> selectB_ClassList(BClass b_Class);
 
     /**
      * 新增班级管理
@@ -33,7 +33,7 @@ public interface IB_ClassService
      * @param b_Class 班级管理
      * @return 结果
      */
-    public int insertB_Class(B_Class b_Class);
+    public int insertB_Class(BClass b_Class);
 
     /**
      * 修改班级管理
@@ -41,7 +41,7 @@ public interface IB_ClassService
      * @param b_Class 班级管理
      * @return 结果
      */
-    public int updateB_Class(B_Class b_Class);
+    public int updateB_Class(BClass b_Class);
 
     /**
      * 批量删除班级管理
