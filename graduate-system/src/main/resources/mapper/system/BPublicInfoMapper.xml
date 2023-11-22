@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.graduate.system.mapper.BPublicInfoMapper">
+    
+    <resultMap type="BPublicInfo" id="BPublicInfoResult">
+        <result property="nId"    column="n_id"    />
+        <result property="nTitle"    column="n_title"    />
+        <result property="nType"    column="n_type"    />
+        <result property="nContent"    column="n_content"    />
+        <result property="nStatus"    column="n_status"    />
+        <result property="nPeople"    column="n_people"    />
+        <result property="nTime"    column="n_time"    />
+        <result property="nMender"    column="n_mender"    />
+        <result property="nRemark"    column="n_remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectBPublicInfoVo">
+        select n_id, n_title, n_type, n_content, n_status, n_people, n_time, n_mender, n_remark, create_time, update_time from b_public_info
+    </sql>
+
+    <select id="selectBPublicInfoList" parameterType="BPublicInfo" resultMap="BPublicInfoResult">
+        <include refid="selectBPublicInfoVo"/>
+        <where>  
+            <if test="nTitle != null  and nTitle != ''"> and n_title like concat('%', #{nTitle}, '%')</if>
+            <if test="nType != null  and nType != ''"> and n_type = #{nType}</if>
+            <if test="nContent != null  and nContent != ''"> and n_content like concat('%', #{nContent}, '%')</if>
+            <if test="nPeople != null  and nPeople != ''"> and n_people like concat('%', #{nPeople}, '%')</if>
+            <if test="nTime != null "> and n_time = #{nTime}</if>
+            <if test="nMender != null  and nMender != ''"> and n_mender like concat('%', #{nMender}, '%')</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectBPublicInfoByNId" parameterType="Long" resultMap="BPublicInfoResult">
+        <include refid="selectBPublicInfoVo"/>
+        where n_id = #{nId}
+    </select>
+        
+    <insert id="insertBPublicInfo" parameterType="BPublicInfo">
+        insert into b_public_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="nId != null">n_id,</if>
+            <if test="nTitle != null">n_title,</if>
+            <if test="nType != null">n_type,</if>
+            <if test="nContent != null">n_content,</if>
+            <if test="nStatus != null">n_status,</if>
+            <if test="nPeople != null">n_people,</if>
+            <if test="nTime != null">n_time,</if>
+            <if test="nMender != null">n_mender,</if>
+            <if test="nRemark != null">n_remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="nId != null">#{nId},</if>
+            <if test="nTitle != null">#{nTitle},</if>
+            <if test="nType != null">#{nType},</if>
+            <if test="nContent != null">#{nContent},</if>
+            <if test="nStatus != null">#{nStatus},</if>
+            <if test="nPeople != null">#{nPeople},</if>
+            <if test="nTime != null">#{nTime},</if>
+            <if test="nMender != null">#{nMender},</if>
+            <if test="nRemark != null">#{nRemark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBPublicInfo" parameterType="BPublicInfo">
+        update b_public_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="nTitle != null">n_title = #{nTitle},</if>
+            <if test="nType != null">n_type = #{nType},</if>
+            <if test="nContent != null">n_content = #{nContent},</if>
+            <if test="nStatus != null">n_status = #{nStatus},</if>
+            <if test="nPeople != null">n_people = #{nPeople},</if>
+            <if test="nTime != null">n_time = #{nTime},</if>
+            <if test="nMender != null">n_mender = #{nMender},</if>
+            <if test="nRemark != null">n_remark = #{nRemark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where n_id = #{nId}
+    </update>
+
+    <delete id="deleteBPublicInfoByNId" parameterType="Long">
+        delete from b_public_info where n_id = #{nId}
+    </delete>
+
+    <delete id="deleteBPublicInfoByNIds" parameterType="String">
+        delete from b_public_info where n_id in 
+        <foreach item="nId" collection="array" open="(" separator="," close=")">
+            #{nId}
+        </foreach>
+    </delete>
+</mapper>

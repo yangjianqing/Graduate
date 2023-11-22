@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.graduate.system.mapper.BSchoolMapper">
+    
+    <resultMap type="BSchool" id="BSchoolResult">
+        <result property="sId"    column="s_id"    />
+        <result property="sName"    column="s_name"    />
+        <result property="sLogo"    column="s_logo"    />
+        <result property="sLongitude"    column="s_longitude"    />
+        <result property="sLatitude"    column="s_latitude"    />
+        <result property="sWebsite"    column="s_website"    />
+        <result property="sRector"    column="s_rector"    />
+        <result property="sConnection"    column="s_connection"    />
+        <result property="sMailbox"    column="s_mailbox"    />
+        <result property="sRemark"    column="s_remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectBSchoolVo">
+        select s_id, s_name, s_logo, s_longitude, s_latitude, s_website, s_rector, s_connection, s_mailbox, s_remark, create_time, update_time from b_school
+    </sql>
+
+    <select id="selectBSchoolList" parameterType="BSchool" resultMap="BSchoolResult">
+        <include refid="selectBSchoolVo"/>
+        <where>  
+            <if test="sId != null "> and s_id = #{sId}</if>
+            <if test="sName != null  and sName != ''"> and s_name like concat('%', #{sName}, '%')</if>
+            <if test="sRector != null  and sRector != ''"> and s_rector like concat('%', #{sRector}, '%')</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectBSchoolBySId" parameterType="Long" resultMap="BSchoolResult">
+        <include refid="selectBSchoolVo"/>
+        where s_id = #{sId}
+    </select>
+        
+    <insert id="insertBSchool" parameterType="BSchool">
+        insert into b_school
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sId != null">s_id,</if>
+            <if test="sName != null">s_name,</if>
+            <if test="sLogo != null">s_logo,</if>
+            <if test="sLongitude != null">s_longitude,</if>
+            <if test="sLatitude != null">s_latitude,</if>
+            <if test="sWebsite != null">s_website,</if>
+            <if test="sRector != null">s_rector,</if>
+            <if test="sConnection != null">s_connection,</if>
+            <if test="sMailbox != null">s_mailbox,</if>
+            <if test="sRemark != null">s_remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sId != null">#{sId},</if>
+            <if test="sName != null">#{sName},</if>
+            <if test="sLogo != null">#{sLogo},</if>
+            <if test="sLongitude != null">#{sLongitude},</if>
+            <if test="sLatitude != null">#{sLatitude},</if>
+            <if test="sWebsite != null">#{sWebsite},</if>
+            <if test="sRector != null">#{sRector},</if>
+            <if test="sConnection != null">#{sConnection},</if>
+            <if test="sMailbox != null">#{sMailbox},</if>
+            <if test="sRemark != null">#{sRemark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBSchool" parameterType="BSchool">
+        update b_school
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sName != null">s_name = #{sName},</if>
+            <if test="sLogo != null">s_logo = #{sLogo},</if>
+            <if test="sLongitude != null">s_longitude = #{sLongitude},</if>
+            <if test="sLatitude != null">s_latitude = #{sLatitude},</if>
+            <if test="sWebsite != null">s_website = #{sWebsite},</if>
+            <if test="sRector != null">s_rector = #{sRector},</if>
+            <if test="sConnection != null">s_connection = #{sConnection},</if>
+            <if test="sMailbox != null">s_mailbox = #{sMailbox},</if>
+            <if test="sRemark != null">s_remark = #{sRemark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where s_id = #{sId}
+    </update>
+
+    <delete id="deleteBSchoolBySId" parameterType="Long">
+        delete from b_school where s_id = #{sId}
+    </delete>
+
+    <delete id="deleteBSchoolBySIds" parameterType="String">
+        delete from b_school where s_id in 
+        <foreach item="sId" collection="array" open="(" separator="," close=")">
+            #{sId}
+        </foreach>
+    </delete>
+</mapper>
