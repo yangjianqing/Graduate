@@ -19,6 +19,16 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="公告状态" prop="nStatus">
+        <el-select v-model="queryParams.nStatus" placeholder="请选择公告状态(0 正常；1 关闭)" clearable>
+          <el-option
+            v-for="dict in dict.type.sys_notice_status"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="创建者" prop="nPeople">
         <el-input
           v-model="queryParams.nPeople"
@@ -27,36 +37,13 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="创建时间" prop="nTime">
-        <el-date-picker clearable
-          v-model="queryParams.nTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择创建时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="更新者" prop="nMender">
-        <el-input
-          v-model="queryParams.nMender"
-          placeholder="请输入更新者"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="添加时间" prop="createTime">
+
+      <el-form-item label="创建时间" prop="createTime">
         <el-date-picker clearable
           v-model="queryParams.createTime"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择添加时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="修改时间" prop="updateTime">
-        <el-date-picker clearable
-          v-model="queryParams.updateTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择最后修改时间">
+          placeholder="请选择创建时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -127,13 +114,19 @@
         </template>
       </el-table-column>
       <el-table-column label="创建者" align="center" prop="nPeople" />
-      <el-table-column label="创建时间" align="center" prop="nTime" width="180">
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.nTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="更新者" align="center" prop="nMender" />
       <el-table-column label="备注" align="center" prop="nRemark" />
+
+      <el-table-column label="最后修改时间" align="center" prop="updateTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -143,19 +136,6 @@
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:info:edit']"
           >修改</el-button>
-
-
-<!--          <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['system:info:query', 'system:info:remove']">-->
-<!--            <span class="el-dropdown-link">-->
-<!--              <i class="el-icon-d-arrow-right el-icon&#45;&#45;right"></i>更多-->
-<!--            </span>-->
-<!--            <el-dropdown-menu slot="dropdown">-->
-<!--              <el-dropdown-item command="handleView" icon="el-icon-view"-->
-<!--                                v-hasPermi="['system:info:query']">详情</el-dropdown-item>-->
-<!--              <el-dropdown-item command="handleDelete" icon="el-icon-delete"-->
-<!--                                v-hasPermi="['system:info:remove']">删除</el-dropdown-item>-->
-<!--            </el-dropdown-menu>-->
-<!--          </el-dropdown>-->
 
           <el-button
             size="mini"
@@ -206,14 +186,6 @@
         </el-form-item>
         <el-form-item label="创建者" prop="nPeople">
           <el-input v-model="form.nPeople" placeholder="请输入创建者" />
-        </el-form-item>
-        <el-form-item label="创建时间" prop="nTime">
-          <el-date-picker clearable
-            v-model="form.nTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择创建时间">
-          </el-date-picker>
         </el-form-item>
         <el-form-item label="更新者" prop="nMender">
           <el-input v-model="form.nMender" placeholder="请输入更新者" />

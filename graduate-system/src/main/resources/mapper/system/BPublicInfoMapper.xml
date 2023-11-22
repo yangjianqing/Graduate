@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.graduate.system.mapper.BPublicInfoMapper">
-    
+
     <resultMap type="BPublicInfo" id="BPublicInfoResult">
         <result property="nId"    column="n_id"    />
         <result property="nTitle"    column="n_title"    />
@@ -24,23 +24,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectBPublicInfoList" parameterType="BPublicInfo" resultMap="BPublicInfoResult">
         <include refid="selectBPublicInfoVo"/>
-        <where>  
+        <where>
             <if test="nTitle != null  and nTitle != ''"> and n_title like concat('%', #{nTitle}, '%')</if>
             <if test="nType != null  and nType != ''"> and n_type = #{nType}</if>
             <if test="nContent != null  and nContent != ''"> and n_content like concat('%', #{nContent}, '%')</if>
+            <if test="nStatus != null  and nStatus != ''"> and n_status = #{nStatus}</if>
             <if test="nPeople != null  and nPeople != ''"> and n_people like concat('%', #{nPeople}, '%')</if>
             <if test="nTime != null "> and n_time = #{nTime}</if>
             <if test="nMender != null  and nMender != ''"> and n_mender like concat('%', #{nMender}, '%')</if>
-            <if test="createTime != null "> and create_time = #{createTime}</if>
-            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="nRemark != null  and nRemark != ''"> and n_remark = #{nRemark}</if>
         </where>
     </select>
-    
+
     <select id="selectBPublicInfoByNId" parameterType="Long" resultMap="BPublicInfoResult">
         <include refid="selectBPublicInfoVo"/>
         where n_id = #{nId}
     </select>
-        
+
     <insert id="insertBPublicInfo" parameterType="BPublicInfo">
         insert into b_public_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="nRemark != null">n_remark,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="nId != null">#{nId},</if>
             <if test="nTitle != null">#{nTitle},</if>
@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="nRemark != null">#{nRemark},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateBPublicInfo" parameterType="BPublicInfo">
@@ -93,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteBPublicInfoByNIds" parameterType="String">
-        delete from b_public_info where n_id in 
+        delete from b_public_info where n_id in
         <foreach item="nId" collection="array" open="(" separator="," close=")">
             #{nId}
         </foreach>

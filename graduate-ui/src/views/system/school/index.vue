@@ -1,14 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-<!--      <el-form-item label="学校ID(key)" prop="sId">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.sId"-->
-<!--          placeholder="请输入学校ID(key)"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
+
       <el-form-item label="学校名称" prop="sName">
         <el-input
           v-model="queryParams.sName"
@@ -25,12 +18,12 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="添加时间" prop="createTime">
+      <el-form-item label="创建时间" prop="createTime">
         <el-date-picker clearable
           v-model="queryParams.createTime"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择添加时间">
+          placeholder="请选择创建时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item label="修改时间" prop="updateTime">
@@ -95,7 +88,7 @@
 
     <el-table v-loading="loading" :data="schoolList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="学校ID(key)" align="center" prop="sId" />
+      <el-table-column label="学校ID" align="center" prop="sId" />
       <el-table-column label="学校名称" align="center" prop="sName" />
       <el-table-column label="学校Logo" align="center" prop="sLogo" width="100">
         <template slot-scope="scope">
@@ -106,9 +99,19 @@
       <el-table-column label="学校纬度" align="center" prop="sLatitude" />
       <el-table-column label="学校官网" align="center" prop="sWebsite" />
       <el-table-column label="学校校长" align="center" prop="sRector" />
-      <el-table-column label="学校联系方式" align="center" prop="sConnection" />
+      <el-table-column label="联系方式" align="center" prop="sConnection" />
       <el-table-column label="学校邮箱" align="center" prop="sMailbox" />
       <el-table-column label="学校备注" align="center" prop="sRemark" />
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="最后修改时间" align="center" prop="updateTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -159,7 +162,7 @@
         <el-form-item label="学校校长" prop="sRector">
           <el-input v-model="form.sRector" placeholder="请输入学校校长" />
         </el-form-item>
-        <el-form-item label="学校联系方式" prop="sConnection">
+        <el-form-item label="联系方式" prop="sConnection">
           <el-input v-model="form.sConnection" placeholder="请输入学校联系方式" />
         </el-form-item>
         <el-form-item label="学校邮箱" prop="sMailbox">

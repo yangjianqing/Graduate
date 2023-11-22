@@ -1,4 +1,4 @@
-package org.graduate.web.controller.system;
+package org.graduate.web.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
