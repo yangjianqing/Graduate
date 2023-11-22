@@ -13,10 +13,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="cPhone"    column="c_phone"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
+        <result property="cLongitude"    column="c_longitude"    />
+        <result property="cLatitude"    column="c_latitude"    />
     </resultMap>
 
     <sql id="selectBCompanyVo">
-        select c_id, c_name, c_data, c_type, c_address, c_phone, create_time, update_time from b_company
+        select c_id, c_name, c_data, c_type, c_address, c_phone, create_time, update_time, c_longitude, c_latitude from b_company
     </sql>
 
     <select id="selectBCompanyList" parameterType="BCompany" resultMap="BCompanyResult">
@@ -35,17 +37,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectBClassListCIds" resultMap="BCompanyResult" parameterType="list">
-        <include refid="selectBCompanyVo"/>
-        where c_id in
-        <foreach item="ClassIds" collection="list" open="(" separator="," close=")">
-            #{ClassIds}
-        </foreach>
+    <include refid="selectBCompanyVo"/>
+    where c_id in
+    <foreach item="ClassIds" collection="list" open="(" separator="," close=")">
+        #{ClassIds}
+    </foreach>
     </select>
 
-    <insert id="insertBCompany" parameterType="BCompany">
+
+    <insert id="insertBCompany" parameterType="BCompany" useGeneratedKeys="true" keyProperty="cId">
         insert into b_company
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="cId != null">c_id,</if>
             <if test="cName != null">c_name,</if>
             <if test="cData != null">c_data,</if>
             <if test="cType != null">c_type,</if>
@@ -53,9 +55,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cPhone != null">c_phone,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
+            <if test="cLongitude != null">c_longitude,</if>
+            <if test="cLatitude != null">c_latitude,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="cId != null">#{cId},</if>
             <if test="cName != null">#{cName},</if>
             <if test="cData != null">#{cData},</if>
             <if test="cType != null">#{cType},</if>
@@ -63,6 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cPhone != null">#{cPhone},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
+            <if test="cLongitude != null">#{cLongitude},</if>
+            <if test="cLatitude != null">#{cLatitude},</if>
          </trim>
     </insert>
 
@@ -76,6 +81,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cPhone != null">c_phone = #{cPhone},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="cLongitude != null">c_longitude = #{cLongitude},</if>
+            <if test="cLatitude != null">c_latitude = #{cLatitude},</if>
         </trim>
         where c_id = #{cId}
     </update>

@@ -2,13 +2,12 @@ package org.graduate.system.mapper;
 
 import java.util.List;
 import org.graduate.system.domain.BCompany;
-import org.graduate.system.domain.BTeacher;
 
 /**
  * 公司管理Mapper接口
  * 
  * @author ruoyi
- * @date 2023-11-20
+ * @date 2023-11-22
  */
 public interface BCompanyMapper 
 {
@@ -66,4 +65,6 @@ public interface BCompanyMapper
      * @return
      */
     List<BCompany> selectBClassListCIds(List<Long> ClassIds);
+
+
 }

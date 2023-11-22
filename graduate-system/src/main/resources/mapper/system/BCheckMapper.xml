@@ -11,12 +11,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="ckAddress"    column="ck_address"    />
         <result property="ckLongitude"    column="ck_longitude"    />
         <result property="ckLatitude"    column="ck_latitude"    />
-        <result property="sId"    column="s_id"    />
+        <result property="bClass"    column="b_class"    />
         <result property="ckTpye"    column="ck_tpye"    />
     </resultMap>
 
     <sql id="selectBCheckVo">
-        select ck_id, ck_name, ck_time, ck_address, ck_longitude, ck_latitude, s_id, ck_tpye from b_check
+        select ck_id, ck_name, ck_time, ck_address, ck_longitude, ck_latitude, b_class, ck_tpye from b_check
     </sql>
 
     <select id="selectBCheckList" parameterType="BCheck" resultMap="BCheckResult">
@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ckName != null  and ckName != ''"> and ck_name like concat('%', #{ckName}, '%')</if>
             <if test="ckTime != null "> and ck_time = #{ckTime}</if>
             <if test="ckAddress != null  and ckAddress != ''"> and ck_address = #{ckAddress}</if>
+            <if test="bClass != null "> and b_class = #{bClass}</if>
             <if test="ckTpye != null  and ckTpye != ''"> and ck_tpye = #{ckTpye}</if>
         </where>
     </select>
@@ -42,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ckAddress != null">ck_address,</if>
             <if test="ckLongitude != null">ck_longitude,</if>
             <if test="ckLatitude != null">ck_latitude,</if>
-            <if test="sId != null">s_id,</if>
+            <if test="bClass != null">b_class,</if>
             <if test="ckTpye != null">ck_tpye,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -51,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ckAddress != null">#{ckAddress},</if>
             <if test="ckLongitude != null">#{ckLongitude},</if>
             <if test="ckLatitude != null">#{ckLatitude},</if>
-            <if test="sId != null">#{sId},</if>
+            <if test="bClass != null">#{bClass},</if>
             <if test="ckTpye != null">#{ckTpye},</if>
          </trim>
     </insert>
@@ -64,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ckAddress != null">ck_address = #{ckAddress},</if>
             <if test="ckLongitude != null">ck_longitude = #{ckLongitude},</if>
             <if test="ckLatitude != null">ck_latitude = #{ckLatitude},</if>
-            <if test="sId != null">s_id = #{sId},</if>
+            <if test="bClass != null">b_class = #{bClass},</if>
             <if test="ckTpye != null">ck_tpye = #{ckTpye},</if>
         </trim>
         where ck_id = #{ckId}

@@ -25,7 +25,7 @@ import org.graduate.common.core.page.TableDataInfo;
  * 公司管理Controller
  * 
  * @author ruoyi
- * @date 2023-11-20
+ * @date 2023-11-22
  */
 @RestController
 @RequestMapping("/system/company")

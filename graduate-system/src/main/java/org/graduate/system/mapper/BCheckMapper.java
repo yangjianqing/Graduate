@@ -7,7 +7,7 @@ import org.graduate.system.domain.BCheck;
  * 签到Mapper接口
  * 
  * @author ruoyi
- * @date 2023-11-20
+ * @date 2023-11-22
  */
 public interface BCheckMapper 
 {

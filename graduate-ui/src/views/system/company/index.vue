@@ -113,6 +113,8 @@
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="经度" align="center" prop="cLongitude" />
+      <el-table-column label="纬度" align="center" prop="cLatitude" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -132,7 +134,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -170,6 +172,12 @@
         </el-form-item>
         <el-form-item label="联系方式" prop="cPhone">
           <el-input v-model="form.cPhone" placeholder="请输入联系方式" />
+        </el-form-item>
+        <el-form-item label="经度" prop="cLongitude">
+          <el-input v-model="form.cLongitude" placeholder="请输入经度" />
+        </el-form-item>
+        <el-form-item label="纬度" prop="cLatitude">
+          <el-input v-model="form.cLatitude" placeholder="请输入纬度" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -250,7 +258,9 @@ export default {
         cAddress: null,
         cPhone: null,
         createTime: null,
-        updateTime: null
+        updateTime: null,
+        cLongitude: null,
+        cLatitude: null
       };
       this.resetForm("form");
     },

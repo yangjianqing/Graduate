@@ -1,7 +1,13 @@
 package org.graduate.system.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.graduate.common.utils.DateUtils;
+import org.graduate.system.domain.BClass;
+import org.graduate.system.mapper.BClassMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.graduate.system.mapper.BCompanyMapper;
@@ -12,7 +18,7 @@ import org.graduate.system.service.IBCompanyService;
  * 公司管理Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-11-20
+ * @date 2023-11-22
  */
 @Service
 public class BCompanyServiceImpl implements IBCompanyService 
@@ -41,6 +47,29 @@ public class BCompanyServiceImpl implements IBCompanyService
     @Override
     public List<BCompany> selectBCompanyList(BCompany bCompany)
     {
+//        /**
+//         * 班级姓名
+//         **/
+//        List<BCompany> bStudent = bCompanyMapper.selectBCompanyList(bCompany);
+//        List<Long> lists = new ArrayList<>();
+//
+//
+//        for(BCompany bc:bStudent) {
+//            lists.add(bc.getcId());
+//        }
+//        //获取到班级列表
+//        List<BClass> ClassList= bClassMapper.selectBClassListCIds(lists);
+//        //将列表转换成集合
+//        Map<Long, BClass> ClassMap = new HashMap<>();
+//        for(BClass c:ClassList) {
+//            ClassMap.put(c.getcId(),c);
+//        }
+//
+//        //将map集合中 教师名称取出 存入到list中
+//        for(BCompany bc:bStudent) {bc.setClassName(ClassMap.get(bc.getClassId()).getcName());}
+//
+//        return bStudent;
+
         return bCompanyMapper.selectBCompanyList(bCompany);
     }
 

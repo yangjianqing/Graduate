@@ -1,5 +1,6 @@
 package org.graduate.system.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,7 +12,7 @@ import org.graduate.common.core.domain.BaseEntity;
  * 公司管理对象 b_company
  * 
  * @author ruoyi
- * @date 2023-11-20
+ * @date 2023-11-22
  */
 public class BCompany extends BaseEntity
 {
@@ -40,6 +41,14 @@ public class BCompany extends BaseEntity
     /** 联系方式 */
     @Excel(name = "联系方式")
     private String cPhone;
+
+    /** 经度 */
+    @Excel(name = "经度")
+    private BigDecimal cLongitude;
+
+    /** 纬度 */
+    @Excel(name = "纬度")
+    private BigDecimal cLatitude;
 
     public void setcId(Long cId) 
     {
@@ -95,6 +104,24 @@ public class BCompany extends BaseEntity
     {
         return cPhone;
     }
+    public void setcLongitude(BigDecimal cLongitude) 
+    {
+        this.cLongitude = cLongitude;
+    }
+
+    public BigDecimal getcLongitude() 
+    {
+        return cLongitude;
+    }
+    public void setcLatitude(BigDecimal cLatitude) 
+    {
+        this.cLatitude = cLatitude;
+    }
+
+    public BigDecimal getcLatitude() 
+    {
+        return cLatitude;
+    }
 
     @Override
     public String toString() {
@@ -107,6 +134,8 @@ public class BCompany extends BaseEntity
             .append("cPhone", getcPhone())
             .append("createTime", getCreateTime())
             .append("updateTime", getUpdateTime())
+            .append("cLongitude", getcLongitude())
+            .append("cLatitude", getcLatitude())
             .toString();
     }
 }

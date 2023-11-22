@@ -7,7 +7,7 @@ import org.graduate.system.domain.BCompany;
  * 公司管理Service接口
  * 
  * @author ruoyi
- * @date 2023-11-20
+ * @date 2023-11-22
  */
 public interface IBCompanyService 
 {
