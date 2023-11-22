@@ -36,6 +36,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where c_id = #{cId}
     </select>
 
+    <select id="selectBCompanyAll"  resultMap="BCompanyResult">
+        <include refid="selectBCompanyVo"/>
+
+    </select>
+
     <select id="selectBClassListCIds" resultMap="BCompanyResult" parameterType="list">
     <include refid="selectBCompanyVo"/>
     where c_id in

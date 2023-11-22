@@ -2,6 +2,8 @@ package org.graduate.web.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import org.graduate.system.service.IBTeacherService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +35,8 @@ public class BClassController extends BaseController
 {
     @Autowired
     private IBClassService b_ClassService;
-
+    @Autowired
+    private IBTeacherService ibTeacherService;
     /**
      * 查询班级管理列表
      */
@@ -66,7 +69,10 @@ public class BClassController extends BaseController
     @GetMapping(value = "/{cId}")
     public AjaxResult getInfo(@PathVariable("cId") Long cId)
     {
-        return AjaxResult.success(b_ClassService.selectB_ClassByCId(cId));
+        AjaxResult success = AjaxResult.success(b_ClassService.selectB_ClassByCId(cId));
+        success.put("teachers",ibTeacherService.selectBTeacherAll());
+        return success;
+
     }
 
     /**

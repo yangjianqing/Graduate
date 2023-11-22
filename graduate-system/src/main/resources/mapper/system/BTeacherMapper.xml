@@ -45,6 +45,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </select>
 
+    <select id="selectBTeacherAll"  resultMap="BTeacherResult">
+        <include refid="selectBTeacherVo"/>
+
+    </select>
+
     <insert id="insertBTeacher" parameterType="BTeacher" useGeneratedKeys="true" keyProperty="tchrId">
         insert into b_teacher
         <trim prefix="(" suffix=")" suffixOverrides=",">

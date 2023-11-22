@@ -122,4 +122,9 @@ public class BCompanyServiceImpl implements IBCompanyService
     {
         return bCompanyMapper.deleteBCompanyByCId(cId);
     }
+
+    @Override
+    public List<BCompany> selectBCompanyAll() {
+        return bCompanyMapper.selectBCompanyAll();
+    }
 }

@@ -1,6 +1,8 @@
 package org.graduate.system.service;
 
 import java.util.List;
+
+import org.graduate.system.domain.BCompany;
 import org.graduate.system.domain.BTeacher;
 
 /**
@@ -58,4 +60,10 @@ public interface IBTeacherService
      * @return 结果
      */
     public int deleteBTeacherByTchrId(Long tchrId);
+
+    /**
+     * 查询所有老师
+     * @return
+     */
+    public List<BTeacher> selectBTeacherAll();
 }

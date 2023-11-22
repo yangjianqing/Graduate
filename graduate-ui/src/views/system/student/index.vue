@@ -169,9 +169,18 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="公司" prop="compenyId">
-          <el-input v-model="form.compenyId" placeholder="请输入公司" />
+
+        <el-form-item label="公司">
+          <el-select v-model="form.companys" multiple placeholder="请选择公司">
+            <el-option
+              v-for="item in companys"
+              :key="item.cId"
+              :label="item.cName"
+              :value="item.cId"
+            ></el-option>
+          </el-select>
         </el-form-item>
+
         <el-form-item label="就业状态">
           <el-radio-group v-model="form.cStatus">
             <el-radio
@@ -181,12 +190,29 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="辅导员" prop="teacherId">
-          <el-input v-model="form.teacherId" placeholder="请输入辅导员" />
+
+        <el-form-item label="辅导员">
+          <el-select v-model="form.teachers" multiple placeholder="请选择辅导员">
+            <el-option
+              v-for="item in teachers"
+              :key="item.tchrId"
+              :label="item.tchrName"
+              :value="item.tchrId"
+            ></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="班级" prop="classId">
-          <el-input v-model="form.classId" placeholder="请输入班级" />
+
+        <el-form-item label="班级">
+          <el-select v-model="form.clasei" multiple placeholder="请选择班级">
+            <el-option
+              v-for="item in clasei"
+              :key="item.cId"
+              :label="item.cName"
+              :value="item.cId"
+            ></el-option>
+          </el-select>
         </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -220,6 +246,12 @@ export default {
       studentList: [],
       // 弹出层标题
       title: "",
+      //公司列表
+      companys:[],
+      //辅导员列表
+      teachers:[],
+      //班級列表
+      clasei:[],
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -328,6 +360,9 @@ export default {
       this.reset();
       const sId = row.sId || this.ids
       getStudent(sId).then(response => {
+        this.companys=response.companys;
+        this.teachers=response.teachers;
+        this.clasei=response.clasei;
         this.form = response.data;
         this.open = true;
         this.title = "修改学生管理";

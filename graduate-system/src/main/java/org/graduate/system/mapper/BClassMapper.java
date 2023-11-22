@@ -67,4 +67,10 @@ public interface BClassMapper
      * @return
      */
     List<BClass> selectBClassListCIds(List<Long> ClassIds);
+
+    /**
+     * 查询所有班級
+     * @return
+     */
+    public List<BClass> selectBClassAll();
 }

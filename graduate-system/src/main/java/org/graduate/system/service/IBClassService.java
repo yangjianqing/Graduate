@@ -2,6 +2,7 @@ package org.graduate.system.service;
 
 import java.util.List;
 import org.graduate.system.domain.BClass;
+import org.graduate.system.domain.BTeacher;
 
 /**
  * 班级管理Service接口
@@ -58,4 +59,10 @@ public interface IBClassService
      * @return 结果
      */
     public int deleteB_ClassByCId(Long cId);
+
+    /**
+     * 查询所有班級
+     * @return
+     */
+    public List<BClass> selectBClassAll();
 }

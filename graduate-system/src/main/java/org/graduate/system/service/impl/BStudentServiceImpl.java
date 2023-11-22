@@ -109,7 +109,7 @@ public class BStudentServiceImpl implements IBStudentService
             SchoolMap.put(b.getsId(),b);
         }
 
-        //将map集合中 教师名称取出 存入到list中
+        //将map集合中 将名称取出 存入到list中
         for(BStudent bc:bStudent) {
             bc.setTeacherName(teacherMap.get(bc.getTeacherId()).getTchrName());
             bc.setCompenyName(bCompanyMap.get(bc.getCompenyId()).getcName());

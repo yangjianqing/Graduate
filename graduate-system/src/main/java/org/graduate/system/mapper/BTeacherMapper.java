@@ -65,4 +65,10 @@ public interface BTeacherMapper
      * @return
      */
     List<BTeacher> selectBTeacherListById(List<Long> tchrIds);
+
+    /**
+     * 查询所有老师
+     * @return
+     */
+    public List<BTeacher> selectBTeacherAll();
 }

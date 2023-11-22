@@ -118,4 +118,9 @@ public class BClassServiceImpl implements IBClassService
     {
         return b_ClassMapper.deleteB_ClassByCId(cId);
     }
+
+    @Override
+    public List<BClass> selectBClassAll() {
+        return b_ClassMapper.selectBClassAll();
+    }
 }

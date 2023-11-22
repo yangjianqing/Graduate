@@ -65,6 +65,11 @@ public interface BCompanyMapper
      * @return
      */
     List<BCompany> selectBClassListCIds(List<Long> ClassIds);
+    /**
+     * 查询所有公司
+     * @return
+     */
+    public List<BCompany> selectBCompanyAll();
 
 
 }

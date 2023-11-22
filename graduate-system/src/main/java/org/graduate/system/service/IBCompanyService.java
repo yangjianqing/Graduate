@@ -58,4 +58,10 @@ public interface IBCompanyService
      * @return 结果
      */
     public int deleteBCompanyByCId(Long cId);
+
+    /**
+     * 查询所有公司
+     * @return
+     */
+    public List<BCompany> selectBCompanyAll();
 }

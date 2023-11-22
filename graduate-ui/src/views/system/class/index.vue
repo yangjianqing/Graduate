@@ -137,8 +137,15 @@
         <el-form-item label="班级名称" prop="cName">
           <el-input v-model="form.cName" placeholder="请输入班级名称" />
         </el-form-item>
-        <el-form-item label="辅导员" prop="teacherId">
-          <el-input v-model="form.teacherId" placeholder="请输入辅导员" />
+        <el-form-item label="辅导员">
+          <el-select v-model="form.teachers" multiple placeholder="请选择辅导员">
+            <el-option
+              v-for="item in teachers"
+              :key="item.tchrId"
+              :label="item.tchrName"
+              :value="item.tchrId"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="手机号码" prop="cPhone">
           <el-input v-model="form.cPhone" placeholder="请输入手机号码" />
@@ -176,6 +183,8 @@ export default {
       total: 0,
       // 班级管理表格数据
       classList: [],
+      //老師列表
+      teachers: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -271,6 +280,7 @@ export default {
       const cId = row.cId || this.ids
       getClass(cId).then(response => {
         this.form = response.data;
+        this.teachers=response.teachers;
         this.open = true;
         this.title = "修改班级管理";
       });
