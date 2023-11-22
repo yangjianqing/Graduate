@@ -27,6 +27,16 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="学校" prop="schoolId">
+        <el-input
+          v-model="queryParams.schoolId"
+          placeholder="请输入学校"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+
+
+      </el-form-item>
       <el-form-item label="就业状态" prop="cStatus">
         <el-select v-model="queryParams.cStatus" placeholder="请选择就业状态" clearable>
           <el-option
@@ -165,7 +175,7 @@
             <el-radio
               v-for="dict in dict.type.b_gender"
               :key="dict.value"
-:label="parseInt(dict.value)"
+              :label="parseInt(dict.value)"
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
@@ -181,12 +191,23 @@
           </el-select>
         </el-form-item>
 
+        <el-form-item label="学校">
+          <el-select v-model="form.schools" multiple placeholder="请选择学校">
+            <el-option
+              v-for="item in schools"
+              :key="item.sId"
+              :label="item.sName"
+              :value="item.sId"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item label="就业状态">
           <el-radio-group v-model="form.cStatus">
             <el-radio
               v-for="dict in dict.type.c_status"
               :key="dict.value"
-:label="parseInt(dict.value)"
+              :label="parseInt(dict.value)"
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
@@ -212,7 +233,6 @@
             ></el-option>
           </el-select>
         </el-form-item>
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -252,6 +272,8 @@ export default {
       teachers:[],
       //班級列表
       clasei:[],
+      //学校列表
+      schools: [],
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -269,30 +291,6 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        sName: [
-          { required: true, message: "学生姓名不能为空", trigger: "blur" }
-        ],
-        sGender: [
-          { required: true, message: "性别不能为空", trigger: "blur" }
-        ],
-        schoolId: [
-          { required: true, message: "学校不能为空", trigger: "change" }
-        ],
-        compenyId: [
-          { required: true, message: "公司不能为空", trigger: "blur" }
-        ],
-        cStatus: [
-          { required: true, message: "就业状态不能为空", trigger: "blur" }
-        ],
-        teacherId: [
-          { required: true, message: "辅导员不能为空", trigger: "blur" }
-        ],
-        classId: [
-          { required: true, message: "班级不能为空", trigger: "blur" }
-        ],
-        createTime: [
-          { required: true, message: "创建时间不能为空", trigger: "blur" }
-        ],
       }
     };
   },
@@ -353,8 +351,6 @@ export default {
       this.open = true;
       this.title = "添加学生管理";
     },
-
-
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
@@ -363,13 +359,12 @@ export default {
         this.companys=response.companys;
         this.teachers=response.teachers;
         this.clasei=response.clasei;
+        this.schools=response.schools;
         this.form = response.data;
         this.open = true;
         this.title = "修改学生管理";
       });
     },
-
-
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {

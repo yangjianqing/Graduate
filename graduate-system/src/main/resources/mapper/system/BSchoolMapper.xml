@@ -47,6 +47,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </select>
 
+    <select id="selectBSchoolAll"  resultMap="BSchoolResult">
+        <include refid="selectBSchoolVo"/>
+
+    </select>
+
     <insert id="insertBSchool" parameterType="BSchool">
         insert into b_school
         <trim prefix="(" suffix=")" suffixOverrides=",">

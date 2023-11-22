@@ -4,10 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.graduate.system.domain.BStudent;
-import org.graduate.system.service.IBClassService;
-import org.graduate.system.service.IBCompanyService;
-import org.graduate.system.service.IBStudentService;
-import org.graduate.system.service.IBTeacherService;
+import org.graduate.system.service.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +40,8 @@ public class BStudentController extends BaseController
     private IBTeacherService ibTeacherService;
     @Autowired
     private IBClassService ibClassService;
+    @Autowired
+    private IBSchoolService ibSchoolService;
     /**
      * 查询学生管理列表
      */
@@ -79,6 +78,7 @@ public class BStudentController extends BaseController
         success.put("companys",iBCompanyService.selectBCompanyAll());
         success.put("teachers",ibTeacherService.selectBTeacherAll());
         success.put("clasei",ibClassService.selectBClassAll());
+        success.put("schools",ibSchoolService.selectBSchoolAll());
         return success;
     }
 

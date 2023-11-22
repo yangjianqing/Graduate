@@ -64,4 +64,10 @@ public interface BSchoolMapper
      * @return
      */
     List<BSchool> selectBSchoolListSIds(List<Long> SchoolIds);
+
+    /**
+     * 查询所有学校
+     * @return
+     */
+    public List<BSchool> selectBSchoolAll();
 }

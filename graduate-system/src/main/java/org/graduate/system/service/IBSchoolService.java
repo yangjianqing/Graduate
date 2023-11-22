@@ -1,6 +1,8 @@
 package org.graduate.system.service;
 
 import java.util.List;
+
+import org.graduate.system.domain.BClass;
 import org.graduate.system.domain.BSchool;
 
 /**
@@ -58,4 +60,10 @@ public interface IBSchoolService
      * @return 结果
      */
     public int deleteBSchoolBySId(Long sId);
+
+    /**
+     * 查询所有学校
+     * @return
+     */
+    public List<BSchool> selectBSchoolAll();
 }

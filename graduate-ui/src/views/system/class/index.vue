@@ -27,10 +27,10 @@
       </el-form-item>
       <el-form-item label="创建时间" prop="createTime">
         <el-date-picker clearable
-          v-model="queryParams.createTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择创建时间">
+                        v-model="queryParams.createTime"
+                        type="date"
+                        value-format="yyyy-MM-dd"
+                        placeholder="请选择创建时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -137,6 +137,7 @@
         <el-form-item label="班级名称" prop="cName">
           <el-input v-model="form.cName" placeholder="请输入班级名称" />
         </el-form-item>
+
         <el-form-item label="辅导员">
           <el-select v-model="form.teachers" multiple placeholder="请选择辅导员">
             <el-option
@@ -147,12 +148,22 @@
             ></el-option>
           </el-select>
         </el-form-item>
+
         <el-form-item label="手机号码" prop="cPhone">
           <el-input v-model="form.cPhone" placeholder="请输入手机号码" />
         </el-form-item>
-        <el-form-item label="班级人数" prop="cCount">
-          <el-input v-model="form.cCount" placeholder="请输入班级人数" />
+
+        <el-form-item label="班级">
+          <el-select v-model="form.clasei" multiple placeholder="请选择班级">
+            <el-option
+              v-for="item in clasei"
+              :key="item.cId"
+              :label="item.cName"
+              :value="item.cId"
+            ></el-option>
+          </el-select>
         </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -181,10 +192,12 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
+      //老师列表
+      teachers:[],
+      //班级列表
+      clasei:[],
       // 班级管理表格数据
       classList: [],
-      //老師列表
-      teachers: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -202,21 +215,6 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        cName: [
-          { required: true, message: "班级名称不能为空", trigger: "blur" }
-        ],
-        teacherId: [
-          { required: true, message: "辅导员不能为空", trigger: "blur" }
-        ],
-        cPhone: [
-          { required: true, message: "手机号码不能为空", trigger: "blur" }
-        ],
-        cCount: [
-          { required: true, message: "班级人数不能为空", trigger: "blur" }
-        ],
-        createTime: [
-          { required: true, message: "创建时间不能为空", trigger: "blur" }
-        ],
       }
     };
   },
@@ -281,6 +279,7 @@ export default {
       getClass(cId).then(response => {
         this.form = response.data;
         this.teachers=response.teachers;
+        this.clasei=response.clasei;
         this.open = true;
         this.title = "修改班级管理";
       });

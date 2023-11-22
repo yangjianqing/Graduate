@@ -93,4 +93,9 @@ public class BSchoolServiceImpl implements IBSchoolService
     {
         return bSchoolMapper.deleteBSchoolBySId(sId);
     }
+
+    @Override
+    public List<BSchool> selectBSchoolAll() {
+        return bSchoolMapper.selectBSchoolAll();
+    }
 }

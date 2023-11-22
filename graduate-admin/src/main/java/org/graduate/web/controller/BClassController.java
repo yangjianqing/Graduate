@@ -37,6 +37,8 @@ public class BClassController extends BaseController
     private IBClassService b_ClassService;
     @Autowired
     private IBTeacherService ibTeacherService;
+    @Autowired
+    private IBClassService ibClassService;
     /**
      * 查询班级管理列表
      */
@@ -71,6 +73,7 @@ public class BClassController extends BaseController
     {
         AjaxResult success = AjaxResult.success(b_ClassService.selectB_ClassByCId(cId));
         success.put("teachers",ibTeacherService.selectBTeacherAll());
+        success.put("clasei",ibClassService.selectBClassAll());
         return success;
 
     }
