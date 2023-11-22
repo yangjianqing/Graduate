@@ -95,10 +95,6 @@ public class B_StudentServiceImpl implements IB_StudentService
         for(B_Class c:ClassList) {
             ClassMap.put(c.getcId(),c);
         }
-        //将map集合中 班级名称取出 存入到list中
-        for(B_Student bc:bStudent) {
-            bc.setClassName(ClassMap.get(bc.getClassId()).getcName());
-        }
         /**
          * 学校姓名
          **/
@@ -117,6 +113,7 @@ public class B_StudentServiceImpl implements IB_StudentService
         for(B_Student bc:bStudent) {
             bc.setTeacherName(teacherMap.get(bc.getTeacherId()).getTchrName());
             bc.setCompenyName(bCompanyMap.get(bc.getCompenyId()).getcName());
+            bc.setClassName(ClassMap.get(bc.getClassId()).getcName());
             bc.setSchoolName(SchoolMap.get(bc.getSchoolId()).getsName());
         }
         return bStudent;
