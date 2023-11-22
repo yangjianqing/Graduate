@@ -38,7 +38,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectBSchoolVo"/>
         where s_id = #{sId}
     </select>
-        
+
+    <select id="selectBSchoolListSIds" resultMap="BSchoolResult" parameterType="list">
+        <include refid="selectBSchoolVo"/>
+        where s_id in
+        <foreach item="SchoolIds" collection="list" open="(" separator="," close=")">
+            #{SchoolIds}
+        </foreach>
+    </select>
+
     <insert id="insertBSchool" parameterType="BSchool">
         insert into b_school
         <trim prefix="(" suffix=")" suffixOverrides=",">

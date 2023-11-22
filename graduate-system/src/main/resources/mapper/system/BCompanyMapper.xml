@@ -33,7 +33,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectBCompanyVo"/>
         where c_id = #{cId}
     </select>
-        
+
+    <select id="selectBClassListCIds" resultMap="BCompanyResult" parameterType="list">
+        <include refid="selectBCompanyVo"/>
+        where c_id in
+        <foreach item="ClassIds" collection="list" open="(" separator="," close=")">
+            #{ClassIds}
+        </foreach>
+    </select>
+
     <insert id="insertBCompany" parameterType="BCompany">
         insert into b_company
         <trim prefix="(" suffix=")" suffixOverrides=",">

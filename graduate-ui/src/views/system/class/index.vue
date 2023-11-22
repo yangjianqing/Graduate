@@ -90,7 +90,7 @@
       <el-table-column label="班级" align="center" prop="cId" />
       <el-table-column label="班级编号" align="center" prop="cNumber" />
       <el-table-column label="班级名称" align="center" prop="cName" />
-      <el-table-column label="辅导员" align="center" prop="teacherId" />
+      <el-table-column label="辅导员" align="center" prop="teacherName" />
       <el-table-column label="手机号码" align="center" prop="cPhone" />
       <el-table-column label="班级人数" align="center" prop="cCount" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -122,7 +122,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"

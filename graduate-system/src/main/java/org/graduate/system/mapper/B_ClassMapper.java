@@ -1,6 +1,8 @@
 package org.graduate.system.mapper;
 
 import java.util.List;
+
+import org.graduate.system.domain.BCompany;
 import org.graduate.system.domain.B_Class;
 
 /**
@@ -28,6 +30,7 @@ public interface B_ClassMapper
     public List<B_Class> selectB_ClassList(B_Class b_Class);
 
     /**
+     *
      * 新增班级管理
      * 
      * @param b_Class 班级管理
@@ -58,4 +61,11 @@ public interface B_ClassMapper
      * @return 结果
      */
     public int deleteB_ClassByCIds(Long[] cIds);
+
+    /**
+     * 根据班级ids 获取信息
+     * @param ClassIds
+     * @return
+     */
+    List<B_Class> selectBClassListCIds(List<Long> ClassIds);
 }

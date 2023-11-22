@@ -1,7 +1,13 @@
 package org.graduate.system.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.graduate.common.utils.DateUtils;
+import org.graduate.system.domain.BTeacher;
+import org.graduate.system.mapper.BTeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.graduate.system.mapper.B_ClassMapper;
@@ -19,6 +25,9 @@ public class B_ClassServiceImpl implements IB_ClassService
 {
     @Autowired
     private B_ClassMapper b_ClassMapper;
+    @Autowired
+    private BTeacherMapper bTeacherMapper;
+
 
     /**
      * 查询班级管理
@@ -41,7 +50,23 @@ public class B_ClassServiceImpl implements IB_ClassService
     @Override
     public List<B_Class> selectB_ClassList(B_Class b_Class)
     {
-        return b_ClassMapper.selectB_ClassList(b_Class);
+        List<B_Class> bClasses = b_ClassMapper.selectB_ClassList(b_Class);
+        List<Long> lists = new ArrayList<>();
+        for(B_Class bc:bClasses) {
+            lists.add(bc.getTeacherId());
+        }
+        //获取到教师列表
+       List<BTeacher> teacherList= bTeacherMapper.selectBTeacherListById(lists);
+        //将列表转换成集合
+        Map<Long,BTeacher> teacherMap = new HashMap<>();
+        for(BTeacher t:teacherList) {
+            teacherMap.put(t.getTchrId(),t);
+        }
+        //将map集合中 教师名称取出 存入到list中
+        for(B_Class bc:bClasses) {
+            bc.setTeacherName(teacherMap.get(bc.getTeacherId()).getTchrName());
+        }
+        return bClasses;
     }
 
     /**

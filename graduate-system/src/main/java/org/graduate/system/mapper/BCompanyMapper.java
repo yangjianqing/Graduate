@@ -2,6 +2,7 @@ package org.graduate.system.mapper;
 
 import java.util.List;
 import org.graduate.system.domain.BCompany;
+import org.graduate.system.domain.BTeacher;
 
 /**
  * 公司管理Mapper接口
@@ -58,4 +59,11 @@ public interface BCompanyMapper
      * @return 结果
      */
     public int deleteBCompanyByCIds(Long[] cIds);
+
+    /**
+     * 根据公司ids 获取信息
+     * @param ClassIds
+     * @return
+     */
+    List<BCompany> selectBClassListCIds(List<Long> ClassIds);
 }

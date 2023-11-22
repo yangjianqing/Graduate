@@ -107,15 +107,15 @@
           <dict-tag :options="dict.type.b_gender" :value="scope.row.sGender"/>
         </template>
       </el-table-column>
-      <el-table-column label="学校" align="center" prop="schoolId" />
-      <el-table-column label="公司" align="center" prop="compenyId" />
+      <el-table-column label="学校" align="center" prop="schoolName" />
+      <el-table-column label="公司" align="center" prop="compenyName" />
       <el-table-column label="就业状态" align="center" prop="cStatus">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.c_status" :value="scope.row.cStatus"/>
         </template>
       </el-table-column>
-      <el-table-column label="辅导员" align="center" prop="teacherId" />
-      <el-table-column label="班级" align="center" prop="classId" />
+      <el-table-column label="辅导员" align="center" prop="teacherName" />
+      <el-table-column label="班级" align="center" prop="className" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
@@ -145,7 +145,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -321,6 +321,8 @@ export default {
       this.open = true;
       this.title = "添加学生管理";
     },
+
+
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
@@ -331,6 +333,8 @@ export default {
         this.title = "修改学生管理";
       });
     },
+
+
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {

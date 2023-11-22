@@ -58,4 +58,11 @@ public interface BTeacherMapper
      * @return 结果
      */
     public int deleteBTeacherByTchrIds(Long[] tchrIds);
+
+    /**
+     * 根据教师ids 获取信息
+     * @param tchrIds
+     * @return
+     */
+    List<BTeacher> selectBTeacherListById(List<Long> tchrIds);
 }

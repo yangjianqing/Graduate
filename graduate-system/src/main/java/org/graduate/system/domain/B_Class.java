@@ -31,6 +31,8 @@ public class B_Class extends BaseEntity
     @Excel(name = "辅导员")
     private Long teacherId;
 
+    @Excel(name = "辅导员")
+    private String teacherName;
     /** 手机号码 */
     @Excel(name = "手机号码")
     private String cPhone;
@@ -92,6 +94,14 @@ public class B_Class extends BaseEntity
     public Long getcCount() 
     {
         return cCount;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
     @Override

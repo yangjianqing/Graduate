@@ -2,6 +2,7 @@ package org.graduate.system.mapper;
 
 import java.util.List;
 import org.graduate.system.domain.BSchool;
+import org.graduate.system.domain.B_Class;
 
 /**
  * 学校管理Mapper接口
@@ -58,4 +59,10 @@ public interface BSchoolMapper
      * @return 结果
      */
     public int deleteBSchoolBySIds(Long[] sIds);
+    /**
+     * 根据学校ids 获取信息
+     * @param SchoolIds
+     * @return
+     */
+    List<BSchool> selectBSchoolListSIds(List<Long> SchoolIds);
 }
