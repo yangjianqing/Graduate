@@ -1,12 +1,7 @@
 package org.graduate.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.graduate.system.domain.BClass;
-import org.graduate.system.domain.BCompany;
 import org.graduate.system.mapper.BClassMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,30 +44,25 @@ public class BCheckServiceImpl implements IBCheckService
     @Override
     public List<BCheck> selectBCheckList(BCheck bCheck)
     {
-
         /**
          * 班级姓名
          **/
         List<BCheck> bStudent = bCheckMapper.selectBCheckList(bCheck);
-        List<Long> lists = new ArrayList<>();
-
-
-        for(BCheck bc:bStudent) {
-            lists.add(bc.getbClass());
-        }
-        //获取到班级列表
-        List<BClass> ClassList= bClassMapper.selectBClassListCIds(lists);
-        //将列表转换成集合
-        Map<Long, BClass> ClassMap = new HashMap<>();
-        for(BClass c:ClassList) {
-            ClassMap.put(c.getcId(),c);
-        }
-
-        //将map集合中 教师名称取出 存入到list中
-        for(BCheck bc:bStudent) {bc.setbClassName(ClassMap.get(bc.getbClass()).getcName());}
-
+//        List<Long> lists = new ArrayList<>();
+//        for(BCheck bc:bStudent) {
+//            lists.add(bc.getbClass());
+//        }
+//        //获取到班级列表
+//        List<BClass> ClassList= bClassMapper.selectBClassListCIds(lists);
+//        //将列表转换成集合
+//        Map<Long, BClass> ClassMap = new HashMap<>();
+//        for(BClass c:ClassList) {
+//            ClassMap.put(c.getcId(),c);
+//        }
+//
+//        //将map集合中 教师名称取出 存入到list中
+//        for(BCheck bc:bStudent) {bc.setbClassName(ClassMap.get(bc.getbClass()).getcName());}
         return bStudent;
-
 //        return bCheckMapper.selectBCheckList(bCheck);
     }
 

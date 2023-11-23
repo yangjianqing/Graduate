@@ -9,14 +9,14 @@ import org.graduate.common.core.domain.BaseEntity;
  * 班级管理对象 b_class
  * 
  * @author chuan
- * @date 2023-11-21
+ * @date 2023-11-23
  */
 public class BClass extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** 班级 */
-    @Excel(name = "班级")
+    /** 班级id */
+    @Excel(name = "班级id")
     private Long cId;
 
     /** 班级编号 */
@@ -31,10 +31,8 @@ public class BClass extends BaseEntity
     @Excel(name = "辅导员")
     private Long teacherId;
 
-    @Excel(name = "辅导员")
-    private String teacherName;
-    /** 手机号码 */
-    @Excel(name = "手机号码")
+    /** 联系方式 */
+    @Excel(name = "联系方式")
     private String cPhone;
 
     /** 班级人数 */
@@ -94,14 +92,6 @@ public class BClass extends BaseEntity
     public Long getcCount() 
     {
         return cCount;
-    }
-
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
     }
 
     @Override

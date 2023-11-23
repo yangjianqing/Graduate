@@ -18,19 +18,21 @@
         />
       </el-form-item>
       <el-form-item label="辅导员" prop="teacherId">
-        <el-input
-          v-model="queryParams.teacherId"
-          placeholder="请输入辅导员"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+        <el-select v-model="queryParams.teacherId" placeholder="请选择辅导员" clearable>
+          <el-option
+            v-for="dict in dict.type.b_techar"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="创建时间" prop="createTime">
         <el-date-picker clearable
-                        v-model="queryParams.createTime"
-                        type="date"
-                        value-format="yyyy-MM-dd"
-                        placeholder="请选择创建时间">
+          v-model="queryParams.createTime"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择创建时间">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -87,11 +89,15 @@
 
     <el-table v-loading="loading" :data="classList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="班级" align="center" prop="cId" />
+      <el-table-column label="班级id" align="center" prop="cId" />
       <el-table-column label="班级编号" align="center" prop="cNumber" />
       <el-table-column label="班级名称" align="center" prop="cName" />
-      <el-table-column label="辅导员" align="center" prop="teacherName" />
-      <el-table-column label="手机号码" align="center" prop="cPhone" />
+      <el-table-column label="辅导员" align="center" prop="teacherId">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.b_techar" :value="scope.row.teacherId"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="联系方式" align="center" prop="cPhone" />
       <el-table-column label="班级人数" align="center" prop="cCount" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
@@ -122,7 +128,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -137,33 +143,22 @@
         <el-form-item label="班级名称" prop="cName">
           <el-input v-model="form.cName" placeholder="请输入班级名称" />
         </el-form-item>
-
-        <el-form-item label="辅导员">
-          <el-select v-model="form.teachers" multiple placeholder="请选择辅导员">
+        <el-form-item label="辅导员" prop="teacherId">
+          <el-select v-model="form.teacherId" placeholder="请选择辅导员">
             <el-option
-              v-for="item in teachers"
-              :key="item.tchrId"
-              :label="item.tchrName"
-              :value="item.tchrId"
+              v-for="dict in dict.type.b_techar"
+              :key="dict.value"
+              :label="dict.label"
+:value="parseInt(dict.value)"
             ></el-option>
           </el-select>
         </el-form-item>
-
-        <el-form-item label="手机号码" prop="cPhone">
-          <el-input v-model="form.cPhone" placeholder="请输入手机号码" />
+        <el-form-item label="联系方式" prop="cPhone">
+          <el-input v-model="form.cPhone" placeholder="请输入联系方式" />
         </el-form-item>
-
-        <el-form-item label="班级">
-          <el-select v-model="form.clasei" multiple placeholder="请选择班级">
-            <el-option
-              v-for="item in clasei"
-              :key="item.cId"
-              :label="item.cName"
-              :value="item.cId"
-            ></el-option>
-          </el-select>
+        <el-form-item label="班级人数" prop="cCount">
+          <el-input v-model="form.cCount" placeholder="请输入班级人数" />
         </el-form-item>
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -178,6 +173,7 @@ import { listClass, getClass, delClass, addClass, updateClass } from "@/api/syst
 
 export default {
   name: "Class",
+  dicts: ['b_techar'],
   data() {
     return {
       // 遮罩层
@@ -192,10 +188,6 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      //老师列表
-      teachers:[],
-      //班级列表
-      clasei:[],
       // 班级管理表格数据
       classList: [],
       // 弹出层标题
@@ -278,8 +270,6 @@ export default {
       const cId = row.cId || this.ids
       getClass(cId).then(response => {
         this.form = response.data;
-        this.teachers=response.teachers;
-        this.clasei=response.clasei;
         this.open = true;
         this.title = "修改班级管理";
       });

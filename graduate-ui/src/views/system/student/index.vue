@@ -28,14 +28,14 @@
         </el-select>
       </el-form-item>
       <el-form-item label="学校" prop="schoolId">
-        <el-input
-          v-model="queryParams.schoolId"
-          placeholder="请输入学校"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-
-
+        <el-select v-model="queryParams.schoolId" placeholder="请选择学校" clearable>
+          <el-option
+            v-for="dict in dict.type.b_school"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="就业状态" prop="cStatus">
         <el-select v-model="queryParams.cStatus" placeholder="请选择就业状态" clearable>
@@ -48,12 +48,14 @@
         </el-select>
       </el-form-item>
       <el-form-item label="班级" prop="classId">
-        <el-input
-          v-model="queryParams.classId"
-          placeholder="请输入班级"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+        <el-select v-model="queryParams.classId" placeholder="请选择班级" clearable>
+          <el-option
+            v-for="dict in dict.type.b_class"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -109,7 +111,7 @@
 
     <el-table v-loading="loading" :data="studentList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="学生" align="center" prop="sId" />
+      <el-table-column label="id" align="center" prop="sId" />
       <el-table-column label="学生学号" align="center" prop="sNumber" />
       <el-table-column label="学生姓名" align="center" prop="sName" />
       <el-table-column label="性别" align="center" prop="sGender">
@@ -117,15 +119,32 @@
           <dict-tag :options="dict.type.b_gender" :value="scope.row.sGender"/>
         </template>
       </el-table-column>
-      <el-table-column label="学校" align="center" prop="schoolName" />
-      <el-table-column label="公司" align="center" prop="compenyName" />
+      <el-table-column label="学校" align="center" prop="schoolId">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.b_school" :value="scope.row.schoolId"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="联系方式" align="center" prop="sNumbers" />
+      <el-table-column label="公司" align="center" prop="compenyId">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.b_company" :value="scope.row.compenyId"/>
+        </template>
+      </el-table-column>
       <el-table-column label="就业状态" align="center" prop="cStatus">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.c_status" :value="scope.row.cStatus"/>
         </template>
       </el-table-column>
-      <el-table-column label="辅导员" align="center" prop="teacherName" />
-      <el-table-column label="班级" align="center" prop="className" />
+      <el-table-column label="辅导员" align="center" prop="teacherId">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.b_techar" :value="scope.row.teacherId"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="班级" align="center" prop="classId">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.b_class" :value="scope.row.classId"/>
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
@@ -155,7 +174,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -175,61 +194,59 @@
             <el-radio
               v-for="dict in dict.type.b_gender"
               :key="dict.value"
-              :label="parseInt(dict.value)"
+:label="parseInt(dict.value)"
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-
-        <el-form-item label="公司">
-          <el-select v-model="form.companys" multiple placeholder="请选择公司">
+        <el-form-item label="学校" prop="schoolId">
+          <el-select v-model="form.schoolId" placeholder="请选择学校">
             <el-option
-              v-for="item in companys"
-              :key="item.cId"
-              :label="item.cName"
-              :value="item.cId"
+              v-for="dict in dict.type.b_school"
+              :key="dict.value"
+              :label="dict.label"
+:value="parseInt(dict.value)"
             ></el-option>
           </el-select>
         </el-form-item>
-
-        <el-form-item label="学校">
-          <el-select v-model="form.schools" multiple placeholder="请选择学校">
+        <el-form-item label="联系方式" prop="sNumbers">
+          <el-input v-model="form.sNumbers" placeholder="请输入联系方式" />
+        </el-form-item>
+        <el-form-item label="公司" prop="compenyId">
+          <el-select v-model="form.compenyId" placeholder="请选择公司">
             <el-option
-              v-for="item in schools"
-              :key="item.sId"
-              :label="item.sName"
-              :value="item.sId"
+              v-for="dict in dict.type.b_company"
+              :key="dict.value"
+              :label="dict.label"
+:value="parseInt(dict.value)"
             ></el-option>
           </el-select>
         </el-form-item>
-
         <el-form-item label="就业状态">
           <el-radio-group v-model="form.cStatus">
             <el-radio
               v-for="dict in dict.type.c_status"
               :key="dict.value"
-              :label="parseInt(dict.value)"
+:label="parseInt(dict.value)"
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-
-        <el-form-item label="辅导员">
-          <el-select v-model="form.teachers" multiple placeholder="请选择辅导员">
+        <el-form-item label="辅导员" prop="teacherId">
+          <el-select v-model="form.teacherId" placeholder="请选择辅导员">
             <el-option
-              v-for="item in teachers"
-              :key="item.tchrId"
-              :label="item.tchrName"
-              :value="item.tchrId"
+              v-for="dict in dict.type.b_techar"
+              :key="dict.value"
+              :label="dict.label"
+:value="parseInt(dict.value)"
             ></el-option>
           </el-select>
         </el-form-item>
-
-        <el-form-item label="班级">
-          <el-select v-model="form.clasei" multiple placeholder="请选择班级">
+        <el-form-item label="班级" prop="classId">
+          <el-select v-model="form.classId" placeholder="请选择班级">
             <el-option
-              v-for="item in clasei"
-              :key="item.cId"
-              :label="item.cName"
-              :value="item.cId"
+              v-for="dict in dict.type.b_class"
+              :key="dict.value"
+              :label="dict.label"
+:value="parseInt(dict.value)"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -247,7 +264,7 @@ import { listStudent, getStudent, delStudent, addStudent, updateStudent } from "
 
 export default {
   name: "Student",
-  dicts: ['c_status', 'b_gender'],
+  dicts: ['c_status', 'b_school', 'b_company', 'b_gender', 'b_class', 'b_techar'],
   data() {
     return {
       // 遮罩层
@@ -266,14 +283,6 @@ export default {
       studentList: [],
       // 弹出层标题
       title: "",
-      //公司列表
-      companys:[],
-      //辅导员列表
-      teachers:[],
-      //班級列表
-      clasei:[],
-      //学校列表
-      schools: [],
       // 是否显示弹出层
       open: false,
       // 查询参数
@@ -320,6 +329,7 @@ export default {
         sName: null,
         sGender: 0,
         schoolId: null,
+        sNumbers: null,
         compenyId: null,
         cStatus: 0,
         teacherId: null,
@@ -356,10 +366,6 @@ export default {
       this.reset();
       const sId = row.sId || this.ids
       getStudent(sId).then(response => {
-        this.companys=response.companys;
-        this.teachers=response.teachers;
-        this.clasei=response.clasei;
-        this.schools=response.schools;
         this.form = response.data;
         this.open = true;
         this.title = "修改学生管理";

@@ -1,13 +1,8 @@
 package org.graduate.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.graduate.common.utils.DateUtils;
-import org.graduate.system.domain.BClass;
-import org.graduate.system.mapper.BClassMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.graduate.system.mapper.BCompanyMapper;
@@ -47,9 +42,9 @@ public class BCompanyServiceImpl implements IBCompanyService
     @Override
     public List<BCompany> selectBCompanyList(BCompany bCompany)
     {
-//        /**
-//         * 班级姓名
-//         **/
+        /**
+         * 班级姓名
+         **/
 //        List<BCompany> bStudent = bCompanyMapper.selectBCompanyList(bCompany);
 //        List<Long> lists = new ArrayList<>();
 //
@@ -69,7 +64,8 @@ public class BCompanyServiceImpl implements IBCompanyService
 //        for(BCompany bc:bStudent) {bc.setClassName(ClassMap.get(bc.getClassId()).getcName());}
 //
 //        return bStudent;
-
+//
+//        return bCompanyMapper.selectBCompanyList(bCompany);
         return bCompanyMapper.selectBCompanyList(bCompany);
     }
 

@@ -3,8 +3,7 @@ package org.graduate.web.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import org.graduate.system.domain.BStudent;
-import org.graduate.system.service.*;
+import org.graduate.common.utils.StudentNumberGenerator;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +18,8 @@ import org.graduate.common.annotation.Log;
 import org.graduate.common.core.controller.BaseController;
 import org.graduate.common.core.domain.AjaxResult;
 import org.graduate.common.enums.BusinessType;
+import org.graduate.system.domain.BStudent;
+import org.graduate.system.service.IBStudentService;
 import org.graduate.common.utils.poi.ExcelUtil;
 import org.graduate.common.core.page.TableDataInfo;
 
@@ -26,31 +27,24 @@ import org.graduate.common.core.page.TableDataInfo;
  * 学生管理Controller
  * 
  * @author chuan
- * @date 2023-11-21
+ * @date 2023-11-23
  */
 @RestController
 @RequestMapping("/system/student")
 public class BStudentController extends BaseController
 {
     @Autowired
-    private IBStudentService b_StudentService;
-    @Autowired
-    private IBCompanyService iBCompanyService;
-    @Autowired
-    private IBTeacherService ibTeacherService;
-    @Autowired
-    private IBClassService ibClassService;
-    @Autowired
-    private IBSchoolService ibSchoolService;
+    private IBStudentService bStudentService;
+
     /**
      * 查询学生管理列表
      */
     @PreAuthorize("@ss.hasPermi('system:student:list')")
     @GetMapping("/list")
-    public TableDataInfo list(BStudent b_Student)
+    public TableDataInfo list(BStudent bStudent)
     {
         startPage();
-        List<BStudent> list = b_StudentService.selectB_StudentList(b_Student);
+        List<BStudent> list = bStudentService.selectBStudentList(bStudent);
         return getDataTable(list);
     }
 
@@ -60,9 +54,9 @@ public class BStudentController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:student:export')")
     @Log(title = "学生管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, BStudent b_Student)
+    public void export(HttpServletResponse response, BStudent bStudent)
     {
-        List<BStudent> list = b_StudentService.selectB_StudentList(b_Student);
+        List<BStudent> list = bStudentService.selectBStudentList(bStudent);
         ExcelUtil<BStudent> util = new ExcelUtil<BStudent>(BStudent.class);
         util.exportExcel(response, list, "学生管理数据");
     }
@@ -74,12 +68,7 @@ public class BStudentController extends BaseController
     @GetMapping(value = "/{sId}")
     public AjaxResult getInfo(@PathVariable("sId") Long sId)
     {
-        AjaxResult success = AjaxResult.success(b_StudentService.selectB_StudentBySId(sId));
-        success.put("companys",iBCompanyService.selectBCompanyAll());
-        success.put("teachers",ibTeacherService.selectBTeacherAll());
-        success.put("clasei",ibClassService.selectBClassAll());
-        success.put("schools",ibSchoolService.selectBSchoolAll());
-        return success;
+        return AjaxResult.success(bStudentService.selectBStudentBySId(sId));
     }
 
     /**
@@ -88,9 +77,10 @@ public class BStudentController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:student:add')")
     @Log(title = "学生管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody BStudent b_Student)
+    public AjaxResult add(@RequestBody BStudent bStudent)
     {
-        return toAjax(b_StudentService.insertB_Student(b_Student));
+        bStudent.setsNumber(StudentNumberGenerator.generateStudentNumber());
+        return toAjax(bStudentService.insertBStudent(bStudent));
     }
 
     /**
@@ -99,9 +89,9 @@ public class BStudentController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:student:edit')")
     @Log(title = "学生管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody BStudent b_Student)
+    public AjaxResult edit(@RequestBody BStudent bStudent)
     {
-        return toAjax(b_StudentService.updateB_Student(b_Student));
+        return toAjax(bStudentService.updateBStudent(bStudent));
     }
 
     /**
@@ -112,6 +102,6 @@ public class BStudentController extends BaseController
 	@DeleteMapping("/{sIds}")
     public AjaxResult remove(@PathVariable Long[] sIds)
     {
-        return toAjax(b_StudentService.deleteB_StudentBySIds(sIds));
+        return toAjax(bStudentService.deleteBStudentBySIds(sIds));
     }
 }

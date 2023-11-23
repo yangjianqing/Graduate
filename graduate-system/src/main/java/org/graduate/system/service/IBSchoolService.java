@@ -2,7 +2,6 @@ package org.graduate.system.service;
 
 import java.util.List;
 
-import org.graduate.system.domain.BClass;
 import org.graduate.system.domain.BSchool;
 
 /**

@@ -3,7 +3,7 @@ package org.graduate.web.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import org.graduate.system.service.IBTeacherService;
+import org.graduate.common.utils.NumberGenerator;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,31 +23,30 @@ import org.graduate.system.service.IBClassService;
 import org.graduate.common.utils.poi.ExcelUtil;
 import org.graduate.common.core.page.TableDataInfo;
 
+import static org.graduate.common.utils.NumberGenerator.generateCode;
+
 /**
  * 班级管理Controller
  * 
  * @author chuan
- * @date 2023-11-21
+ * @date 2023-11-23
  */
 @RestController
 @RequestMapping("/system/class")
 public class BClassController extends BaseController
 {
     @Autowired
-    private IBClassService b_ClassService;
-    @Autowired
-    private IBTeacherService ibTeacherService;
-    @Autowired
-    private IBClassService ibClassService;
+    private IBClassService bClassService;
+
     /**
      * 查询班级管理列表
      */
     @PreAuthorize("@ss.hasPermi('system:class:list')")
     @GetMapping("/list")
-    public TableDataInfo list(BClass b_Class)
+    public TableDataInfo list(BClass bClass)
     {
         startPage();
-        List<BClass> list = b_ClassService.selectB_ClassList(b_Class);
+        List<BClass> list = bClassService.selectBClassList(bClass);
         return getDataTable(list);
     }
 
@@ -57,9 +56,9 @@ public class BClassController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:class:export')")
     @Log(title = "班级管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, BClass b_Class)
+    public void export(HttpServletResponse response, BClass bClass)
     {
-        List<BClass> list = b_ClassService.selectB_ClassList(b_Class);
+        List<BClass> list = bClassService.selectBClassList(bClass);
         ExcelUtil<BClass> util = new ExcelUtil<BClass>(BClass.class);
         util.exportExcel(response, list, "班级管理数据");
     }
@@ -71,11 +70,7 @@ public class BClassController extends BaseController
     @GetMapping(value = "/{cId}")
     public AjaxResult getInfo(@PathVariable("cId") Long cId)
     {
-        AjaxResult success = AjaxResult.success(b_ClassService.selectB_ClassByCId(cId));
-        success.put("teachers",ibTeacherService.selectBTeacherAll());
-        success.put("clasei",ibClassService.selectBClassAll());
-        return success;
-
+        return AjaxResult.success(bClassService.selectBClassByCId(cId));
     }
 
     /**
@@ -84,9 +79,10 @@ public class BClassController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:class:add')")
     @Log(title = "班级管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody BClass b_Class)
+    public AjaxResult add(@RequestBody BClass bClass)
     {
-        return toAjax(b_ClassService.insertB_Class(b_Class));
+        bClass.setcNumber(NumberGenerator.generateCode("TG",5));
+        return toAjax(bClassService.insertBClass(bClass));
     }
 
     /**
@@ -95,9 +91,9 @@ public class BClassController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:class:edit')")
     @Log(title = "班级管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody BClass b_Class)
+    public AjaxResult edit(@RequestBody BClass bClass)
     {
-        return toAjax(b_ClassService.updateB_Class(b_Class));
+        return toAjax(bClassService.updateBClass(bClass));
     }
 
     /**
@@ -108,6 +104,6 @@ public class BClassController extends BaseController
 	@DeleteMapping("/{cIds}")
     public AjaxResult remove(@PathVariable Long[] cIds)
     {
-        return toAjax(b_ClassService.deleteB_ClassByCIds(cIds));
+        return toAjax(bClassService.deleteBClassByCIds(cIds));
     }
 }
