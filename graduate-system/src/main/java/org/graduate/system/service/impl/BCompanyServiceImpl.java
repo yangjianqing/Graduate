@@ -42,30 +42,6 @@ public class BCompanyServiceImpl implements IBCompanyService
     @Override
     public List<BCompany> selectBCompanyList(BCompany bCompany)
     {
-        /**
-         * 班级姓名
-         **/
-//        List<BCompany> bStudent = bCompanyMapper.selectBCompanyList(bCompany);
-//        List<Long> lists = new ArrayList<>();
-//
-//
-//        for(BCompany bc:bStudent) {
-//            lists.add(bc.getcId());
-//        }
-//        //获取到班级列表
-//        List<BClass> ClassList= bClassMapper.selectBClassListCIds(lists);
-//        //将列表转换成集合
-//        Map<Long, BClass> ClassMap = new HashMap<>();
-//        for(BClass c:ClassList) {
-//            ClassMap.put(c.getcId(),c);
-//        }
-//
-//        //将map集合中 教师名称取出 存入到list中
-//        for(BCompany bc:bStudent) {bc.setClassName(ClassMap.get(bc.getClassId()).getcName());}
-//
-//        return bStudent;
-//
-//        return bCompanyMapper.selectBCompanyList(bCompany);
         return bCompanyMapper.selectBCompanyList(bCompany);
     }
 

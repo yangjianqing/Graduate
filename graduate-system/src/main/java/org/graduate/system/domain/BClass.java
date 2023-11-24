@@ -9,7 +9,7 @@ import org.graduate.common.core.domain.BaseEntity;
  * 班级管理对象 b_class
  * 
  * @author chuan
- * @date 2023-11-23
+ * @date 2023-11-24
  */
 public class BClass extends BaseEntity
 {
@@ -30,6 +30,18 @@ public class BClass extends BaseEntity
     /** 辅导员 */
     @Excel(name = "辅导员")
     private Long teacherId;
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    /** 辅导员 */
+    @Excel(name = "辅导员")
+    private String teacherName;
 
     /** 联系方式 */
     @Excel(name = "联系方式")

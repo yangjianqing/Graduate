@@ -1,14 +1,13 @@
 package org.graduate.system.mapper;
 
-import org.graduate.system.domain.BClass;
-
 import java.util.List;
+import org.graduate.system.domain.BClass;
 
 /**
  * 班级管理Mapper接口
  * 
  * @author chuan
- * @date 2023-11-23
+ * @date 2023-11-24
  */
 public interface BClassMapper 
 {
@@ -59,4 +58,17 @@ public interface BClassMapper
      * @return 结果
      */
     public int deleteBClassByCIds(Long[] cIds);
+
+    /**
+     * 根据班级ids 获取信息
+     * @param ClassIds
+     * @return
+     */
+    List<BClass> selectBClassListCIds(List<Long> ClassIds);
+
+    /**
+     * 查询所有班級
+     * @return
+     */
+    public List<BClass> selectBClassAll();
 }

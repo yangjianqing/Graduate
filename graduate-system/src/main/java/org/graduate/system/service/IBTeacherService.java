@@ -58,4 +58,10 @@ public interface IBTeacherService
      * @return 结果
      */
     public int deleteBTeacherByTchrId(Long tchrId);
+
+    /**
+     * 查询所有老师
+     * @return
+     */
+    public List<BTeacher> selectBTeacherAll();
 }

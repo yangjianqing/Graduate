@@ -1,14 +1,13 @@
 package org.graduate.system.service;
 
-import org.graduate.system.domain.BClass;
-
 import java.util.List;
+import org.graduate.system.domain.BClass;
 
 /**
  * 班级管理Service接口
  * 
  * @author chuan
- * @date 2023-11-23
+ * @date 2023-11-24
  */
 public interface IBClassService 
 {
@@ -59,4 +58,10 @@ public interface IBClassService
      * @return 结果
      */
     public int deleteBClassByCId(Long cId);
+
+    /**
+     * 查询所有班級
+     * @return
+     */
+    public List<BClass> selectBClassAll();
 }

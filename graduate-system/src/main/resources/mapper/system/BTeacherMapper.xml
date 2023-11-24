@@ -40,7 +40,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectBTeacherVo"/>
         where tchr_id = #{tchrId}
     </select>
-        
+
+    <select id="selectBTeacherListById" resultMap="BTeacherResult" parameterType="list">
+        <include refid="selectBTeacherVo"/>
+        where tchr_id in
+        <foreach item="tchrId" collection="list" open="(" separator="," close=")">
+            #{tchrId}
+        </foreach>
+    </select>
+
+    <select id="selectBTeacherAll"  resultMap="BTeacherResult">
+        <include refid="selectBTeacherVo"/>
+
+    </select>
+
     <insert id="insertBTeacher" parameterType="BTeacher" useGeneratedKeys="true" keyProperty="tchrId">
         insert into b_teacher
         <trim prefix="(" suffix=")" suffixOverrides=",">

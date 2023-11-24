@@ -93,4 +93,9 @@ public class BTeacherServiceImpl implements IBTeacherService
     {
         return bTeacherMapper.deleteBTeacherByTchrId(tchrId);
     }
+
+    @Override
+    public List<BTeacher> selectBTeacherAll() {
+        return bTeacherMapper.selectBTeacherAll();
+    }
 }

@@ -2,7 +2,6 @@ package org.graduate.system.service.impl;
 
 import java.util.List;
 
-import org.graduate.system.mapper.BClassMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.graduate.system.mapper.BCheckMapper;
@@ -20,8 +19,8 @@ public class BCheckServiceImpl implements IBCheckService
 {
     @Autowired
     private BCheckMapper bCheckMapper;
-    @Autowired
-    private BClassMapper bClassMapper;
+//    @Autowired
+//    private BClassMapper bClassMapper;
 
     /**
      * 查询签到

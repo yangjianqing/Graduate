@@ -7,7 +7,7 @@ import org.graduate.system.domain.BStudent;
  * 学生管理Mapper接口
  * 
  * @author chuan
- * @date 2023-11-23
+ * @date 2023-11-24
  */
 public interface BStudentMapper 
 {

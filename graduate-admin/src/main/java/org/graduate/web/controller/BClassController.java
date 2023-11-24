@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.graduate.common.utils.NumberGenerator;
+import org.graduate.system.service.IBTeacherService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,13 +24,11 @@ import org.graduate.system.service.IBClassService;
 import org.graduate.common.utils.poi.ExcelUtil;
 import org.graduate.common.core.page.TableDataInfo;
 
-import static org.graduate.common.utils.NumberGenerator.generateCode;
-
 /**
  * 班级管理Controller
  * 
  * @author chuan
- * @date 2023-11-23
+ * @date 2023-11-24
  */
 @RestController
 @RequestMapping("/system/class")
@@ -37,6 +36,10 @@ public class BClassController extends BaseController
 {
     @Autowired
     private IBClassService bClassService;
+    @Autowired
+    private IBTeacherService ibTeacherService;
+    @Autowired
+    private IBClassService ibClassService;
 
     /**
      * 查询班级管理列表
@@ -70,7 +73,10 @@ public class BClassController extends BaseController
     @GetMapping(value = "/{cId}")
     public AjaxResult getInfo(@PathVariable("cId") Long cId)
     {
-        return AjaxResult.success(bClassService.selectBClassByCId(cId));
+        AjaxResult success = AjaxResult.success(bClassService.selectBClassByCId(cId));
+        success.put("teachers",ibTeacherService.selectBTeacherAll());
+        success.put("clasei",ibClassService.selectBClassAll());
+        return success;
     }
 
     /**
@@ -81,7 +87,7 @@ public class BClassController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody BClass bClass)
     {
-        bClass.setcNumber(NumberGenerator.generateCode("TG",5));
+        bClass.setcNumber(NumberGenerator.generateCode("TG", 5));
         return toAjax(bClassService.insertBClass(bClass));
     }
 

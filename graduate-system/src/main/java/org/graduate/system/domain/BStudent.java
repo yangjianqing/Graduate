@@ -9,14 +9,14 @@ import org.graduate.common.core.domain.BaseEntity;
  * 学生管理对象 b_student
  * 
  * @author chuan
- * @date 2023-11-23
+ * @date 2023-11-24
  */
 public class BStudent extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** id */
-    @Excel(name = "id")
+    /** 学生id */
+    @Excel(name = "学生id")
     private Long sId;
 
     /** 学生学号 */
@@ -31,17 +31,57 @@ public class BStudent extends BaseEntity
     @Excel(name = "性别")
     private Long sGender;
 
-    /** 学校 */
-    @Excel(name = "学校")
-    private Long schoolId;
-
     /** 联系方式 */
     @Excel(name = "联系方式")
     private String sNumbers;
 
+    /** 学校 */
+    @Excel(name = "学校")
+    private Long schoolId;
+
+    /** 学校 */
+    @Excel(name = "学校")
+    private String schoolName;
+
     /** 公司 */
     @Excel(name = "公司")
     private Long compenyId;
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public String getCompenyName() {
+        return compenyName;
+    }
+
+    public void setCompenyName(String compenyName) {
+        this.compenyName = compenyName;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    /** 公司 */
+    @Excel(name = "公司")
+    private String compenyName;
 
     /** 就业状态 */
     @Excel(name = "就业状态")
@@ -51,9 +91,17 @@ public class BStudent extends BaseEntity
     @Excel(name = "辅导员")
     private Long teacherId;
 
+    /** 辅导员 */
+    @Excel(name = "辅导员")
+    private String teacherName;
+
     /** 班级 */
     @Excel(name = "班级")
     private Long classId;
+
+    /** 班级 */
+    @Excel(name = "班级")
+    private String className;
 
     public void setsId(Long sId) 
     {
@@ -91,15 +139,6 @@ public class BStudent extends BaseEntity
     {
         return sGender;
     }
-    public void setSchoolId(Long schoolId) 
-    {
-        this.schoolId = schoolId;
-    }
-
-    public Long getSchoolId() 
-    {
-        return schoolId;
-    }
     public void setsNumbers(String sNumbers) 
     {
         this.sNumbers = sNumbers;
@@ -108,6 +147,15 @@ public class BStudent extends BaseEntity
     public String getsNumbers() 
     {
         return sNumbers;
+    }
+    public void setSchoolId(Long schoolId) 
+    {
+        this.schoolId = schoolId;
+    }
+
+    public Long getSchoolId() 
+    {
+        return schoolId;
     }
     public void setCompenyId(Long compenyId) 
     {
@@ -153,8 +201,8 @@ public class BStudent extends BaseEntity
             .append("sNumber", getsNumber())
             .append("sName", getsName())
             .append("sGender", getsGender())
-            .append("schoolId", getSchoolId())
             .append("sNumbers", getsNumbers())
+            .append("schoolId", getSchoolId())
             .append("compenyId", getCompenyId())
             .append("cStatus", getcStatus())
             .append("teacherId", getTeacherId())
