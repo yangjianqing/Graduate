@@ -7,7 +7,7 @@ import org.graduate.system.domain.BTeacher;
  * 教师信息Mapper接口
  * 
  * @author ruoyi
- * @date 2023-11-21
+ * @date 2023-11-24
  */
 public interface BTeacherMapper 
 {
@@ -58,17 +58,4 @@ public interface BTeacherMapper
      * @return 结果
      */
     public int deleteBTeacherByTchrIds(Long[] tchrIds);
-
-    /**
-     * 根据教师ids 获取信息
-     * @param tchrIds
-     * @return
-     */
-    List<BTeacher> selectBTeacherListById(List<Long> tchrIds);
-
-    /**
-     * 查询所有老师
-     * @return
-     */
-    public List<BTeacher> selectBTeacherAll();
 }

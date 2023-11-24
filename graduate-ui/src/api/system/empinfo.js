@@ -42,3 +42,11 @@ export function delEmpinfo(empId) {
     method: 'delete'
   })
 }
+
+// 调整发布状态
+export function modifiedEmpinfo(empId,empStatus) {
+  return request({
+    url: '/system/empinfo/'+empId+"/"+empStatus,
+    method: 'put',
+  })
+}

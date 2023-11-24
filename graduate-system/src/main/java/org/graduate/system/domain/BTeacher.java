@@ -9,7 +9,7 @@ import org.graduate.common.core.domain.BaseEntity;
  * 教师信息对象 b_teacher
  * 
  * @author ruoyi
- * @date 2023-11-21
+ * @date 2023-11-24
  */
 public class BTeacher extends BaseEntity
 {
@@ -24,7 +24,7 @@ public class BTeacher extends BaseEntity
 
     /** 所属院校(fkey) */
     @Excel(name = "所属院校(fkey)")
-    private String schoolName;
+    private Long sId;
 
     /** 教师姓名 */
     @Excel(name = "教师姓名")
@@ -34,8 +34,8 @@ public class BTeacher extends BaseEntity
     @Excel(name = "教师性别")
     private String tchrGender;
 
-    /** 教室年龄 */
-    @Excel(name = "教室年龄")
+    /** 教师年龄 */
+    @Excel(name = "教师年龄")
     private Long tchrAge;
 
     /** 教师照片 */
@@ -68,14 +68,14 @@ public class BTeacher extends BaseEntity
     {
         return tchrNum;
     }
-    public void setSchoolName(String schoolName) 
+    public void setsId(Long sId) 
     {
-        this.schoolName = schoolName;
+        this.sId = sId;
     }
 
-    public String getSchoolName() 
+    public Long getsId() 
     {
-        return schoolName;
+        return sId;
     }
     public void setTchrName(String tchrName) 
     {
@@ -137,7 +137,7 @@ public class BTeacher extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("tchrId", getTchrId())
             .append("tchrNum", getTchrNum())
-            .append("schoolName", getSchoolName())
+            .append("sId", getsId())
             .append("tchrName", getTchrName())
             .append("tchrGender", getTchrGender())
             .append("tchrAge", getTchrAge())

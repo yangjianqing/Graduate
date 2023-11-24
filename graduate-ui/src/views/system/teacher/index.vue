@@ -1,6 +1,14 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="教师编号" prop="tchrNum">
+        <el-input
+          v-model="queryParams.tchrNum"
+          placeholder="请输入教师编号"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="教师姓名" prop="tchrName">
         <el-input
           v-model="queryParams.tchrName"
@@ -9,8 +17,24 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="教师在校状态" prop="tchrStatus">
-        <el-select v-model="queryParams.tchrStatus" placeholder="请选择状态" clearable>
+<!--      <el-form-item label="所属院校" prop="sId">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.sId"-->
+<!--          placeholder="请输入所属院校"-->
+<!--          clearable-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+      <el-form-item label="所属院校" prop="sId">
+        <el-select v-model="queryParams.sId" placeholder="请选择学校" clearable @keyup.enter.native="handleQuery">
+          <el-option v-for="s in schoolList"
+                     :key="s.sId"
+                     :label="s.sName"
+                     :value="s.sId"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="在校状态" prop="tchrStatus">
+        <el-select v-model="queryParams.tchrStatus" placeholder="请选择教师在职状态" clearable>
           <el-option
             v-for="dict in dict.type.b_teacher_status"
             :key="dict.value"
@@ -75,7 +99,12 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="序号" align="center" prop="tchrId" />
       <el-table-column label="教师编号" align="center" prop="tchrNum" />
-      <el-table-column label="所属院校" align="center" prop="schoolName" />
+<!--      <el-table-column label="所属院校" align="center" prop="sId" />-->
+      <el-table-column label="所属院校" align="center" prop="sId">
+        <template slot-scope="scope">
+          <span>{{getSchoolName(scope.row.sId)}}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="教师姓名" align="center" prop="tchrName" />
       <el-table-column label="教师性别" align="center" prop="tchrGender">
         <template slot-scope="scope">
@@ -83,7 +112,13 @@
         </template>
       </el-table-column>
       <el-table-column label="教师年龄" align="center" prop="tchrAge" />
-      <el-table-column label="教师照片" align="center" prop="tchrImg" />
+<!--      <el-table-column label="教师照片" align="center" prop="tchrImg" />-->
+      <el-table-column label="教师照片" align="center" prop="tchrImg" width="100">
+        <template slot-scope="scope">
+          <image-preview v-if="scope.row.tchrImg" :src="scope.row.tchrImg" width="30" height="30"/>
+          <span v-else>该教师暂未上传照片</span>
+        </template>
+      </el-table-column>
       <el-table-column label="教师联系方式" align="center" prop="tchrPhone" />
       <el-table-column label="添加时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
@@ -95,7 +130,7 @@
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="教师在校状态" align="center" prop="tchrStatus">
+      <el-table-column label="教师在职状态" align="center" prop="tchrStatus">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.b_teacher_status" :value="scope.row.tchrStatus"/>
         </template>
@@ -137,12 +172,23 @@
         <el-form-item label="教师姓名" prop="tchrName">
           <el-input v-model="form.tchrName" placeholder="请输入教师姓名" />
         </el-form-item>
+<!--        <el-form-item label="所属院校" prop="sId">-->
+<!--          <el-input v-model="form.sId" placeholder="请输入所属院校" />-->
+<!--        </el-form-item>-->
+        <el-form-item label="所属院校" prop="sId">
+          <el-select v-model="form.sId" placeholder="请输入所属院校">
+            <el-option v-for="s in schoolList"
+                       :key="s.sId"
+                       :label="s.sName"
+                       :value="s.sId"/>
+          </el-select>
+        </el-form-item>
         <el-form-item label="教师性别">
           <el-radio-group v-model="form.tchrGender">
             <el-radio
               v-for="dict in dict.type.b_teacher_gender"
               :key="dict.value"
-:label="dict.value"
+              :label="dict.value"
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
@@ -152,12 +198,15 @@
         <el-form-item label="教师联系方式" prop="tchrPhone">
           <el-input v-model="form.tchrPhone" placeholder="请输入教师联系方式" />
         </el-form-item>
-        <el-form-item label="教师在校状态">
+        <el-form-item label="上传照片" prop="tchrImg">
+          <ImageUpload :limit="1" v-model="form.tchrImg"></ImageUpload>
+        </el-form-item>
+        <el-form-item label="在职状态">
           <el-radio-group v-model="form.tchrStatus">
             <el-radio
               v-for="dict in dict.type.b_teacher_status"
               :key="dict.value"
-:label="dict.value"
+              :label="dict.value"
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
@@ -172,6 +221,7 @@
 
 <script>
 import { listTeacher, getTeacher, delTeacher, addTeacher, updateTeacher } from "@/api/system/teacher";
+import {listSchool} from "@/api/system/school";
 
 export default {
   name: "Teacher",
@@ -192,6 +242,7 @@ export default {
       total: 0,
       // 教师信息表格数据
       teacherList: [],
+      schoolList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -200,8 +251,13 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        schoolName: null,
+        tchrNum: null,
+        sId: null,
         tchrName: null,
+        tchrGender: null,
+        tchrAge: null,
+        tchrImg: null,
+        tchrPhone: null,
         tchrStatus: null
       },
       // 表单参数
@@ -213,13 +269,28 @@ export default {
   },
   created() {
     this.getList();
+    this.getSchoolList();
   },
   methods: {
+    //根据sId获取学校名称
+    getSchoolName(sId){
+      const school = this.schoolList.find(item => item.sId === sId);
+      return school ? school.sName : '';
+    },
     /** 查询教师信息列表 */
     getList() {
       this.loading = true;
       listTeacher(this.queryParams).then(response => {
         this.teacherList = response.rows;
+        this.total = response.total;
+        this.loading = false;
+      });
+    },
+    /** 查询学校管理列表 */
+    getSchoolList() {
+      this.loading = true;
+      listSchool(this.queryParams).then(response => {
+        this.schoolList = response.rows;
         this.total = response.total;
         this.loading = false;
       });
@@ -234,9 +305,9 @@ export default {
       this.form = {
         tchrId: null,
         tchrNum: null,
-        schoolName: null,
+        sId: null,
         tchrName: null,
-        tchrGender: "0",
+        tchrGender: null,
         tchrAge: null,
         tchrImg: null,
         tchrPhone: null,

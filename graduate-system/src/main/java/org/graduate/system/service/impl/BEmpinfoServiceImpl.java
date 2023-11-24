@@ -10,19 +10,19 @@ import org.graduate.system.service.IBEmpinfoService;
 
 /**
  * 就业信息发布Service业务层处理
- * 
+ *
  * @author ruoyi
  * @date 2023-11-21
  */
 @Service
-public class BEmpinfoServiceImpl implements IBEmpinfoService 
+public class BEmpinfoServiceImpl implements IBEmpinfoService
 {
     @Autowired
     private BEmpinfoMapper bEmpinfoMapper;
 
     /**
      * 查询就业信息发布
-     * 
+     *
      * @param empId 就业信息发布主键
      * @return 就业信息发布
      */
@@ -34,7 +34,7 @@ public class BEmpinfoServiceImpl implements IBEmpinfoService
 
     /**
      * 查询就业信息发布列表
-     * 
+     *
      * @param bEmpinfo 就业信息发布
      * @return 就业信息发布
      */
@@ -46,7 +46,7 @@ public class BEmpinfoServiceImpl implements IBEmpinfoService
 
     /**
      * 新增就业信息发布
-     * 
+     *
      * @param bEmpinfo 就业信息发布
      * @return 结果
      */
@@ -59,7 +59,7 @@ public class BEmpinfoServiceImpl implements IBEmpinfoService
 
     /**
      * 修改就业信息发布
-     * 
+     *
      * @param bEmpinfo 就业信息发布
      * @return 结果
      */
@@ -72,7 +72,7 @@ public class BEmpinfoServiceImpl implements IBEmpinfoService
 
     /**
      * 批量删除就业信息发布
-     * 
+     *
      * @param empIds 需要删除的就业信息发布主键
      * @return 结果
      */
@@ -84,7 +84,7 @@ public class BEmpinfoServiceImpl implements IBEmpinfoService
 
     /**
      * 删除就业信息发布信息
-     * 
+     *
      * @param empId 就业信息发布主键
      * @return 结果
      */
@@ -92,5 +92,15 @@ public class BEmpinfoServiceImpl implements IBEmpinfoService
     public int deleteBEmpinfoByEmpId(Long empId)
     {
         return bEmpinfoMapper.deleteBEmpinfoByEmpId(empId);
+    }
+
+    /**
+     * 调整就业信息发布状态
+     *
+     * @param bEmpinfo 需要调整的主键
+     * @return 结果
+     */
+    public int modifiedBEmpinfoByEmpId(BEmpinfo bEmpinfo) {
+        return bEmpinfoMapper.modifiedBEmpinfoByEmpId(bEmpinfo);
     }
 }

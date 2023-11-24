@@ -2,20 +2,20 @@ package org.graduate.system.service.impl;
 
 import java.util.List;
 import org.graduate.common.utils.DateUtils;
+import org.graduate.system.service.IBTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.graduate.system.mapper.BTeacherMapper;
 import org.graduate.system.domain.BTeacher;
-import org.graduate.system.service.IBTeacherService;
 
 /**
  * 教师信息Service业务层处理
  * 
  * @author ruoyi
- * @date 2023-11-21
+ * @date 2023-11-24
  */
 @Service
-public class BTeacherServiceImpl implements IBTeacherService 
+public class BTeacherServiceImpl implements IBTeacherService
 {
     @Autowired
     private BTeacherMapper bTeacherMapper;
@@ -92,10 +92,5 @@ public class BTeacherServiceImpl implements IBTeacherService
     public int deleteBTeacherByTchrId(Long tchrId)
     {
         return bTeacherMapper.deleteBTeacherByTchrId(tchrId);
-    }
-
-    @Override
-    public List<BTeacher> selectBTeacherAll() {
-        return bTeacherMapper.selectBTeacherAll();
     }
 }

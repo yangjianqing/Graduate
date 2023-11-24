@@ -1,15 +1,13 @@
 package org.graduate.system.service;
 
 import java.util.List;
-
-import org.graduate.system.domain.BCompany;
 import org.graduate.system.domain.BTeacher;
 
 /**
  * 教师信息Service接口
  * 
  * @author ruoyi
- * @date 2023-11-21
+ * @date 2023-11-24
  */
 public interface IBTeacherService 
 {
@@ -60,10 +58,4 @@ public interface IBTeacherService
      * @return 结果
      */
     public int deleteBTeacherByTchrId(Long tchrId);
-
-    /**
-     * 查询所有老师
-     * @return
-     */
-    public List<BTeacher> selectBTeacherAll();
 }

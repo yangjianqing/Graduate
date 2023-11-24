@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.graduate.system.mapper.BEmpinfoMapper">
-    
+
     <resultMap type="BEmpinfo" id="BEmpinfoResult">
         <result property="empId"    column="emp_id"    />
         <result property="cName"    column="c_name"    />
@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectBEmpinfoList" parameterType="BEmpinfo" resultMap="BEmpinfoResult">
         <include refid="selectBEmpinfoVo"/>
-        <where>  
+        <where>
             <if test="cName != null  and cName != ''"> and c_name = #{cName}</if>
             <if test="empName != null  and empName != ''"> and emp_name like concat('%', #{empName}, '%')</if>
             <if test="empQuantity != null "> and emp_quantity &gt;= #{empQuantity}</if>
@@ -37,12 +37,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="empStatus != null  and empStatus != ''"> and emp_status = #{empStatus}</if>
         </where>
     </select>
-    
+
     <select id="selectBEmpinfoByEmpId" parameterType="Long" resultMap="BEmpinfoResult">
         <include refid="selectBEmpinfoVo"/>
         where emp_id = #{empId}
     </select>
-        
+
     <insert id="insertBEmpinfo" parameterType="BEmpinfo" useGeneratedKeys="true" keyProperty="empId">
         insert into b_empinfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null">update_time,</if>
             <if test="empInfo != null">emp_info,</if>
             <if test="empStatus != null">emp_status,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="cName != null">#{cName},</if>
             <if test="empName != null">#{empName},</if>
@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null">#{updateTime},</if>
             <if test="empInfo != null">#{empInfo},</if>
             <if test="empStatus != null">#{empStatus},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateBEmpinfo" parameterType="BEmpinfo">
@@ -95,7 +95,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="empInfo != null">emp_info = #{empInfo},</if>
-            <if test="empStatus != null">emp_status = #{empStatus},</if>
+            <if test="empStatus == 0">emp_status = '1',</if>
+        </trim>
+        where emp_id = #{empId}
+    </update>
+
+    <update id="modifiedBEmpinfoByEmpId" parameterType="BEmpinfo">
+        update b_empinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="empStatus == 1">emp_status = '0',</if>
+            <if test="empStatus == 0">emp_status = '1',</if>
         </trim>
         where emp_id = #{empId}
     </update>
@@ -105,7 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteBEmpinfoByEmpIds" parameterType="String">
-        delete from b_empinfo where emp_id in 
+        delete from b_empinfo where emp_id in
         <foreach item="empId" collection="array" open="(" separator="," close=")">
             #{empId}
         </foreach>

@@ -101,4 +101,18 @@ public class BEmpinfoController extends BaseController
     {
         return toAjax(bEmpinfoService.deleteBEmpinfoByEmpIds(empIds));
     }
+
+    /**
+     * 调整就业信息发布状态
+     */
+    @PreAuthorize("@ss.hasPermi('system:empinfo:modified')")
+    @Log(title = "就业信息发布", businessType = BusinessType.UPDATE)
+    @PutMapping("/{empId}/{empStatus}")
+    public AjaxResult modified(@PathVariable Long empId, @PathVariable String empStatus)
+    {
+        BEmpinfo empinfo = new BEmpinfo();
+        empinfo.setEmpId(empId);
+        empinfo.setEmpStatus(empStatus);
+        return toAjax(bEmpinfoService.modifiedBEmpinfoByEmpId(empinfo));
+    }
 }

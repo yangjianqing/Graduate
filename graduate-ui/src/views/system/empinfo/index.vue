@@ -1,14 +1,32 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="就业岗位" prop="empName">
-        <el-input
-          v-model="queryParams.empName"
-          placeholder="请输入要查询的岗位"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+
+      <el-form-item label="公司名称" prop="cName">
+        <el-select v-model="queryParams.cName"
+                   :data="companyList"
+                   placeholder="请选择要查询的公司" clearable @keyup.enter.native="handleQuery">
+        <el-option v-for="(cName,index) in companyList"
+                   :key="index"
+                   :label="cName"
+                   :value="cName"/>
+          </el-select>
       </el-form-item>
+
+      <el-form-item label="所属地区" prop="cAddress">
+        <el-select
+          v-model="queryParams.cAddress"
+          :data="cAddressList"
+          placeholder="请选择公司所属地区" clearable @keyup.enter.native="handleQuery">
+                <el-option
+                  v-for="(cAddress,index) in cAddressList"
+                  :key="index"
+                  :label="cAddress"
+                  :value="cAddress"
+                  />
+          </el-select>
+      </el-form-item>
+
       <el-form-item label="招聘人数" prop="empQuantity">
         <el-input
           v-model="queryParams.empQuantity"
@@ -50,29 +68,8 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:empinfo:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['system:empinfo:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['system:empinfo:remove']"
-        >删除</el-button>
+        >新增
+        </el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -82,40 +79,53 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['system:empinfo:export']"
-        >导出</el-button>
+        >导出
+        </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="empinfoList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" align="center" prop="empId" />
-      <el-table-column label="公司名称" align="center" prop="cName" />
-      <el-table-column label="就业岗位" align="center" prop="empName" />
-      <el-table-column label="职位描述" align="center" prop="empDes" />
-      <el-table-column label="招聘人数" align="center" prop="empQuantity" />
-      <el-table-column label="薪资标准" align="center" prop="empPay" />
-      <el-table-column label="福利待遇" align="center" prop="empBonus" />
-      <el-table-column label="工作内容" align="center" prop="empConten" />
-      <el-table-column label="上岗需求" align="center" prop="empReq" />
-      <el-table-column label="联系方式" align="center" prop="cPhone" />
-      <el-table-column label="公司地址" align="center" prop="cAddress" />
-      <el-table-column label="添加时间" align="center" prop="createTime" width="180">
+      <el-table-column type="selection" width="50" align="center"/>
+      <el-table-column label="序号" align="center" prop="empId"/>
+      <el-table-column label="公司名称" align="center" prop="cName"/>
+      <el-table-column label="就业岗位" align="center" prop="empName"/>
+      <el-table-column label="职位描述" align="center" prop="empDes"/>
+      <el-table-column label="招聘人数" align="center" prop="empQuantity"/>
+      <el-table-column label="薪资标准" align="center" prop="empPay"/>
+      <el-table-column label="福利待遇" align="center" prop="empBonus"/>
+      <el-table-column label="工作内容" align="center" prop="empConten"/>
+      <el-table-column label="上岗需求" align="center" prop="empReq"/>
+      <el-table-column label="联系方式" align="center" :min-width="100" prop="cPhone"/>
+      <el-table-column label="公司地址" align="center" prop="cAddress"/>
+      <el-table-column label="添加时间" align="center" prop="createTime" width="100">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="最后修改时间" align="center" prop="updateTime" width="180">
+      <el-table-column label="最后修改时间" align="center" prop="updateTime" width="100">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="就业信息详情" align="center" prop="empInfo" />
-      <el-table-column label="发布状态" align="center" prop="empStatus">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.b_empinfo" :value="scope.row.empStatus"/>
+      <el-table-column label="详情信息" align="center" prop="empInfo" tooltip-effect="light">
+        <template slot-scope="{ row }">
+          <el-tooltip class="item" effect="light" :content="row.empInfo" placement="left" popper-class="tooltip-width">
+            <div style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; max-width: 200px; overflow: hidden;">
+              {{ row.empInfo }}
+            </div>
+          </el-tooltip>
         </template>
       </el-table-column>
+
+      <el-table-column label="发布状态" align="center" prop="empStatus">
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.empStatus==='1'" :active-value="true" :inactive-value="false"
+                     active-color="#00FF00" inactive-color="#CCCCCC" @change="handleModified(scope.row)">
+          </el-switch>
+        </template>
+      </el-table-column>
+
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -124,14 +134,8 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:empinfo:edit']"
-          >修改</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['system:empinfo:remove']"
-          >删除</el-button>
+          >修改
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -143,57 +147,61 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-
     <!-- 添加或修改就业信息发布对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="就业岗位" prop="empName">
-          <el-input v-model="form.empName" placeholder="请输入就业岗位" />
+        <el-form-item label="公司名称" prop="cName">
+          <el-input v-model="form.cName" placeholder="请输入公司名称"/>
         </el-form-item>
-        <el-form-item label="职位描述" prop="empDes">
-          <el-input v-model="form.empDes" placeholder="请输入职位描述" />
-        </el-form-item>
-        <el-form-item label="招聘人数" prop="empQuantity">
-          <el-input v-model="form.empQuantity" placeholder="请输入招聘人数" />
-        </el-form-item>
-        <el-form-item label="薪资标准" prop="empPay">
-          <el-input v-model="form.empPay" placeholder="请输入薪资标准" />
-        </el-form-item>
-        <el-form-item label="福利待遇" prop="empBonus">
-          <el-input v-model="form.empBonus" placeholder="请输入福利待遇" />
-        </el-form-item>
-        <el-form-item label="工作内容" prop="empConten">
-          <el-input v-model="form.empConten" placeholder="请输入工作内容" />
-        </el-form-item>
-        <el-form-item label="上岗需求" prop="empReq">
-          <el-input v-model="form.empReq" placeholder="请输入上岗需求" />
+        <el-form-item label="公司地址" prop="cAddress">
+          <el-input v-model="form.cAddress" placeholder="请输入公司地址"/>
         </el-form-item>
         <el-form-item label="联系方式" prop="cPhone">
-          <el-input v-model="form.cPhone" placeholder="请输入联系方式" />
+          <el-input v-model="form.cPhone" placeholder="请输入联系方式"/>
         </el-form-item>
-        <el-form-item label="就业信息详情" prop="empInfo">
-          <el-input v-model="form.empInfo" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="就业岗位" prop="empName">
+          <el-input v-model="form.empName" placeholder="请输入就业岗位"/>
         </el-form-item>
-        <el-form-item label="发布状态">
-          <el-radio-group v-model="form.empStatus">
-            <el-radio
-              v-for="dict in dict.type.b_empinfo"
-              :key="dict.value"
-:label="dict.value"
-            >{{dict.label}}</el-radio>
-          </el-radio-group>
+        <el-form-item label="职位描述" prop="empDes">
+          <el-input v-model="form.empDes" placeholder="请输入职位描述"/>
+        </el-form-item>
+        <el-form-item label="招聘人数" prop="empQuantity">
+          <el-input v-model="form.empQuantity" placeholder="请输入招聘人数"/>
+        </el-form-item>
+        <el-form-item label="薪资标准" prop="empPay">
+          <el-input v-model="form.empPay" placeholder="请输入薪资标准"/>
+        </el-form-item>
+        <el-form-item label="福利待遇" prop="empBonus">
+          <el-input v-model="form.empBonus" placeholder="请输入福利待遇"/>
+        </el-form-item>
+        <el-form-item label="工作内容" prop="empConten">
+          <el-input v-model="form.empConten" placeholder="请输入工作内容"/>
+        </el-form-item>
+        <el-form-item label="上岗需求" prop="empReq">
+          <el-input v-model="form.empReq" placeholder="请输入上岗需求"/>
+        </el-form-item>
+        <el-form-item label="详情信息" prop="empInfo">
+          <el-input v-model="form.empInfo" type="textarea" :autosize="{ minRows: 2, maxRows: 12 }" placeholder="请输入内容"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="submitForm">发 布</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
-
+<style>
+.tooltip-width{
+  max-width: 600px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #00afff;
+}
+</style>
 <script>
-import { listEmpinfo, getEmpinfo, delEmpinfo, addEmpinfo, updateEmpinfo } from "@/api/system/empinfo";
+import {addEmpinfo, getEmpinfo, listEmpinfo, modifiedEmpinfo, updateEmpinfo} from "@/api/system/empinfo";
+import {listCompany} from "@/api/system/company";
 
 export default {
   name: "Empinfo",
@@ -214,6 +222,8 @@ export default {
       total: 0,
       // 就业信息发布表格数据
       empinfoList: [],
+      companyList: [],
+      cAddressList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -232,12 +242,13 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {
-      }
+      rules: {}
     };
   },
   created() {
     this.getList();
+    this.getCompanyList();
+    this.getAddressList();
   },
   methods: {
     /** 查询就业信息发布列表 */
@@ -247,6 +258,34 @@ export default {
         this.empinfoList = response.rows;
         this.total = response.total;
         this.loading = false;
+      });
+    },
+    getCompanyList() {
+      this.loading = true;
+      listEmpinfo(this.queryParams).then(response => {
+        this.empinfoList = response.rows;
+        this.total = response.total;
+        this.loading = false;
+        /** 公司去重 **/
+        const companySet = new Set();
+        this.empinfoList.forEach(empinfo => {
+          companySet.add(empinfo.cName);
+        });
+        this.companyList = Array.from(companySet);
+      });
+    },
+    getAddressList() {
+      this.loading = true;
+      listEmpinfo(this.queryParams).then(response => {
+        this.empinfoList = response.rows;
+        this.total = response.total;
+        this.loading = false;
+        /** 地址去重 **/
+        const addressSet = new Set();
+        this.empinfoList.forEach(empinfo => {
+          addressSet.add(empinfo.cAddress);
+        });
+        this.cAddressList = Array.from(addressSet);
       });
     },
     // 取消按钮
@@ -271,7 +310,7 @@ export default {
         createTime: null,
         updateTime: null,
         empInfo: null,
-        empStatus: "0"
+        empStatus: "1"
       };
       this.resetForm("form");
     },
@@ -288,7 +327,7 @@ export default {
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.empId)
-      this.single = selection.length!==1
+      this.single = selection.length !== 1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -327,15 +366,20 @@ export default {
         }
       });
     },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const empIds = row.empId || this.ids;
-      this.$modal.confirm('是否确认删除就业信息发布编号为"' + empIds + '"的数据项？').then(function() {
-        return delEmpinfo(empIds);
-      }).then(() => {
+    /** 调整按钮操作 */
+    handleModified(row) {
+      const empId = row.empId;
+      const empStatus = row.empStatus;
+      modifiedEmpinfo(empId, empStatus).then(response => {
+        if (empStatus === "0") {
+          this.$modal.msgSuccess("发布成功");
+        } else {
+          // this.$modal.msgSuccess("下架成功");
+          this.$message({message:"下架成功",type:"info"});
+        }
+        this.open = false;
         this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
+      });
     },
     /** 导出按钮操作 */
     handleExport() {

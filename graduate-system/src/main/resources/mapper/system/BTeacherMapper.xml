@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="BTeacher" id="BTeacherResult">
         <result property="tchrId"    column="tchr_id"    />
         <result property="tchrNum"    column="tchr_num"    />
-        <result property="schoolName"    column="school_name"    />
+        <result property="sId"    column="s_id"    />
         <result property="tchrName"    column="tchr_name"    />
         <result property="tchrGender"    column="tchr_gender"    />
         <result property="tchrAge"    column="tchr_age"    />
@@ -19,14 +19,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectBTeacherVo">
-        select tchr_id, tchr_num, school_name, tchr_name, tchr_gender, tchr_age, tchr_img, tchr_phone, create_time, update_time, tchr_status from b_teacher
+        select tchr_id, tchr_num, s_id, tchr_name, tchr_gender, tchr_age, tchr_img, tchr_phone, create_time, update_time, tchr_status from b_teacher
     </sql>
 
     <select id="selectBTeacherList" parameterType="BTeacher" resultMap="BTeacherResult">
         <include refid="selectBTeacherVo"/>
         <where>  
-            <if test="schoolName != null  and schoolName != ''"> and school_name = #{schoolName}</if>
+            <if test="tchrNum != null "> and tchr_num = #{tchrNum}</if>
+            <if test="sId != null "> and s_id = #{sId}</if>
             <if test="tchrName != null  and tchrName != ''"> and tchr_name like concat('%', #{tchrName}, '%')</if>
+            <if test="tchrGender != null  and tchrGender != ''"> and tchr_gender = #{tchrGender}</if>
+            <if test="tchrAge != null "> and tchr_age = #{tchrAge}</if>
+            <if test="tchrImg != null  and tchrImg != ''"> and tchr_img = #{tchrImg}</if>
+            <if test="tchrPhone != null "> and tchr_phone = #{tchrPhone}</if>
             <if test="tchrStatus != null  and tchrStatus != ''"> and tchr_status = #{tchrStatus}</if>
         </where>
     </select>
@@ -35,26 +40,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectBTeacherVo"/>
         where tchr_id = #{tchrId}
     </select>
-
-
-    <select id="selectBTeacherListById" resultMap="BTeacherResult" parameterType="list">
-        <include refid="selectBTeacherVo"/>
-        where tchr_id in
-        <foreach item="tchrId" collection="list" open="(" separator="," close=")">
-            #{tchrId}
-        </foreach>
-    </select>
-
-    <select id="selectBTeacherAll"  resultMap="BTeacherResult">
-        <include refid="selectBTeacherVo"/>
-
-    </select>
-
+        
     <insert id="insertBTeacher" parameterType="BTeacher" useGeneratedKeys="true" keyProperty="tchrId">
         insert into b_teacher
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="tchrNum != null">tchr_num,</if>
-            <if test="schoolName != null">school_name,</if>
+            <if test="sId != null">s_id,</if>
             <if test="tchrName != null">tchr_name,</if>
             <if test="tchrGender != null">tchr_gender,</if>
             <if test="tchrAge != null">tchr_age,</if>
@@ -66,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="tchrNum != null">#{tchrNum},</if>
-            <if test="schoolName != null">#{schoolName},</if>
+            <if test="sId != null">#{sId},</if>
             <if test="tchrName != null">#{tchrName},</if>
             <if test="tchrGender != null">#{tchrGender},</if>
             <if test="tchrAge != null">#{tchrAge},</if>
@@ -82,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update b_teacher
         <trim prefix="SET" suffixOverrides=",">
             <if test="tchrNum != null">tchr_num = #{tchrNum},</if>
-            <if test="schoolName != null">school_name = #{schoolName},</if>
+            <if test="sId != null">s_id = #{sId},</if>
             <if test="tchrName != null">tchr_name = #{tchrName},</if>
             <if test="tchrGender != null">tchr_gender = #{tchrGender},</if>
             <if test="tchrAge != null">tchr_age = #{tchrAge},</if>

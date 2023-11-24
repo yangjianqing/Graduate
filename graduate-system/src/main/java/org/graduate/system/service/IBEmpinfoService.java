@@ -58,4 +58,12 @@ public interface IBEmpinfoService
      * @return 结果
      */
     public int deleteBEmpinfoByEmpId(Long empId);
+
+    /**
+     * 调整就业信息发布状态
+     *
+     * @param bEmpinfo 需要调整的主键
+     * @return 结果
+     */
+    public int modifiedBEmpinfoByEmpId(BEmpinfo bEmpinfo);
 }
