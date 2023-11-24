@@ -26,7 +26,7 @@
 <!--        />-->
 <!--      </el-form-item>-->
       <el-form-item label="所属院校" prop="sId">
-        <el-select v-model="queryParams.sId" placeholder="请选择学校" clearable @keyup.enter.native="handleQuery">
+        <el-select v-model="queryParams.sId" placeholder="请选择学校" clearable filterable @keyup.enter.native="handleQuery">
           <el-option v-for="s in schoolList"
                      :key="s.sId"
                      :label="s.sName"

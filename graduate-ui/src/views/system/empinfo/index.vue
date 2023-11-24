@@ -5,7 +5,7 @@
       <el-form-item label="公司名称" prop="cName">
         <el-select v-model="queryParams.cName"
                    :data="companyList"
-                   placeholder="请选择要查询的公司" clearable @keyup.enter.native="handleQuery">
+                   placeholder="请选择要查询的公司" clearable filterable @keyup.enter.native="handleQuery">
         <el-option v-for="(cName,index) in companyList"
                    :key="index"
                    :label="cName"
@@ -17,7 +17,7 @@
         <el-select
           v-model="queryParams.cAddress"
           :data="cAddressList"
-          placeholder="请选择公司所属地区" clearable @keyup.enter.native="handleQuery">
+          placeholder="请选择公司所属地区" clearable filterable @keyup.enter.native="handleQuery">
                 <el-option
                   v-for="(cAddress,index) in cAddressList"
                   :key="index"
