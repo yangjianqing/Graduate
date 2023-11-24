@@ -287,7 +287,7 @@
 </template>
 
 <script>
-import { listStudent, getStudent, delStudent, addStudent, updateStudent } from "@/api/system/student";
+import { listStudent, getStudent, delStudent, addStudent, updateStudent,initStudent } from "@/api/system/student";
 
 export default {
   name: "Student",
@@ -341,8 +341,20 @@ export default {
   },
   created() {
     this.getList();
+    this.init();
   },
   methods: {
+    // 页面加载初始化数据
+    init(){
+      initStudent().then(response => {
+        console.log(response)
+        this.companys=response.companys;
+        this.teachers=response.teachers;
+        this.clasei=response.clasei;
+        this.schools=response.schools;
+      });
+    },
+
     /** 查询学生管理列表 */
     getList() {
       this.loading = true;
@@ -402,10 +414,6 @@ export default {
       this.reset();
       const sId = row.sId || this.ids
       getStudent(sId).then(response => {
-        this.companys=response.companys;
-        this.teachers=response.teachers;
-        this.clasei=response.clasei;
-        this.schools=response.schools;
         this.form = response.data;
         this.open = true;
         this.title = "修改学生管理";

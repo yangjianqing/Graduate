@@ -117,4 +117,15 @@ public class BStudentController extends BaseController
     {
         return toAjax(bStudentService.deleteBStudentBySIds(sIds));
     }
+
+    @GetMapping(value = "/initStudent")
+    public AjaxResult initStudent()
+    {
+        AjaxResult success = AjaxResult.success();
+        success.put("companys",iBCompanyService.selectBCompanyAll());
+        success.put("teachers",ibTeacherService.selectBTeacherAll());
+        success.put("clasei",ibClassService.selectBClassAll());
+        success.put("schools",ibSchoolService.selectBSchoolAll());
+        return success;
+    }
 }

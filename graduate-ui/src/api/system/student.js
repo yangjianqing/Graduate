@@ -17,6 +17,8 @@ export function getStudent(sId) {
   })
 }
 
+
+
 // 新增学生管理
 export function addStudent(data) {
   return request({
@@ -40,5 +42,12 @@ export function delStudent(sId) {
   return request({
     url: '/system/student/' + sId,
     method: 'delete'
+  })
+}
+//初始化学生管理所需数据
+export function initStudent() {
+  return request({
+    url: '/system/student/initStudent',
+    method: 'get'
   })
 }
