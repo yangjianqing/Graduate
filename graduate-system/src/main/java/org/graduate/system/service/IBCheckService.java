@@ -1,13 +1,14 @@
 package org.graduate.system.service;
 
-import java.util.List;
 import org.graduate.system.domain.BCheck;
+
+import java.util.List;
 
 /**
  * 签到Service接口
  * 
  * @author ruoyi
- * @date 2023-11-22
+ * @date 2023-11-24
  */
 public interface IBCheckService 
 {
@@ -58,4 +59,5 @@ public interface IBCheckService
      * @return 结果
      */
     public int deleteBCheckByCkId(Long ckId);
+
 }

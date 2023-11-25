@@ -12,7 +12,7 @@ import org.graduate.common.core.domain.BaseEntity;
  * 签到对象 b_check
  * 
  * @author ruoyi
- * @date 2023-11-22
+ * @date 2023-11-24
  */
 public class BCheck extends BaseEntity
 {
@@ -20,6 +20,29 @@ public class BCheck extends BaseEntity
 
     /** Id */
     private Long ckId;
+
+    public String getcName() {
+        return cName;
+    }
+
+    public void setcName(String cName) {
+        this.cName = cName;
+    }
+
+    /** 班级名称 */
+    private String cName;
+
+    public String getComName() {
+        return comName;
+    }
+
+    public void setComName(String comName) {
+        this.comName = comName;
+    }
+
+    /** 公司名称 */
+    private String comName;
+
 
     /** 姓名 */
     @Excel(name = "姓名")
@@ -46,22 +69,13 @@ public class BCheck extends BaseEntity
     @Excel(name = "班级")
     private Long bClass;
 
-    public String getbClassName() {
-        return bClassName;
-    }
-
-    public void setbClassName(String bClassName) {
-        this.bClassName = bClassName;
-    }
-
-    /** 班级 */
-    @Excel(name = "班级")
-    private String bClassName;
-
-
     /** 类型 */
     @Excel(name = "类型")
     private String ckTpye;
+
+    /** 公司Id */
+    @Excel(name = "公司Id")
+    private Long cId;
 
     public void setCkId(Long ckId) 
     {
@@ -135,6 +149,15 @@ public class BCheck extends BaseEntity
     {
         return ckTpye;
     }
+    public void setcId(Long cId) 
+    {
+        this.cId = cId;
+    }
+
+    public Long getcId() 
+    {
+        return cId;
+    }
 
     @Override
     public String toString() {
@@ -147,6 +170,7 @@ public class BCheck extends BaseEntity
             .append("ckLatitude", getCkLatitude())
             .append("bClass", getbClass())
             .append("ckTpye", getCkTpye())
+            .append("cId", getcId())
             .toString();
     }
 }

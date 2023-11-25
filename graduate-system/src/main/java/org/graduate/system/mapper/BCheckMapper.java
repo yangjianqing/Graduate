@@ -1,13 +1,14 @@
 package org.graduate.system.mapper;
 
-import java.util.List;
 import org.graduate.system.domain.BCheck;
+
+import java.util.List;
 
 /**
  * 签到Mapper接口
  * 
  * @author ruoyi
- * @date 2023-11-22
+ * @date 2023-11-24
  */
 public interface BCheckMapper 
 {

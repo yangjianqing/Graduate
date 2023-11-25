@@ -89,7 +89,7 @@
 
     <el-table v-loading="loading" :data="companyList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="公司Id" align="center" prop="cId" />
+      <el-table-column label="序号" align="center" prop="cId" />
       <el-table-column label="公司名称" align="center" prop="cName" />
       <el-table-column label="成立时间" align="center" prop="cData" width="180">
         <template slot-scope="scope">
@@ -134,7 +134,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
