@@ -76,12 +76,7 @@ public class BStudentController extends BaseController
     @GetMapping(value = "/{sId}")
     public AjaxResult getInfo(@PathVariable("sId") Long sId)
     {
-        AjaxResult success = AjaxResult.success(bStudentService.selectBStudentBySId(sId));
-        success.put("companys",iBCompanyService.selectBCompanyAll());
-        success.put("teachers",ibTeacherService.selectBTeacherAll());
-        success.put("clasei",ibClassService.selectBClassAll());
-        success.put("schools",ibSchoolService.selectBSchoolAll());
-        return success;
+        return AjaxResult.success(bStudentService.selectBStudentBySId(sId));
     }
 
     /**

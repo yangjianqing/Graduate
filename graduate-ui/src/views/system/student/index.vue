@@ -34,7 +34,7 @@
 <!--      </el-form-item>-->
 
       <el-form-item label="学校">
-        <el-select v-model="form.schools"  clearable placeholder="请选择学校">
+        <el-select v-model="queryParams.schoolId" :data="schools"  clearable placeholder="请选择学校">
           <el-option
             v-for="item in schools"
             :key="item.sId"
@@ -54,7 +54,7 @@
 <!--      </el-form-item>-->
 
       <el-form-item label="公司">
-        <el-select v-model="form.companys" clearable placeholder="请选择公司">
+        <el-select v-model="queryParams.compenyId" :data="companys" clearable placeholder="请选择公司" @keyup.enter.native="handleQuery">
           <el-option
             v-for="item in companys"
             :key="item.cId"
@@ -83,8 +83,9 @@
 <!--          @keyup.enter.native="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
+
       <el-form-item label="班级">
-        <el-select v-model="form.clasei" clearable placeholder="请选择班级">
+        <el-select v-model="queryParams.classId" :data="clasei" clearable placeholder="请选择班级" @keyup.enter.native="handleQuery">
           <el-option
             v-for="item in clasei"
             :key="item.cId"
@@ -166,12 +167,12 @@
       </el-table-column>
       <el-table-column label="辅导员" align="center" prop="teacherName" />
       <el-table-column label="班级" align="center" prop="className" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="创建时间" align="center" prop="createTime" width="118">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="修改时间" align="center" prop="updateTime" width="180">
+      <el-table-column label="修改时间" align="center" prop="updateTime" width="118">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>
@@ -223,8 +224,12 @@
           <el-input v-model="form.sNumbers" placeholder="请输入联系方式" />
         </el-form-item>
 
-        <el-form-item label="学校">
-          <el-select v-model="form.schools" clearable placeholder="请选择学校">
+<!--        <el-form-item label="学校" prop="schoolId">-->
+<!--          <el-input v-model="form.schoolId" placeholder="请输入学校" />-->
+<!--        </el-form-item>-->
+
+        <el-form-item label="学校" prop="schoolId">
+          <el-select v-model="form.schoolId" :data="schools" clearable placeholder="请选择学校">
             <el-option
               v-for="item in schools"
               :key="item.sId"
@@ -234,8 +239,12 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="公司">
-          <el-select v-model="form.companys" clearable placeholder="请选择公司">
+<!--        <el-form-item label="公司" prop="compenyId">-->
+<!--          <el-input v-model="form.compenyId" placeholder="请输入公司" />-->
+<!--        </el-form-item>-->
+
+        <el-form-item label="公司" prop="compenyId">
+          <el-select v-model="form.compenyId" :data="companys" clearable placeholder="请选择公司">
             <el-option
               v-for="item in companys"
               :key="item.cId"
@@ -255,8 +264,12 @@
           </el-radio-group>
         </el-form-item>
 
-        <el-form-item label="辅导员">
-          <el-select v-model="form.teachers" clearable placeholder="请选择辅导员">
+<!--        <el-form-item label="辅导员" prop="teacherId">-->
+<!--          <el-input v-model="form.teacherId" placeholder="请输入辅导员" />-->
+<!--        </el-form-item>-->
+
+        <el-form-item label="辅导员" prop="teacherId">
+          <el-select v-model="form.teacherId" :data="teachers" clearable placeholder="请选择辅导员">
             <el-option
               v-for="item in teachers"
               :key="item.tchrId"
@@ -266,8 +279,12 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="班级">
-          <el-select v-model="form.clasei" clearable placeholder="请选择班级">
+<!--        <el-form-item label="班级" prop="classId">-->
+<!--          <el-input v-model="form.classId" placeholder="请输入班级" />-->
+<!--        </el-form-item>-->
+
+        <el-form-item label="班级" prop="classId">
+          <el-select v-model="form.classId" :data="clasei" clearable placeholder="请选择班级">
             <el-option
               v-for="item in clasei"
               :key="item.cId"
@@ -347,11 +364,11 @@ export default {
     // 页面加载初始化数据
     init(){
       initStudent().then(response => {
-        console.log(response)
         this.companys=response.companys;
         this.teachers=response.teachers;
         this.clasei=response.clasei;
         this.schools=response.schools;
+        console.log(this.schools)
       });
     },
 

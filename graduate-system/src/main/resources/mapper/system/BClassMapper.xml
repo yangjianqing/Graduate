@@ -43,8 +43,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectBClassAll"  resultMap="BClassResult">
-        <include refid="selectBClassVo"/>
-
+        select c_id, c_number, c_name, teacher_id, c_phone, c_count, create_time, update_time from b_class
+        <where>
+            <if test="cNumber != null  and cNumber != ''"> and c_number = #{cNumber}</if>
+            <if test="cName != null  and cName != ''"> and c_name like concat('%', #{cName}, '%')</if>
+            <if test="teacherId != null "> and teacher_id = #{teacherId}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+        </where>
     </select>
 
     <insert id="insertBClass" parameterType="BClass" useGeneratedKeys="true" keyProperty="cId">

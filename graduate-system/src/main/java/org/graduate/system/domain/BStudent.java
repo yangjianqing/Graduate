@@ -103,7 +103,7 @@ public class BStudent extends BaseEntity
     @Excel(name = "班级")
     private String className;
 
-    public void setsId(Long sId) 
+    public void setsId(Long sId)
     {
         this.sId = sId;
     }

@@ -42,3 +42,11 @@ export function delClass(cId) {
     method: 'delete'
   })
 }
+
+//初始化班级管理所需数据
+export function listClasesi() {
+  return request({
+    url: '/system/class/listClasesi',
+    method: 'get'
+  })
+}

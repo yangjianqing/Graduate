@@ -73,10 +73,7 @@ public class BClassController extends BaseController
     @GetMapping(value = "/{cId}")
     public AjaxResult getInfo(@PathVariable("cId") Long cId)
     {
-        AjaxResult success = AjaxResult.success(bClassService.selectBClassByCId(cId));
-        success.put("teachers",ibTeacherService.selectBTeacherAll());
-        success.put("clasei",ibClassService.selectBClassAll());
-        return success;
+        return AjaxResult.success(bClassService.selectBClassByCId(cId));
     }
 
     /**
@@ -111,5 +108,14 @@ public class BClassController extends BaseController
     public AjaxResult remove(@PathVariable Long[] cIds)
     {
         return toAjax(bClassService.deleteBClassByCIds(cIds));
+    }
+
+    @GetMapping(value = "/listClasesi")
+    public AjaxResult listClasesi()
+    {
+        AjaxResult success = AjaxResult.success();
+        success.put("teachers",ibTeacherService.selectBTeacherAll());
+        success.put("clasei",ibClassService.selectBClassAll());
+        return success;
     }
 }
