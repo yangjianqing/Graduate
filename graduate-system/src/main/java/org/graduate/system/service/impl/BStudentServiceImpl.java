@@ -1,9 +1,6 @@
 package org.graduate.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.graduate.common.utils.DateUtils;
 import org.graduate.system.domain.*;
@@ -51,71 +48,92 @@ public class BStudentServiceImpl implements IBStudentService
      * @return 学生管理
      */
     @Override
-    public List<BStudent> selectBStudentList(BStudent b_Student)
-    {
+    public List<BStudent> selectBStudentList(BStudent b_Student) {
         List<BStudent> bStudent = bStudentMapper.selectBStudentList(b_Student);
-        List<Long> lists = new ArrayList<>();
-        /**
-         * 公司姓名
-         **/
-        for(BStudent bc:bStudent) {
-            lists.add(bc.getCompenyId());
-        }
-        //获取到公司列表
-        List<BCompany> CompanyList= bCompanyMapper.selectBClassListCIds(lists);
-        //将列表转换成集合
-        Map<Long,BCompany> bCompanyMap = new HashMap<>();
-        for(BCompany b:CompanyList) {
-            bCompanyMap.put(b.getcId(),b);
+        Set<Long> companyIds = new HashSet<>();
+        Set<Long> teacherIds = new HashSet<>();
+        Set<Long> classIds = new HashSet<>();
+        Set<Long> schoolIds = new HashSet();
+
+        for (BStudent bc : bStudent) {
+            if(bc.getCompenyId() != null) {
+                companyIds.add(bc.getCompenyId());
+            }
+            if(bc.getTeacherId() != null) {
+                teacherIds.add(bc.getTeacherId());
+            }
+            if(bc.getClassId() != null) {
+                classIds.add(bc.getClassId());
+            }
+            if(bc.getSchoolId() != null) {
+                schoolIds.add(bc.getSchoolId());
+            }
         }
 
-        /**
-         * 教师姓名
-         **/
-        for(BStudent bc:bStudent) {
-            lists.add(bc.getTeacherId());
+        // 获取公司、教师、班级、学校列表
+        List<BCompany> CompanyList = new ArrayList<>();
+        if(!companyIds.isEmpty()) {
+            CompanyList = bCompanyMapper.selectBClassListCIds(new ArrayList<>(companyIds));
         }
-        //获取到教师列表
-        List<BTeacher> teacherList= bTeacherMapper.selectBTeacherListById(lists);
-        //将列表转换成集合
-        Map<Long,BTeacher> teacherMap = new HashMap<>();
-        for(BTeacher t:teacherList) {
-            teacherMap.put(t.getTchrId(),t);
+        List<BTeacher> teacherList = new ArrayList<>();
+        if(!teacherIds.isEmpty()) {
+            teacherList = bTeacherMapper.selectBTeacherListById(new ArrayList<>(teacherIds));
+        }
+        List<BClass> ClassList = new ArrayList<>();
+        if(!classIds.isEmpty()) {
+            ClassList = b_classMapper.selectBClassListCIds(new ArrayList<>(classIds));
+        }
+        List<BSchool> SchoolList = new ArrayList<>();
+        if(!schoolIds.isEmpty()) {
+            SchoolList = bSchoolMapper.selectBSchoolListSIds(new ArrayList<>(schoolIds));
         }
 
-        /**
-         * 班级姓名
-         **/
-        for(BStudent bc:bStudent) {
-            lists.add(bc.getClassId());
+        Map<Long, BCompany> bCompanyMap = new HashMap<>();
+        for (BCompany b : CompanyList) {
+            bCompanyMap.put(b.getcId(), b);
         }
-        //获取到班级列表
-        List<BClass> ClassList= b_classMapper.selectBClassListCIds(lists);
-        //将列表转换成集合
+
+        Map<Long, BTeacher> teacherMap = new HashMap<>();
+        for (BTeacher t : teacherList) {
+            teacherMap.put(t.getTchrId(), t);
+        }
+
         Map<Long, BClass> ClassMap = new HashMap<>();
-        for(BClass c:ClassList) {
-            ClassMap.put(c.getcId(),c);
-        }
-        /**
-         * 学校姓名
-         **/
-        for(BStudent bc:bStudent) {
-            lists.add(bc.getSchoolId());
-        }
-        //获取学校到列表
-        List<BSchool> SchoolList= bSchoolMapper.selectBSchoolListSIds(lists);
-        //将列表转换成集合
-        Map<Long,BSchool> SchoolMap = new HashMap<>();
-        for(BSchool b:SchoolList) {
-            SchoolMap.put(b.getsId(),b);
+        for (BClass c : ClassList) {
+            ClassMap.put(c.getcId(), c);
         }
 
-        //将map集合中 将名称取出 存入到list中
-        for(BStudent bc:bStudent) {
-            bc.setTeacherName(teacherMap.get(bc.getTeacherId()).getTchrName());
-            bc.setCompenyName(bCompanyMap.get(bc.getCompenyId()).getcName());
-            bc.setClassName(ClassMap.get(bc.getClassId()).getcName());
-            bc.setSchoolName(SchoolMap.get(bc.getSchoolId()).getsName());
+        Map<Long, BSchool> SchoolMap = new HashMap<>();
+        for (BSchool b : SchoolList) {
+            SchoolMap.put(b.getsId(), b);
+        }
+
+        // 设置学生的名称信息
+        for (BStudent bc : bStudent) {
+            if(bc.getTeacherId() != null) {
+                BTeacher teacher = teacherMap.get(bc.getTeacherId());
+                if(teacher != null) {
+                    bc.setTeacherName(teacher.getTchrName());
+                }
+            }
+            if(bc.getCompenyId() != null) {
+                BCompany company = bCompanyMap.get(bc.getCompenyId());
+                if(company != null) {
+                    bc.setCompenyName(company.getcName());
+                }
+            }
+            if(bc.getClassId() != null) {
+                BClass bClass = ClassMap.get(bc.getClassId());
+                if(bClass != null) {
+                    bc.setClassName(bClass.getcName());
+                }
+            }
+            if(bc.getSchoolId() != null) {
+                BSchool school = SchoolMap.get(bc.getSchoolId());
+                if(school != null) {
+                    bc.setSchoolName(school.getsName());
+                }
+            }
         }
         return bStudent;
     }
