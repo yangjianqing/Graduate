@@ -1,9 +1,6 @@
 package org.graduate.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.graduate.common.utils.DateUtils;
 import org.graduate.system.domain.BTeacher;
@@ -50,12 +47,17 @@ public class BClassServiceImpl implements IBClassService
     public List<BClass> selectBClassList(BClass bClass)
     {
         List<BClass> bClasses = bClassMapper.selectBClassList(bClass);
-        List<Long> lists = new ArrayList<>();
+        Set<Long> teacherIds = new HashSet<>();
         for(BClass bc:bClasses) {
-            lists.add(bc.getTeacherId());
+            if(bc.getTeacherId() != null) {
+                teacherIds.add(bc.getTeacherId());
+            }
         }
         //获取到教师列表
-        List<BTeacher> teacherList= bTeacherMapper.selectBTeacherListById(lists);
+        List<BTeacher> teacherList = new ArrayList<>();
+        if(!teacherIds.isEmpty()) {
+            teacherList = bTeacherMapper.selectBTeacherListById(new ArrayList<>(teacherIds));
+        }
         //将列表转换成集合
         Map<Long,BTeacher> teacherMap = new HashMap<>();
         for(BTeacher t:teacherList) {
@@ -63,7 +65,12 @@ public class BClassServiceImpl implements IBClassService
         }
         //将map集合中 教师名称取出 存入到list中
         for(BClass bc:bClasses) {
-            bc.setTeacherName(teacherMap.get(bc.getTeacherId()).getTchrName());
+            if(bc.getTeacherId() != null) {
+                BTeacher teacher = teacherMap.get(bc.getTeacherId());
+                if(teacher != null) {
+                    bc.setTeacherName(teacher.getTchrName());
+                }
+            }
         }
         return bClasses;
     }
