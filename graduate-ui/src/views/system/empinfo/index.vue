@@ -4,27 +4,32 @@
 
       <el-form-item label="公司名称" prop="cName">
         <el-select v-model="queryParams.cName"
-                   :data="companyList"
-                   placeholder="请选择要查询的公司" clearable filterable @keyup.enter.native="handleQuery">
-        <el-option v-for="(cName,index) in companyList"
-                   :key="index"
-                   :label="cName"
-                   :value="cName"/>
-          </el-select>
+                   :data="AllCompanyList"
+                   placeholder="请选择要查询的公司"
+                   clearable
+                   @keyup.enter.native="handleQuery"
+                   filterable
+                   :no-match-text="'没有关于此公司的招聘信息'">
+          <el-option v-for="(cName,index) in AllCompanyList"
+                     :key="index"
+                     :label="cName.label"
+                     :value="cName.value"/>
+        </el-select>
       </el-form-item>
 
       <el-form-item label="所属地区" prop="cAddress">
         <el-select
           v-model="queryParams.cAddress"
-          :data="cAddressList"
-          placeholder="请选择公司所属地区" clearable filterable @keyup.enter.native="handleQuery">
-                <el-option
-                  v-for="(cAddress,index) in cAddressList"
-                  :key="index"
-                  :label="cAddress"
-                  :value="cAddress"
-                  />
-          </el-select>
+          :data="AllAddressList"
+          placeholder="请选择公司所属地区" clearable @keyup.enter.native="handleQuery"
+          filterable
+          :no-match-text="'没有关于此地区的招聘信息'">
+          <el-option
+            v-for="(cAddress,index) in AllAddressList"
+            :key="index"
+            :label="cAddress.label"
+            :value="cAddress.value"/>
+        </el-select>
       </el-form-item>
 
       <el-form-item label="招聘人数" prop="empQuantity">
@@ -111,7 +116,8 @@
       <el-table-column label="详情信息" align="center" prop="empInfo" tooltip-effect="light">
         <template slot-scope="{ row }">
           <el-tooltip class="item" effect="light" :content="row.empInfo" placement="left" popper-class="tooltip-width">
-            <div style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; max-width: 200px; overflow: hidden;">
+            <div
+              style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; max-width: 200px; overflow: hidden;">
               {{ row.empInfo }}
             </div>
           </el-tooltip>
@@ -151,11 +157,21 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="公司名称" prop="cName">
-          <el-input v-model="form.cName" placeholder="请输入公司名称"/>
+          <el-autocomplete
+            class="inline-input"
+            v-model="form.cName"
+            :fetch-suggestions="querySearchOfCompany"
+            placeholder="请输入公司名称">
+          </el-autocomplete>
         </el-form-item>
         <el-form-item label="公司地址" prop="cAddress">
-          <el-input v-model="form.cAddress" placeholder="请输入公司地址"/>
+          <el-autocomplete
+            class="inline-input"
+            v-model="form.cAddress"
+            :fetch-suggestions="querySearchOfAddress"
+            placeholder="请输入公司地址"></el-autocomplete>
         </el-form-item>
+
         <el-form-item label="联系方式" prop="cPhone">
           <el-input v-model="form.cPhone" placeholder="请输入联系方式"/>
         </el-form-item>
@@ -192,7 +208,7 @@
   </div>
 </template>
 <style>
-.tooltip-width{
+.tooltip-width {
   max-width: 600px;
   font-size: 24px;
   font-weight: bold;
@@ -222,8 +238,8 @@ export default {
       total: 0,
       // 就业信息发布表格数据
       empinfoList: [],
-      companyList: [],
-      cAddressList: [],
+      AllAddressList: [],
+      AllCompanyList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -247,10 +263,24 @@ export default {
   },
   created() {
     this.getList();
-    this.getCompanyList();
-    this.getAddressList();
+    this.getAllList();
   },
   methods: {
+    querySearchOfAddress(queryString, cb) {
+      const restaurants = this.AllAddressList;
+      const results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+      cb(results);
+    },
+    querySearchOfCompany(queryString, cb) {
+      const restaurants = this.AllCompanyList;
+      const results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+      cb(results);
+    },
+    createFilter(queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
     /** 查询就业信息发布列表 */
     getList() {
       this.loading = true;
@@ -260,32 +290,21 @@ export default {
         this.loading = false;
       });
     },
-    getCompanyList() {
+    getAllList(){
       this.loading = true;
       listEmpinfo(this.queryParams).then(response => {
         this.empinfoList = response.rows;
         this.total = response.total;
         this.loading = false;
-        /** 公司去重 **/
+        /** 公司与地址去重 **/
+        const addressSet = new Set();
         const companySet = new Set();
         this.empinfoList.forEach(empinfo => {
+          addressSet.add(empinfo.cAddress);
           companySet.add(empinfo.cName);
         });
-        this.companyList = Array.from(companySet);
-      });
-    },
-    getAddressList() {
-      this.loading = true;
-      listEmpinfo(this.queryParams).then(response => {
-        this.empinfoList = response.rows;
-        this.total = response.total;
-        this.loading = false;
-        /** 地址去重 **/
-        const addressSet = new Set();
-        this.empinfoList.forEach(empinfo => {
-          addressSet.add(empinfo.cAddress);
-        });
-        this.cAddressList = Array.from(addressSet);
+        this.AllAddressList = Array.from(addressSet).map(address => ({"value": address, "address": address}));
+        this.AllCompanyList = Array.from(companySet).map(company => ({"value": company, "address": company}));
       });
     },
     // 取消按钮
@@ -375,7 +394,7 @@ export default {
           this.$modal.msgSuccess("发布成功");
         } else {
           // this.$modal.msgSuccess("下架成功");
-          this.$message({message:"下架成功",type:"info"});
+          this.$message({message: "下架成功", type: "info"});
         }
         this.open = false;
         this.getList();
