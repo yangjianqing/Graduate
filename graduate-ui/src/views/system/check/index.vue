@@ -66,7 +66,6 @@
           placeholder="请输入公司名称" clearable filterable @keyup.enter.native="handleQuery" style="width:170px">
         <el-option
           v-for="dict in companyList"
-
           :key="dict.cId"
           :label="dict.cName"
           :value="dict.cId"
@@ -142,16 +141,17 @@
           <span>{{getCalssName(scope.row.bClass)}}</span>
         </template>
       </el-table-column>
+      <el-table-column label="公司名称" align="center" prop="cId" >
+        <template slot-scope="scope">
+          <span>{{getCompanyName(scope.row.cId)}}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="类型" align="center" prop="ckTpye">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.b_check_type" :value="scope.row.ckTpye"/>
         </template>
       </el-table-column>
-      <el-table-column label="公司名称" align="center" prop="cId" >
-        <template slot-scope="scope">
-          <span>{{getCompany(scope.row.cId)}}</span>
-        </template>
-      </el-table-column>
+
 <!--      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">-->
 <!--        <template slot-scope="scope">-->
 <!--          <el-button-->
@@ -284,12 +284,14 @@ export default {
   },
   methods: {
     getCalssName(cId){
+      // console.log(cId);
       const  calss=this.classList.find(item =>item.cId ===cId);
       return calss ? calss.cName : '';
     },
-    getCompany(cId){
-      const  calss=this.companyList.find(item =>item.cId ===cId);
-      return calss ? calss.cName : '';
+    getCompanyName(cId){
+      console.log(cId);
+      const  company=this.companyList.find(item =>item.cId ===cId);
+      return company ? company.cName : '';
     },
     /** 查询签到列表 */
     getList() {

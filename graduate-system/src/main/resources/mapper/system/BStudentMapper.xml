@@ -45,6 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectBStudentVo"/>
         where s_id = #{sId}
     </select>
+
         
     <insert id="insertBStudent" parameterType="BStudent" useGeneratedKeys="true" keyProperty="sId">
         insert into b_student

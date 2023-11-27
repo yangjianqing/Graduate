@@ -13,10 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="ckLatitude"    column="ck_latitude"    />
         <result property="bClass"    column="b_class"    />
         <result property="ckTpye"    column="ck_tpye"    />
+        <result property="cId"    column="c_id"    />
     </resultMap>
 
     <sql id="selectBCheckVo">
-        select ck_id, ck_name, ck_time, ck_address, ck_longitude, ck_latitude, b_class, ck_tpye from b_check
+        select ck_id, ck_name, ck_time, ck_address, ck_longitude, ck_latitude, b_class, ck_tpye ,c_id from b_check
     </sql>
 
     <select id="selectBCheckList" parameterType="BCheck" resultMap="BCheckResult">
