@@ -1,0 +1,103 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body{    background-color: #f3f4f6;
+}
+.status-bar {
+    background-color: #0096AA; /* 状态栏的背景颜色 */
+    color: #ffffff; /* 状态栏中的文本颜色 */
+    height: 1rem; /* 状态栏的高度 */
+    font-size: 14px; /* 文本字体大小 */
+    width: 100%;
+    z-index: 9999; /* 设置层级较高，确保状态栏显示在顶部 */
+  }
+
+.mine{
+    display: flex;
+    width: 100%;
+    height: 3rem;
+    background-color: white;
+    font-size: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+  }
+.information{
+    display: flex;
+    width: 100%;
+    height: 5rem;
+    background-color: white;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.1rem;
+}
+.information img{
+    width: 50px;
+    height: 50px;
+    margin-left: 18px;
+    margin-right: 22px;
+}
+.select{
+    display: flex;
+    width: 100%;
+    height: 5rem;
+    margin-top: 21px;
+    background-color: white;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 1rem;
+}
+
+.select img{
+    width: 30px;
+    height: 30px;
+    color: black;
+}
+.peope{
+    display: flex;
+    width: 100%;
+    height: 4rem;
+    margin-top: 21px;
+    margin-bottom: 21px;
+    background-color: white;
+    align-items: center;
+    justify-content: space-between;
+}
+.peope img{
+    width: 37px;
+}
+.peope_select{
+    display: flex;
+    width: 100%;
+    height: 4rem;
+    background-color: white;
+    align-items: center;
+    justify-content: space-between;
+}
+.peope_select img{
+    width: 35px;
+}
+
+.endqiehuan{
+    display: flex;
+    width: 100%;
+    background-color: white;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+  .endqiehuan a{
+    color: black;
+    /* background-color: #0096AA; */
+    font-size: 2rem;
+    text-decoration: none;
+  }
+  .endqiehuan a:hover{
+    color: white;
+    background-color: #0096AA;
+  }
+
+

@@ -1,0 +1,30 @@
+.toolbar {
+    background-color: #fbfdfd;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 3.3rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.toolbar a {
+    color: #8d8d8f;
+    text-decoration: none;
+}
+
+.toolbar a span {
+    display: block;
+    font-size: 1rem;
+}
+
+.toolbar a i {
+    font-size: 1.5rem;
+}
+
+.toolbar a.active {
+    color: #1DB0AC;
+}
