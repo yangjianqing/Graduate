@@ -111,7 +111,7 @@
 
     <el-table v-loading="loading" :data="classList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="班级id" align="center" prop="cId" />
+      <el-table-column label="班级ID" align="center" prop="cId" />
       <el-table-column label="班级编号" align="center" prop="cNumber" />
       <el-table-column label="班级名称" align="center" prop="cName" />
       <el-table-column label="辅导员" align="center" prop="teacherName" />

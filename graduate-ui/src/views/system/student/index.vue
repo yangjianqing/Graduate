@@ -149,7 +149,7 @@
 
     <el-table v-loading="loading" :data="studentList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="学生id" align="center" prop="sId" />
+      <el-table-column label="学生ID" align="center" prop="sId" />
       <el-table-column label="学生学号" align="center" prop="sNumber" />
       <el-table-column label="学生姓名" align="center" prop="sName" />
       <el-table-column label="性别" align="center" prop="sGender">
