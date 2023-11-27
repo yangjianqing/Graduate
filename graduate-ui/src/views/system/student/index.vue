@@ -28,13 +28,8 @@
         </el-select>
       </el-form-item>
 
-<!--      <el-form-item label="学校" >-->
-<!--        <el-input-->
-<!--          v-model="queryParams.schoolId" placeholder="请输入学校" clearable />-->
-<!--      </el-form-item>-->
-
-      <el-form-item label="学校">
-        <el-select v-model="queryParams.schoolId" :data="schools"  clearable placeholder="请选择学校">
+      <el-form-item label="学校"  prop="schoolId">
+        <el-select v-model="queryParams.schoolId" :data="schools"  clearable placeholder="请选择学校" @keyup.enter.native="handleQuery">
           <el-option
             v-for="item in schools"
             :key="item.sId"
@@ -44,16 +39,7 @@
         </el-select>
       </el-form-item>
 
-<!--      <el-form-item label="公司" prop="compenyId">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.compenyId"-->
-<!--          placeholder="请输入公司"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-
-      <el-form-item label="公司">
+      <el-form-item label="公司" prop="compenyId">
         <el-select v-model="queryParams.compenyId" :data="companys" clearable placeholder="请选择公司" @keyup.enter.native="handleQuery">
           <el-option
             v-for="item in companys"
@@ -75,16 +61,7 @@
         </el-select>
       </el-form-item>
 
-<!--      <el-form-item label="班级" prop="classId">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.classId"-->
-<!--          placeholder="请输入班级"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-
-      <el-form-item label="班级">
+      <el-form-item label="班级" prop="classId">
         <el-select v-model="queryParams.classId" :data="clasei" clearable placeholder="请选择班级" @keyup.enter.native="handleQuery">
           <el-option
             v-for="item in clasei"
@@ -172,7 +149,7 @@
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="修改时间" align="center" prop="updateTime" width="118">
+      <el-table-column label="修改时间" align="center" prop="updateTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>
@@ -223,13 +200,8 @@
         <el-form-item label="联系方式" prop="sNumbers">
           <el-input v-model="form.sNumbers" placeholder="请输入联系方式" />
         </el-form-item>
-
-<!--        <el-form-item label="学校" prop="schoolId">-->
-<!--          <el-input v-model="form.schoolId" placeholder="请输入学校" />-->
-<!--        </el-form-item>-->
-
         <el-form-item label="学校" prop="schoolId">
-          <el-select v-model="form.schoolId" :data="schools" clearable placeholder="请选择学校">
+          <el-select v-model="queryParams.schoolId" :data="schools" clearable placeholder="请选择学校"  @keyup.enter.native="handleQuery">
             <el-option
               v-for="item in schools"
               :key="item.sId"
@@ -238,13 +210,8 @@
             ></el-option>
           </el-select>
         </el-form-item>
-
-<!--        <el-form-item label="公司" prop="compenyId">-->
-<!--          <el-input v-model="form.compenyId" placeholder="请输入公司" />-->
-<!--        </el-form-item>-->
-
         <el-form-item label="公司" prop="compenyId">
-          <el-select v-model="form.compenyId" :data="companys" clearable placeholder="请选择公司">
+          <el-select v-model="queryParams.compenyId" :data="companys" clearable placeholder="请选择公司" @keyup.enter.native="handleQuery">
             <el-option
               v-for="item in companys"
               :key="item.cId"
@@ -253,7 +220,6 @@
             ></el-option>
           </el-select>
         </el-form-item>
-
         <el-form-item label="就业状态">
           <el-radio-group v-model="form.cStatus">
             <el-radio
@@ -263,13 +229,8 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-
-<!--        <el-form-item label="辅导员" prop="teacherId">-->
-<!--          <el-input v-model="form.teacherId" placeholder="请输入辅导员" />-->
-<!--        </el-form-item>-->
-
         <el-form-item label="辅导员" prop="teacherId">
-          <el-select v-model="form.teacherId" :data="teachers" clearable placeholder="请选择辅导员">
+          <el-select v-model="queryParams.teacherId" :data="teachers" clearable placeholder="请选择辅导员"  @keyup.enter.native="handleQuery">
             <el-option
               v-for="item in teachers"
               :key="item.tchrId"
@@ -278,13 +239,8 @@
             ></el-option>
           </el-select>
         </el-form-item>
-
-<!--        <el-form-item label="班级" prop="classId">-->
-<!--          <el-input v-model="form.classId" placeholder="请输入班级" />-->
-<!--        </el-form-item>-->
-
         <el-form-item label="班级" prop="classId">
-          <el-select v-model="form.classId" :data="clasei" clearable placeholder="请选择班级">
+          <el-select v-model="queryParams.classId" :data="clasei" clearable placeholder="请选择班级" @keyup.enter.native="handleQuery">
             <el-option
               v-for="item in clasei"
               :key="item.cId"
@@ -293,7 +249,6 @@
             ></el-option>
           </el-select>
         </el-form-item>
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -304,7 +259,7 @@
 </template>
 
 <script>
-import { listStudent, getStudent, delStudent, addStudent, updateStudent,initStudent } from "@/api/system/student";
+import { listStudent, getStudent, delStudent, addStudent, updateStudent, initStudent } from "@/api/system/student";
 
 export default {
   name: "Student",
@@ -371,7 +326,6 @@ export default {
         console.log(this.schools)
       });
     },
-
     /** 查询学生管理列表 */
     getList() {
       this.loading = true;
