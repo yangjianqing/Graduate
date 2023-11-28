@@ -191,6 +191,7 @@
 
     <modules>
         <module>graduate-admin</module>
+        <module>graduate-api</module>
         <module>graduate-framework</module>
         <module>graduate-system</module>
         <module>graduate-quartz</module>
