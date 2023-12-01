@@ -11,8 +11,8 @@ import java.util.concurrent.CompletableFuture;
 public class SendSms {
     public static void main(String[] args) throws Exception {
         StaticCredentialProvider provider = StaticCredentialProvider.create(Credential.builder()
-                .accessKeyId("LTAI5tFukdN97QRXxz6NWRUR")
-                .accessKeySecret("m16xfJE3VnCrHn4U28JJP6SDcWun2P")
+                .accessKeyId("xxx")
+                .accessKeySecret("xxx")
                 .build());
 
         AsyncClient client = AsyncClient.builder()
