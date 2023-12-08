@@ -46,7 +46,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where s_id = #{sId}
     </select>
 
-        
+    <select id="selectBStudentPhone" resultMap="BStudentResult">
+        <include refid="selectBStudentVo"/>
+        where s_numbers = #{sNumbers}
+    </select>
+
+
     <insert id="insertBStudent" parameterType="BStudent" useGeneratedKeys="true" keyProperty="sId">
         insert into b_student
         <trim prefix="(" suffix=")" suffixOverrides=",">

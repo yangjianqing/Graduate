@@ -58,4 +58,12 @@ public interface BStudentMapper
      * @return 结果
      */
     public int deleteBStudentBySIds(Long[] sIds);
+
+    /**
+     * 根据电话号码查询学生信息
+     *
+     * @param sNumbers 电话
+     * @return 结果
+     */
+    public BStudent selectBStudentPhone(String sNumbers);
 }

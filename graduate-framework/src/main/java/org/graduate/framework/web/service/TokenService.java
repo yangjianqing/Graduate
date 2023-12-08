@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
+
+import org.graduate.system.domain.BStudent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -117,6 +119,15 @@ public class TokenService
         claims.put(Constants.LOGIN_USER_KEY, token);
         return createToken(claims);
     }
+
+    public String createApiToken(BStudent student){
+        String token = IdUtils.fastUUID();
+        student.setToken(token);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(Constants.LOGIN_USER_KEY, token);
+        return createToken(claims);
+    }
+
 
     /**
      * 验证令牌有效期，相差不足20分钟，自动刷新缓存

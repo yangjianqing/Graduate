@@ -187,4 +187,12 @@ public class BStudentServiceImpl implements IBStudentService
     {
         return bStudentMapper.deleteBStudentBySId(sId);
     }
+
+    @Override
+    public BStudent selectBStudentPhone(String sNumbers)
+            
+    {
+        BStudent bStudent = bStudentMapper.selectBStudentPhone(sNumbers);
+        return bStudent;
+    }
 }

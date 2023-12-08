@@ -47,6 +47,8 @@ public class BStudent extends BaseEntity
     @Excel(name = "公司")
     private Long compenyId;
 
+    private String token;
+
     public String getSchoolName() {
         return schoolName;
     }
@@ -194,6 +196,10 @@ public class BStudent extends BaseEntity
         return classId;
     }
 
+    public String getToken() {
+        return token;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -210,5 +216,9 @@ public class BStudent extends BaseEntity
             .append("createTime", getCreateTime())
             .append("updateTime", getUpdateTime())
             .toString();
+    }
+
+    public void setToken(String token) {
+        this.token=token;
     }
 }
