@@ -45,6 +45,18 @@ public class BPublicInfoServiceImpl implements IBPublicInfoService
     }
 
     /**
+     * 查询公告管理列表
+     *
+     * @param bPublicInfo 公告管理
+     * @return 公告管理
+     */
+    @Override
+    public List<BPublicInfo> queryBPublicInfoList(BPublicInfo bPublicInfo)
+    {
+        return bPublicInfoMapper.queryBPublicInfoList(bPublicInfo);
+    }
+
+    /**
      * 新增公告管理
      * 
      * @param bPublicInfo 公告管理

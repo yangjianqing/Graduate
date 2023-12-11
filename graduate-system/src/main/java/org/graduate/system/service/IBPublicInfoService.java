@@ -11,6 +11,8 @@ import org.graduate.system.domain.BPublicInfo;
  */
 public interface IBPublicInfoService 
 {
+
+
     /**
      * 查询公告管理
      * 
@@ -25,7 +27,15 @@ public interface IBPublicInfoService
      * @param bPublicInfo 公告管理
      * @return 公告管理集合
      */
-    public List<BPublicInfo> selectBPublicInfoList(BPublicInfo bPublicInfo);
+    public  List<BPublicInfo> selectBPublicInfoList(BPublicInfo bPublicInfo);
+
+    /**
+     * 查询公告管理列表
+     *
+     * @param bPublicInfo 公告管理
+     * @return 公告管理集合
+     */
+    public  List<BPublicInfo> queryBPublicInfoList(BPublicInfo bPublicInfo);
 
     /**
      * 新增公告管理

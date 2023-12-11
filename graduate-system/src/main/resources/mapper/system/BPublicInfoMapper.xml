@@ -98,4 +98,18 @@
             #{nId}
         </foreach>
     </delete>
+
+
+
+    <select id="queryBPublicInfoList" parameterType="BPublicInfo" resultMap="BPublicInfoResult">
+        <include refid="selectBPublicInfoVo"/>
+        <where>
+
+            <if test="nContent != null  and nContent != ''">
+             or n_content like concat('%', #{nContent}, '%')
+                or n_title like concat('%', #{nContent}, '%')
+                or n_people like concat('%', #{nContent}, '%')
+             </if>
+        </where>
+    </select>
 </mapper>

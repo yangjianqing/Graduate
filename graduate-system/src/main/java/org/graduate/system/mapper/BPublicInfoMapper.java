@@ -58,4 +58,12 @@ public interface BPublicInfoMapper
      * @return 结果
      */
     public int deleteBPublicInfoByNIds(Long[] nIds);
+
+    /**
+     * 查询公告管理列表
+     *
+     * @param bPublicInfo 公告管理
+     * @return 公告管理集合
+     */
+    public List<BPublicInfo> queryBPublicInfoList(BPublicInfo bPublicInfo);
 }

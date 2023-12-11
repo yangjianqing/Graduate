@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Infinite scroll</title>
+</head>
+<style>
+  .outer{
+    height: 200px;width: 200px;
+    background: #aaa;
+    overflow: auto;
+  }
+  .outer .inner {
+    height: 50px;
+    color: #fff;
+    border:1px solid black;
+    line-height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .outer .loading {
+    text-align:center;
+    font-size: 12px;
+    color: #eee;
+    text-shadow: 0 0 2px rgba(0,0,0,0.5);
+  }
+</style>
+<body>
+<div class="outer" id="outer">
+</div>
+</body>
+<script>
+  let outer = document.querySelector('#outer');
+  let loading = document.createElement('div');
+  loading.classList.add('loading');
+  loading.textContent = 'loading';
+  let requestFlag = false; // whether get http response
+
+  let observer =  new IntersectionObserver(function(e){ // element enter or leave will trigger this function
+    // console.log('e :>> ', e[0]);
+    if(e[0].isIntersecting){ //if visible
+      request();
+    }
+  })
+  observer.observe(loading); // observe loading element visible
+
+  window.onload = function() {
+    rendering(5); // first page
+  }
+
+  function request(){
+    let childrenLength = Array.from(outer.children).filter(it => it.className === 'inner').length;
+    requestFlag = true;
+    setTimeout(() => {// simulate request
+      requestFlag = false;
+      if(childrenLength >= 30){ // max data size
+        requestFlag = true; // all data return ，never set requestFlag false again
+        loading.textContent = 'all return';
+        observer.disconnect(); // close IntersectionObserver
+        return
+      }
+      outer.removeChild(loading); // remove loading element
+      rendering(5);
+    }, 1000);// delay 1s to simulate request
+  }
+
+  /**
+   * append child
+   */
+  function rendering(size){
+    for (let i = 0; i < size; i++) {
+      let div = document.createElement('div');
+      div.classList.add('inner');
+      div.textContent = i;
+      div.style.backgroundColor = `rgb(${parseInt(Math.random()*255)},${parseInt(Math.random()*255)},${parseInt(Math.random()*255)})`;
+      outer.appendChild(div);
+    }
+    outer.appendChild(loading);
+  }
+</script>
+</html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="zh_CN">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Infinite scroll</title>-->
+<!--</head>-->
+<!--<style>-->
+<!--    .outer{-->
+<!--        height: 200px;width: 200px;-->
+<!--        background: #aaa;-->
+<!--        overflow: auto;-->
+<!--    }-->
+<!--    .outer .inner {-->
+<!--        height: 50px;-->
+<!--        color: #fff;-->
+<!--        border:1px solid black;-->
+<!--        line-height: 50px;-->
+<!--        font-size: 20px;-->
+<!--        font-weight: bold;-->
+<!--        text-align: center;-->
+<!--    }-->
+<!--    .outer .loading {-->
+<!--        text-align:center;-->
+<!--        font-size: 12px;-->
+<!--        color: #eee;-->
+<!--        text-shadow: 0 0 2px rgba(0,0,0,0.5);-->
+<!--    }-->
+<!--</style>-->
+<!--<body>-->
+<!--<div class="outer" id="outer">-->
+<!--</div>-->
+<!--</body>-->
+<!--<script>-->
+<!--    let outer = document.querySelector('#outer');-->
+<!--    let loading = document.createElement('div');-->
+<!--    loading.classList.add('loading');-->
+<!--    loading.textContent = 'loading';-->
+<!--    let requestFlag = false; // whether get http response-->
+
+<!--    let observer =  new IntersectionObserver(function(e){ // element enter or leave will trigger this function-->
+<!--        // console.log('e :>> ', e[0]);-->
+<!--        if(e[0].isIntersecting){ //if visible-->
+<!--            request();-->
+<!--        }-->
+<!--    })-->
+<!--    observer.observe(loading); // observe loading element visible-->
+
+<!--    window.onload = function() {-->
+<!--        rendering(5); // first page-->
+<!--    }-->
+
+<!--    function request(){-->
+<!--        let childrenLength = Array.from(outer.children).filter(it => it.className === 'inner').length;-->
+<!--        requestFlag = true;-->
+<!--        setTimeout(() => {// simulate request-->
+<!--            requestFlag = false;-->
+<!--            if(childrenLength >= 30){ // max data size-->
+<!--                requestFlag = true; // all data return ，never set requestFlag false again-->
+<!--                loading.textContent = 'all return';-->
+<!--                observer.disconnect(); // close IntersectionObserver-->
+<!--                return-->
+<!--            }-->
+<!--            outer.removeChild(loading); // remove loading element-->
+<!--            rendering(5);-->
+<!--        }, 1000);// delay 1s to simulate request-->
+<!--    }-->
+
+<!--    /**-->
+<!--     * append child-->
+<!--     */-->
+<!--    function rendering(size){-->
+<!--        for (let i = 0; i < size; i++) {-->
+<!--            let div = document.createElement('div');-->
+<!--            div.classList.add('inner');-->
+<!--            div.textContent = i;-->
+<!--            div.style.backgroundColor = `rgb(${parseInt(Math.random()*255)},${parseInt(Math.random()*255)},${parseInt(Math.random()*255)})`;-->
+<!--            outer.appendChild(div);-->
+<!--        }-->
+<!--        outer.appendChild(loading);-->
+<!--    }-->
+<!--</script>-->
+<!--</html>-->
+
+
+
+

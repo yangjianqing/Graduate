@@ -1,39 +1,43 @@
 package org.graduate.web.controller;
 
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.graduate.common.annotation.Anonymous;
+import org.graduate.common.core.domain.AjaxResult;
+import org.graduate.system.domain.BPublicInfo;
 import org.graduate.common.constant.CacheConstants;
 import org.graduate.common.constant.Constants;
-import org.graduate.common.core.domain.AjaxResult;
 import org.graduate.common.core.redis.RedisCache;
 import org.graduate.common.utils.uuid.IdUtils;
 import org.graduate.framework.web.service.TokenService;
 import org.graduate.system.domain.BStudent;
-import org.graduate.common.annotation.Log;
-import org.graduate.common.core.domain.AjaxResult;
-import org.graduate.common.enums.BusinessType;
-import org.graduate.common.utils.poi.ExcelUtil;
 import org.graduate.system.domain.BCheck;
 import org.graduate.system.domain.BTeacher;
+import org.graduate.system.service.IBPublicInfoService;
 import org.graduate.system.service.IBStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.graduate.system.service.IBCheckService;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 
 import org.graduate.common.core.controller.BaseController;
 import org.graduate.common.core.page.TableDataInfo;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class MobileApiController extends BaseController
 {
+
+    @Resource
+    private IBPublicInfoService bPublicInfoService;
+
+
+//    该注解取消权限控制
     @Autowired
     private IBStudentService bStudentService;
     @Autowired
@@ -118,4 +122,50 @@ public class MobileApiController extends BaseController
         return AjaxResult.success(i);
     }
 
+    /**
+     * 获取公告数据的接口实现
+     * @return 返回公告数据的 JSON 格式字符串
+     */
+    @GetMapping("/announcement") // 使用@GetMapping注解，映射该方法到"/announcement"路径
+    public String getAnnouncements() throws Exception {
+        // 调用 BPulicInfoService 的 selectBPublicInfoList 方法获取公告数据列表
+        List<BPublicInfo> list = bPublicInfoService.selectBPublicInfoList(new BPublicInfo());
+
+        ObjectMapper objectMapper = new ObjectMapper(); // 创建ObjectMapper实例，用于对象序列化成JSON
+        return objectMapper.writeValueAsString(list); // 将列表对象序列化为JSON字符串并返回
+    }
+
+
+    /**
+     * 查询公告管理列表
+     */
+
+    @GetMapping("/search")
+    public AjaxResult selectAll (@RequestParam("keyword") String keyword) {
+        BPublicInfo bPublicInfo = new BPublicInfo();
+        bPublicInfo.setnContent(keyword); //
+        List<BPublicInfo> bPublicInfos = bPublicInfoService.queryBPublicInfoList(bPublicInfo);
+        return AjaxResult.success(bPublicInfos);
+    }
+
+    /**
+     * 根据nID显示公告详情
+     * @param nId
+     * @return
+     */
+
+    @Anonymous
+    @GetMapping("/search/details")
+    public AjaxResult selectById(long nId){
+        BPublicInfo bPublicInfo = bPublicInfoService.selectBPublicInfoByNId(nId);
+        return AjaxResult.success(bPublicInfo);
+    }
+
+
+
+
 }
+
+
+
+
