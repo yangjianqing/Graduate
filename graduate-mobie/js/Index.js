@@ -73,6 +73,7 @@ function submitForm() {
             // 登录成功，存储token和bStudent到localStorage
             localStorage.setItem('token', token);
             localStorage.setItem('bStudent', JSON.stringify(bStudent));
+            window.location.href = "./Signin.html";
 
             // TODO:其他需要处理的逻辑
         })

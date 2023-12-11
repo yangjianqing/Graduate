@@ -109,13 +109,13 @@ public class MobileApiController extends BaseController
         List<BCheck> list = ibCheckService.selectBCheckList(bCheck);
         return AjaxResult.success((list));
     }
-//    //存储经纬度
-//    @Anonymous  //该注解取消权限控制
-//    @PostMapping("/signin")
-//    public AjaxResult inputAddress(@RequestBody BCheck bCheck)
-//    {
-//      int i = ibCheckService.insertBCheck(bCheck);
-//        return AjaxResult.success(i);
-//    }
+    //存储经纬度
+    @Anonymous  //该注解取消权限控制
+    @PostMapping("/signin")
+    public AjaxResult inputAddress(@RequestBody BCheck bCheck)
+    {
+      int i = ibCheckService.insertBCheck(bCheck);
+        return AjaxResult.success(i);
+    }
 
 }

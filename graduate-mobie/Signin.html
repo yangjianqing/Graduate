@@ -23,6 +23,8 @@
     </body>
 <!--创建地图，获取当前定位以及设置考勤地点定位，进行距离比较-->
 <script type="text/javascript">
+
+    var address ="";
     var time = document.querySelector('.time')
     var myDate = new Date();
     time.innerHTML = myDate.getFullYear() + '-' + (myDate.getMonth()+1)+'-'+myDate.getDate(); // 获取当前时间
@@ -73,7 +75,7 @@
         var geoc = new BMap.Geocoder();
         geoc.getLocation(point, function (rs) {// 获取当前定位所在详细地址
             var addComp = rs.addressComponents;
-            var address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+             address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
             alert("您已在" + address + "签到成功")
         });
     }
@@ -87,15 +89,17 @@
 
         var myDate = new Date();
         // 构造要发送的数据对象
+       var stu= localStorage.getItem("bStudent")
+          stu=JSON.parse(stu);
         var data = {
-            phone:localStorage.getItem("bStudent"),
+            phone:stu.sNumbers,
             ckLongitude: lng,
             ckLatitude: lat,
-            // ckName:,
-            // ckAddress:,
-            //cName:,
-            //comName:,
-            //ckTpye:,
+            ckName:stu.sName,
+            ckAddress:address,
+            cName:stu.className,
+            comName:stu.className,
+            ckTpye:"内勤",
             ckTime: myDate
         };
 
@@ -109,7 +113,7 @@
         })
             .then(response => {
                 if (response.ok) {
-                    alert('数据已成功发送到后端');
+                    window.location.href="./page/SigninPage.html"
                 } else {
                     alert('发送数据到后端失败');
                 }
