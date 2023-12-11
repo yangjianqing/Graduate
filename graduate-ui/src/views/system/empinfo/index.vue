@@ -35,19 +35,31 @@
       <el-form-item label="招聘人数" prop="empQuantity">
         <el-input
           v-model="queryParams.empQuantity"
-          placeholder="请输入招聘人数（>=）"
+          placeholder="招聘人数"
           clearable
           @keyup.enter.native="handleQuery"
+          style="width: 120px;"
         />
       </el-form-item>
       <el-form-item label="薪资标准" prop="empPay">
         <el-input
           v-model="queryParams.empPay"
-          placeholder="请输入薪资标准（>=）"
+          placeholder="最低薪资"
           clearable
           @keyup.enter.native="handleQuery"
+          style="width: 120px;"
         />
       </el-form-item>
+      <el-form-item label="" prop="empPayMax">
+        <el-input
+          v-model="queryParams.empPayMax"
+          placeholder="最高薪资"
+          clearable
+          @keyup.enter.native="handleQuery"
+          style="width: 120px;"
+        />
+      </el-form-item>
+
       <el-form-item label="发布状态" prop="empStatus">
         <el-select v-model="queryParams.empStatus" placeholder="请选择发布状态" clearable>
           <el-option
@@ -95,14 +107,61 @@
       <el-table-column label="序号" align="center" prop="empId"/>
       <el-table-column label="公司名称" align="center" prop="cName"/>
       <el-table-column label="就业岗位" align="center" prop="empName"/>
-      <el-table-column label="职位描述" align="center" prop="empDes"/>
+
+      <el-table-column label="职位描述" align="center" prop="empDes" tooltip-effect="light">
+        <template slot-scope="{ row }">
+          <el-tooltip class="item" effect="light" :content="row.empDes" placement="left" popper-class="tooltip-width">
+            <div
+              style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; max-width: 200px; overflow: hidden;">
+              {{ row.empDes }}
+            </div>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+
       <el-table-column label="招聘人数" align="center" prop="empQuantity"/>
-      <el-table-column label="薪资标准" align="center" prop="empPay"/>
-      <el-table-column label="福利待遇" align="center" prop="empBonus"/>
-      <el-table-column label="工作内容" align="center" prop="empConten"/>
-      <el-table-column label="上岗需求" align="center" prop="empReq"/>
+      <el-table-column label="最低薪资" align="center" prop="empPay"/>
+      <el-table-column label="最高薪资" align="center" prop="empPayMax"/>
+
+      <el-table-column label="福利待遇" align="center" prop="empBonus" tooltip-effect="light">
+        <template slot-scope="{ row }">
+          <el-tooltip class="item" effect="light" :content="row.empBonus" placement="left" popper-class="tooltip-width">
+            <div
+              style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; max-width: 200px; overflow: hidden;">
+              {{ row.empBonus }}
+            </div>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="工作内容" align="center" prop="empConten" tooltip-effect="light">
+        <template slot-scope="{ row }">
+          <el-tooltip class="item" effect="light" :content="row.empConten" placement="left" popper-class="tooltip-width">
+            <div
+              style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; max-width: 200px; overflow: hidden;">
+              {{ row.empConten }}
+            </div>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="上岗需求" align="center" prop="empReq" tooltip-effect="light">
+        <template slot-scope="{ row }">
+          <el-tooltip class="item" effect="light" :content="row.empReq" placement="left" popper-class="tooltip-width">
+            <div
+              style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; max-width: 200px; overflow: hidden;">
+              {{ row.empReq }}
+            </div>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+
       <el-table-column label="联系方式" align="center" :min-width="100" prop="cPhone"/>
-      <el-table-column label="公司地址" align="center" prop="cAddress"/>
+      <el-table-column label="公司地址" align="center" prop="cAddress">
+        <template slot-scope="scope">
+          {{ scope.row.cAddress.length > 4 ? (scope.row.cAddress.substring(0, 4) + '...') : scope.row.cAddress }}
+        </template>
+      </el-table-column>
       <el-table-column label="添加时间" align="center" prop="createTime" width="100">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
@@ -113,7 +172,8 @@
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="详情信息" align="center" prop="empInfo" tooltip-effect="light">
+
+      <el-table-column label="公司信息" align="center" prop="empInfo" tooltip-effect="light">
         <template slot-scope="{ row }">
           <el-tooltip class="item" effect="light" :content="row.empInfo" placement="left" popper-class="tooltip-width">
             <div
@@ -184,9 +244,18 @@
         <el-form-item label="招聘人数" prop="empQuantity">
           <el-input v-model="form.empQuantity" placeholder="请输入招聘人数"/>
         </el-form-item>
-        <el-form-item label="薪资标准" prop="empPay">
-          <el-input v-model="form.empPay" placeholder="请输入薪资标准"/>
-        </el-form-item>
+        <el-row>
+          <el-col :span="6">
+            <el-form-item label="薪资标准" prop="empPay">
+              <el-input v-model="form.empPay" placeholder="最低薪资" style="width: 100px;"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="" prop="empPayMax">
+              <el-input v-model="form.empPayMax" placeholder="最高薪资" style="width: 100px;"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="福利待遇" prop="empBonus">
           <el-input v-model="form.empBonus" placeholder="请输入福利待遇"/>
         </el-form-item>
@@ -196,7 +265,7 @@
         <el-form-item label="上岗需求" prop="empReq">
           <el-input v-model="form.empReq" placeholder="请输入上岗需求"/>
         </el-form-item>
-        <el-form-item label="详情信息" prop="empInfo">
+        <el-form-item label="公司信息" prop="empInfo">
           <el-input v-model="form.empInfo" type="textarea" :autosize="{ minRows: 2, maxRows: 12 }" placeholder="请输入内容"/>
         </el-form-item>
       </el-form>
@@ -252,6 +321,7 @@ export default {
         empName: null,
         empQuantity: null,
         empPay: null,
+        empPayMax: null,
         cAddress: null,
         empStatus: null
       },
@@ -321,6 +391,7 @@ export default {
         empDes: null,
         empQuantity: null,
         empPay: null,
+        empPayMax: null,
         empBonus: null,
         empConten: null,
         empReq: null,

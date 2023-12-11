@@ -85,13 +85,13 @@ body {
     flex-direction: row-reverse;
   }
   .job {
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    /*border: 1px solid #ccc;*/
+    /*border-radius: 5px;*/
     padding: 10px;
     margin-bottom: 40px; 
     position: relative;
-    top: 39px;
-    height: 48.6rem;
+    top: 2rem;
+    height: 100%;
 }
 .form_sketch {
   border-color:transparent;

@@ -5,167 +5,183 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/css/employment_details.css">
-    <link rel="stylesheet" href="/css/public.css">
+    <link rel="stylesheet" href="../css/employment_details.css">
+    <link rel="stylesheet" href="../css/public.css">
     <!-- 引入图标库 -->
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../lib/iconfont/iconfont.css">
 </head>
 
 <body>
-    <div class="all background">
-        <!-- 搜索框 -->
-        <div class="search">
-            <!-- <img src="/img/我的/u2.png" alt=""> -->
-            <input type="text" value="搜索职位名称" class="Search">
+<div class="all background">
+    <!-- 搜索框 -->
+    <div class="searchDiv">
+        <input type="text" name="searchEmpName" autocomplete="name" placeholder="搜索职位名称" class="search" id="search-input">
+        <button class="searchBtn" onclick="">搜索</button>
+    </div>
+<!--    &lt;!&ndash; 多选项 &ndash;&gt;-->
+<!--    <div class="device_hander">-->
+<!--        <div class="device">-->
+<!--            <img src="../img/就业详情/定位.png" alt="">-->
+<!--            <img src="../img/就业详情/时间.png" alt="">-->
+<!--            <img src="../img/就业详情/袋类.png" alt="">-->
+<!--            <img src="../img/就业详情/彩色描边图标集3-15.png" alt="">-->
+<!--            <img src="../img/就业详情/日历.png" alt="">-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 职位定制 &ndash;&gt;-->
+<!--        <div class="device_p">-->
+<!--            <div class="devicep_p_demo">-->
+<!--                <p>职位定制&nbsp;<span style="font-size: 0.8rem;color: #E1DCDC;">找工作无需大海捞针</span></p>-->
+
+<!--                <p class="device_p_one">根据地区/职位类型等推荐更精确职位</p>-->
+<!--            </div>-->
+<!--            <button>添加意向</button>-->
+<!--        </div>-->
+<!--    </div>-->
+    <!-- 简介信息 -->
+    <div class="infomation">
+
+
+        <div id="infoContainer"></div>
+
+
+        <div style="height: 3.3rem;"></div>
+        <!-- 底部导航栏 -->
+        <div class="toolbar">
+            <a href="../page/home_page.html">
+                <i class="iconfont icon-index-copy"></i>
+                <span>首页</span>
+            </a>
+            <a href="../page/notice.html">
+                <i class="iconfont icon-youhuiquan"></i>
+                <span>通知</span>
+            </a>
+            <a href="../page/employment_details.html" class="active">
+                <i class="iconfont icon-iconfront-"></i>
+                <span>就业</span>
+            </a>
+            <a href="../page/me.html">
+                <i class="iconfont icon-7"></i>
+                <span>我的</span>
+            </a>
         </div>
-        <!-- 多选项 -->
-        <div class="device_hander">
-            <div class="device">
-                <img src="/img/就业详情/定位.png" alt="">
-                <img src="/img/就业详情/时间.png" alt="">
-                <img src="/img/就业详情/袋类.png" alt="">
-                <img src="/img/就业详情/彩色描边图标集3-15.png" alt="">
-                <img src="/img/就业详情/日历.png" alt="">
-            </div>
-            <!-- 职位定制 -->
-            <div class="device_p">
-                <div class="devicep_p_demo">
-                    <p>职位定制&nbsp;<span style="font-size: 10px;color: #E1DCDC;">找工作无需大海捞针</span></p>
 
-                    <p class="device_p_one">根据地区/职位类型等推荐更精确职位</p>
-                </div>
-                <button>添加意向</button>
-            </div>
-        </div>
-        <!-- 简介信息 -->
-        <div class="infomation">
-            <div class="infomation_one">
-                <!-- 招聘需求 -->
-                <div class="infomation_xinxi">
-                    <p class="work_post">JAVA开发工程师</p>
-                    <p>开科为识&nbsp;1000-9999人&nbsp;不需要融资</p>
-                    <p>
-                        <span>3-5年</span>
-                        <span>本科</span>
-                        <span>Java</span>
-                        <span>Spring</span>
-                        <span>SpringCloud</span>
-                    </p>
-                    <p>
-                        <img src="/img/我的/头像默认图.svg" style="width: 12px;height: 12px;" alt="">
-                        <span>
-                            刘梦硕&nbsp;人力招聘&nbsp;
-                            <span class="online_btn">·在线</span>
-                        </span>
-                    </p>
-                </div>
-                <div class="infomation_pepoel">
-                    <h1 style="color: #51B9BD;">10-15K</h1>
-                    <p>江阳区环球生活广场</p>
-                </div>
 
-            </div>
-
-            <div class="infomation_one">
-                <!-- 招聘需求 -->
-                <div class="infomation_xinxi">
-                    <p class="work_post">JAVA开发工程师</p>
-                    <p>开科为识&nbsp;1000-9999人&nbsp;不需要融资</p>
-                    <p>
-                        <span>3-5年</span>
-                        <span>本科</span>
-                        <span>Java</span>
-                        <span>Spring</span>
-                        <span>SpringCloud</span>
-                    </p>
-                    <p>
-                        <img src="/img/我的/头像默认图.svg" style="width: 12px;height: 12px;" alt="">
-                        <span>
-                            刘梦硕&nbsp;人力招聘&nbsp;
-                            <span class="online_btn">·在线</span>
-                        </span>
-                    </p>
-                </div>
-                <div class="infomation_pepoel">
-                    <h1 style="color: #51B9BD;">10-15K</h1>
-                    <p>江阳区环球生活广场</p>
-                </div>
-
-            </div>
-
-            <div class="infomation_one">
-                <!-- 招聘需求 -->
-                <div class="infomation_xinxi">
-                    <p class="work_post">JAVA开发工程师</p>
-                    <p>开科为识&nbsp;1000-9999人&nbsp;不需要融资</p>
-                    <p>
-                        <span>3-5年</span>
-                        <span>本科</span>
-                        <span>Java</span>
-                        <span>Spring</span>
-                        <span>SpringCloud</span>
-                    </p>
-                    <p>
-                        <img src="/img/我的/头像默认图.svg" style="width: 12px;height: 12px;" alt="">
-                        <span>
-                            刘梦硕&nbsp;人力招聘&nbsp;
-                            <span class="online_btn">·在线</span>
-                        </span>
-                    </p>
-                </div>
-                <div class="infomation_pepoel">
-                    <h1 style="color: #51B9BD;">10-15K</h1>
-                    <p>江阳区环球生活广场</p>
-                </div>
-
-            </div>
-
-            <div class="infomation_one">
-                <!-- 招聘需求 -->
-                <div class="infomation_xinxi">
-                    <p class="work_post">JAVA开发工程师</p>
-                    <p>开科为识&nbsp;1000-9999人&nbsp;不需要融资</p>
-                    <p>
-                        <span>3-5年</span>
-                        <span>本科</span>
-                        <span>Java</span>
-                        <span>Spring</span>
-                        <span>SpringCloud</span>
-                    </p>
-                    <p>
-                        <img src="/img/我的/头像默认图.svg" style="width: 12px;height: 12px;" alt="">
-                        <span>
-                            刘梦硕&nbsp;人力招聘&nbsp;
-                            <span class="online_btn">·在线</span>
-                        </span>
-                    </p>
-                </div>
-                <div class="infomation_pepoel">
-                    <h1 style="color: #51B9BD;">10-15K</h1>
-                    <p>江阳区环球生活广场</p>
-                </div>
-            </div>
-
-            <!-- 底部导航栏 -->
-            <div class="toolbar">
-                <a href="./page/home_page.html">
-                    <i class="iconfont icon-index-copy"></i>
-                    <span>首页</span>
-                </a>
-                <a href="./page/notice.html">
-                    <i class="iconfont icon-youhuiquan"></i>
-                    <span>通知</span>
-                </a>
-                <a href="./page/employment_details.html" class="active">
-                    <i class="iconfont icon-iconfront-"></i>
-                    <span>就业</span>
-                </a>
-                <a href="./page/me.html">
-                    <i class="iconfont icon-7"></i>
-                    <span>我的</span>
-                </a>
-            </div>
-        </div>
+    </div>
+</div>
 </body>
+
+<script>
+    var baseUrl = "http://127.0.0.1:8089/api"
+
+    function getEmpInfo() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", baseUrl + "/selectEmpinfo", true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    var response = JSON.parse(xhr.response);
+
+                    var infoContainer = document.getElementById("infoContainer");
+                    infoContainer.innerHTML = ""; // 清空原有内容
+
+                    for (var i = 0; i < response.rows.length; i++) {
+                        var record = response.rows[i];
+
+                        var empName = record.empName; //empName
+                        var empPay = record.empPay; //empPay
+                        var empPayMax = record.empPayMax; //empPayMax
+                        var cName = record.cName; //cName
+                        var cAddress = record.cAddress; //cAddress
+                        var empDes = record.empDes; //empDes
+
+                        var div = document.createElement("div");
+                        div.className = "infomation_one";
+                        div.style.cssText = "display: flex;flex-direction: column;"
+
+                        // 职位与薪资
+                        var infomationXinxi = document.createElement("div");
+                        infomationXinxi.className = "infomation_xinxi";
+                        infomationXinxi.style.cssText = "width: 100%";
+
+                        var workPost = document.createElement("p");
+                        workPost.className = "work_post";
+                        workPost.style.cssText = "display: inline-block;float: left;margin-left: 2rem;font-size: 1.5rem;";
+                        var empNameSpan = document.createElement("div");
+                        empNameSpan.textContent = empName;
+                        workPost.appendChild(empNameSpan);
+                        infomationXinxi.appendChild(workPost);
+
+                        var h1 = document.createElement("h1");
+                        h1.style.cssText = "color: #51B9BD; padding-right: 1rem;padding-top: 0.4rem; display: inline-block; float: right; margin-right: 1rem;";
+                        var salarySpan = document.createElement("span");
+                        salarySpan.textContent = "月薪：";
+                        var empPaySpan = document.createElement("span");
+                        empPaySpan.id = "empPay";
+                        empPaySpan.textContent = empPay;
+                        var subSpan = document.createElement("span");
+                        subSpan.textContent = "-";
+                        var empPayMaxSpan = document.createElement("span");
+                        empPayMaxSpan.id = "empPayMax";
+                        empPayMaxSpan.textContent = empPayMax;
+                        var kSpan = document.createElement("span");
+                        kSpan.textContent = "K";
+                        h1.appendChild(salarySpan);
+                        h1.appendChild(empPaySpan);
+                        h1.appendChild(subSpan);
+                        h1.appendChild(empPayMaxSpan);
+                        h1.appendChild(kSpan);
+                        infomationXinxi.appendChild(h1);
+
+                        div.appendChild(infomationXinxi);
+
+                        //职位描述
+                        var description = document.createElement("div");
+                        description.className = "description";
+                        description.style.cssText = "width: 100%;padding-left: 3.9rem;";
+
+                        var empDesP = document.createElement("p");
+                        var empDesSpans = empDes.split(/[，。]/);
+                        var length = 0;
+                        for (var j = 0; j < 5 && j < empDesSpans.length && length <= 12; j++) {
+                            var span = document.createElement("span");
+                            span.textContent = empDesSpans[j];
+                            length += empDesSpans[j].length;
+                            span.style.cssText = "font-size: 0.7rem; color: #616060; padding: 0.3rem; background-color: #f2f2f2; padding: 0.2em 0.5em; border-radius: 10px; margin-right: 5px;";
+                            empDesP.appendChild(span);
+                        }
+                        description.appendChild(empDesP);
+
+                        div.appendChild(description);
+
+                        var companyInfo = document.createElement("div");
+                        companyInfo.style.width = "100%";
+                        var cNameSpan = document.createElement("div");
+                        cNameSpan.style.cssText = "font-size: 0.7rem; display: inline-block; float: left; margin-left: 2.3rem;";
+                        cNameSpan.textContent = cName;
+                        var cAddressSpan = document.createElement("div");
+                        cAddressSpan.style.cssText = "font-size: 0.7rem; padding-right: 1rem; display: inline-block; float: right; margin-right: 1rem;";
+                        cAddressSpan.textContent = cAddress;
+                        companyInfo.appendChild(cNameSpan);
+                        companyInfo.appendChild(cAddressSpan);
+                        div.appendChild(companyInfo);
+
+                        infoContainer.appendChild(div);
+                    }
+                } else {
+                    console.log("请求失败，状态码：" + xhr.status);
+                }
+            }
+        };
+        xhr.onerror = function () {
+            console.log("请求出错");
+        };
+        xhr.send();
+    }
+
+    window.onload = function () {
+        getEmpInfo();
+    };
+</script>
 
 </html>

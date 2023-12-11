@@ -4,68 +4,212 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/css/Employment_Information.css">
+    <link rel="stylesheet" href="../css/Employment_Information.css">
 </head>
 <body>
-    <!--  -->
-    <!-- 页面栏 -->
-    <div id="u3578" class="ax_default _默认样式">
-        <div id="u3578_div" class=""></div>
-        <div id="u3578_text" class="text ">
-          <p><span>职业详情</span></p>
-        </div>
-      </div>
-
-      <!-- 招聘信息顶部 -->
-      <div class="job">
-        <h2>Java开发工程师</h2>
-        <p>公司：ABC科技有限公司</p>
-
-          <!-- 招聘员信息 -->
-          <div class="preeval" >
-            <div class="img">
-              <img style="border-radius: 50; width: 40px;" src="../img/就业信息/u2.svg" alt="">
-              <div style="display: inline-block;">
-                <p>李云清 </p>
-                <p>开拓知识·人力招聘</p>
-              </div>
-            </div>
-            <div class="info">
-              <br/>
-                >
-            </div>
-          </div>
-        <p>要求：</p>
-        <ul>
-            <li>熟练掌握移动端开发技术，如HTML5、CSS3、JavaScript等</li>
-            <li>具备一定的移动端设计能力</li>
-            <li>熟悉常见的移动端开发框架，如React Native、Flutter等</li>
-            <li>有丰富的移动端产品经验</li>
-            <li>熟悉用户研究和需求分析</li>
-            <li>具备良好的沟通和团队合作能力</li>
-            <li>包括对应聘者的学历、工作经验、技能要求等。</li>
-        </ul>
-        <p>公司福利</p>
-        <ul>
-          <li>公司提供的福利和员工待遇，如五险一金、带薪年假、培训机会等</li>
-        <li>提供员工购买公司产品或服务的折扣或优惠，以及其他特殊的公司福利，如股票期权、股票奖励计划等</li>
-         <li>提供学习和发展机会，如培训课程、在线学习平台、导师制度等，帮助员工不断提升自己的知识和技能</li>
-          <li>组织各种员工活动，如团建、员工旅游、节日庆祝、运动比赛等，增强员工之间的凝聚力和团队合作精神</li>
-          <li>允许员工根据自己的需求和工作安排，在一定范围内自由调整工作时间，提高工作与生活的平衡</li>
-        </ul>
-        <p class="salary">薪资范围：10,000元 - 15,000元</p>
-      
+<!--  -->
+<!-- 页面栏 -->
+<div id="u3578" class="ax_default _默认样式">
+    <div id="u3578_div" class="" style="padding-top: 0.5rem;padding-left: 0.5rem">
+        <svg t="1702287882855" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+             p-id="4217" width="1.5rem" height="1.5rem">
+            <path d="M700.371228 394.525472 174.028569 394.525472l255.952416-227.506551c12.389168-11.011798 13.505595-29.980825 2.492774-42.369993-11.011798-12.386098-29.977755-13.506619-42.367947-2.492774L76.425623 400.975371c-6.960529 5.496178-11.434423 14.003945-11.434423 23.561625 0 0.013303 0.001023 0.026606 0.001023 0.039909 0 0.01228-0.001023 0.025583-0.001023 0.037862 0 0.473791 0.01535 0.946558 0.037862 1.418302 0.001023 0.016373 0.001023 0.032746 0.001023 0.049119 0.39295 8.030907 3.992941 15.595186 10.034541 20.962427l315.040163 280.028764c5.717212 5.083785 12.83533 7.580652 19.925818 7.580652 8.274454 0 16.514115-3.403516 22.442128-10.07445 11.011798-12.387122 9.896394-31.357172-2.492774-42.367947l-256.128425-227.665163 526.518668 0c109.219517 0 198.075241 88.855724 198.075241 198.075241s-88.855724 198.075241-198.075241 198.075241L354.324888 850.696955c-16.57449 0-30.011524 13.437034-30.011524 30.011524s13.437034 30.011524 30.011524 30.011524l346.046341 0c142.31631 0 258.098289-115.783003 258.098289-258.098289S842.686515 394.525472 700.371228 394.525472z"
+                  fill="#2c2c2c" p-id="4218"></path>
+        </svg>
     </div>
-    <!-- 底部沟通分享栏 -->
-    <div class="hideer">
-      <div class="share">
-        <p>分享</p><p>收藏</p>
-
-      </div>
-      <div class="shoucang">
-        <button class="my-button">联系</button>
-      </div>
+    <div id="u3578_text" class="text ">
+        <p><span>详情信息</span></p>
     </div>
-    
+</div>
+
+<!-- 招聘信息顶部 -->
+<div class="job">
+    <h2>
+        <span id="empName" style="padding-right: 1rem;"></span>
+        <span>需求：</span><span id="empQuantity"></span><span style="padding-right: 2rem;">人</span>
+        <span>月薪：</span><span id="empPay"></span>-<span id="empPayMax"></span>K
+    </h2>
+    <p>公司基本信息：</p>
+    <p><span style="padding-right: 1rem">
+              <svg t="1701740070860" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                   xmlns="http://www.w3.org/2000/svg" p-id="4849" width="1rem" height="1rem"><path
+                      d="M512 1024C229.668571 1024 0 794.331429 0 512S229.668571 0 512 0s512 229.668571 512 512-229.668571 512-512 512z m0-994.742857C245.76 29.257143 29.257143 245.76 29.257143 512s216.502857 482.742857 482.742857 482.742857 482.742857-216.502857 482.742857-482.742857S778.24 29.257143 512 29.257143z"
+                      p-id="4850"></path><path
+                      d="M548.571429 803.108571H282.331429c-8.777143 0-14.628571-5.851429-14.628572-14.628571V368.64c0-14.628571 8.777143-27.794286 20.48-33.645714l217.965714-109.714286c11.702857-5.851429 26.331429-5.851429 38.034286 1.462857s17.554286 19.017143 17.554286 32.182857V789.942857c1.462857 7.314286-5.851429 13.165714-13.165714 13.165714z m-251.611429-29.257142h236.982857V258.925714c0-4.388571-2.925714-7.314286-4.388571-7.314285-1.462857-1.462857-4.388571-2.925714-8.777143 0l-217.965714 109.714285c-2.925714 1.462857-4.388571 4.388571-4.388572 8.777143v403.748572z"
+                      p-id="4851"></path><path
+                      d="M743.131429 803.108571H557.348571c-8.777143 0-14.628571-5.851429-14.628571-14.628571V402.285714c0-10.24 5.851429-20.48 14.628571-26.331428 8.777143-5.851429 20.48-5.851429 29.257143-1.462857L741.668571 453.485714c10.24 5.851429 16.091429 16.091429 16.091429 27.794286V789.942857c0 7.314286-5.851429 13.165714-14.628571 13.165714z m-171.154286-29.257142h157.988571V479.817143l-155.062857-77.531429-1.462857 1.462857v370.102858z"
+                      p-id="4852"></path><path
+                      d="M784.091429 803.108571H239.908571c-8.777143 0-14.628571-5.851429-14.628571-14.628571s5.851429-14.628571 14.628571-14.628571h542.72c8.777143 0 14.628571 5.851429 14.628572 14.628571s-5.851429 14.628571-13.165714 14.628571zM380.342857 561.737143h-36.571428c-8.777143 0-14.628571-5.851429-14.628572-14.628572s5.851429-14.628571 14.628572-14.628571H380.342857c8.777143 0 14.628571 5.851429 14.628572 14.628571s-5.851429 14.628571-14.628572 14.628572zM485.668571 561.737143h-36.571428c-8.777143 0-14.628571-5.851429-14.628572-14.628572s5.851429-14.628571 14.628572-14.628571h36.571428c8.777143 0 14.628571 5.851429 14.628572 14.628571s-7.314286 14.628571-14.628572 14.628572zM485.668571 438.857143h-36.571428c-8.777143 0-14.628571-5.851429-14.628572-14.628572s5.851429-14.628571 14.628572-14.628571h36.571428c8.777143 0 14.628571 5.851429 14.628572 14.628571s-7.314286 14.628571-14.628572 14.628572zM380.342857 683.154286h-36.571428c-8.777143 0-14.628571-5.851429-14.628572-14.628572s5.851429-14.628571 14.628572-14.628571H380.342857c8.777143 0 14.628571 5.851429 14.628572 14.628571s-5.851429 14.628571-14.628572 14.628572zM485.668571 683.154286h-36.571428c-8.777143 0-14.628571-5.851429-14.628572-14.628572s5.851429-14.628571 14.628572-14.628571h36.571428c8.777143 0 14.628571 5.851429 14.628572 14.628571s-7.314286 14.628571-14.628572 14.628572zM683.154286 561.737143h-36.571429c-8.777143 0-14.628571-5.851429-14.628571-14.628572s5.851429-14.628571 14.628571-14.628571h36.571429c8.777143 0 14.628571 5.851429 14.628571 14.628571s-5.851429 14.628571-14.628571 14.628572zM683.154286 683.154286h-36.571429c-8.777143 0-14.628571-5.851429-14.628571-14.628572s5.851429-14.628571 14.628571-14.628571h36.571429c8.777143 0 14.628571 5.851429 14.628571 14.628571s-5.851429 14.628571-14.628571 14.628572z"
+                      p-id="4853"></path></svg>
+                </span>
+        <span id="cName"></span>
+    </p>
+    <p><span style="padding-right: 1rem">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a9 9 0 0 1 9 9c0 7-9 13-9 13S3 18 3 11a9 9 0 0 1 9-9z"></path>
+              <circle cx="12" cy="11" r="3"></circle></svg>
+              </span>
+        <span id="cAddress"></span>
+    </p>
+    <p>
+        <span style="padding-right: 1rem">
+            <svg t="1701740259814" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 p-id="5849" width="1rem" height="1rem"><path
+                    d="M928 170.666667H426.666667v-32a53.393333 53.393333 0 0 0-53.333334-53.333334H224a53.393333 53.393333 0 0 0-53.333333 53.333334v32H96a53.393333 53.393333 0 0 0-53.333333 53.333333v661.333333a53.393333 53.393333 0 0 0 53.333333 53.333334h832a53.393333 53.393333 0 0 0 53.333333-53.333334V224a53.393333 53.393333 0 0 0-53.333333-53.333333zM213.333333 138.666667a10.666667 10.666667 0 0 1 10.666667-10.666667h149.333333a10.666667 10.666667 0 0 1 10.666667 10.666667v576a10.666667 10.666667 0 0 1-10.666667 10.666666H224a10.666667 10.666667 0 0 1-10.666667-10.666666z m725.333334 746.666666a10.666667 10.666667 0 0 1-10.666667 10.666667H96a10.666667 10.666667 0 0 1-10.666667-10.666667V224a10.666667 10.666667 0 0 1 10.666667-10.666667h74.666667v501.333334a53.393333 53.393333 0 0 0 53.333333 53.333333h149.333333a53.393333 53.393333 0 0 0 53.333334-53.333333V213.333333h501.333333a10.666667 10.666667 0 0 1 10.666667 10.666667zM533.333333 469.333333a21.333333 21.333333 0 0 1 21.333334 21.333334 21.333333 21.333333 0 0 1-21.333334 21.333333 21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334z m128 256a21.333333 21.333333 0 0 1 21.333334 21.333334 21.333333 21.333333 0 0 1-21.333334 21.333333 21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334z m0-128a21.333333 21.333333 0 0 1 21.333334 21.333334 21.333333 21.333333 0 0 1-21.333334 21.333333 21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334z m-128 128a21.333333 21.333333 0 0 1 21.333334 21.333334 21.333333 21.333333 0 0 1-21.333334 21.333333 21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334z m0-128a21.333333 21.333333 0 0 1 21.333334 21.333334 21.333333 21.333333 0 0 1-21.333334 21.333333 21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334z m128-128a21.333333 21.333333 0 0 1 21.333334 21.333334 21.333333 21.333333 0 0 1-21.333334 21.333333 21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334zM533.333333 298.666667h256a21.333333 21.333333 0 0 1 21.333334 21.333333 21.333333 21.333333 0 0 1-21.333334 21.333333H533.333333a21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333333z m256 170.666666a21.333333 21.333333 0 0 1 21.333334 21.333334 21.333333 21.333333 0 0 1-21.333334 21.333333 21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334z m0 256a21.333333 21.333333 0 0 1 21.333334 21.333334 21.333333 21.333333 0 0 1-21.333334 21.333333 21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334z m0-128a21.333333 21.333333 0 0 1 21.333334 21.333334 21.333333 21.333333 0 0 1-21.333334 21.333333 21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334z"
+                    fill="#5C5C66" p-id="5850"></path></svg>
+        </span>
+        <span id="cPhone"></span>
+    </p>
+
+    <!-- 招聘员信息 -->
+    <!--          <div class="preeval" >-->
+    <!--            <div class="img">-->
+    <!--              <img style="border-radius: 5rem; width: 4rem;" src="../img/就业信息/u2.svg" alt="">-->
+    <!--              <div style="display: inline-block;">-->
+    <!--                <p>李云清 </p>-->
+    <!--                <p>开拓知识·人力招聘</p>-->
+    <!--              </div>-->
+    <!--            </div>-->
+    <!--            <div class="info">-->
+    <!--              <br/>-->
+    <!--            </div>-->
+    <!--          </div>-->
+
+    <p>职位描述：</p>
+    <ul id="empDes"></ul>
+
+    <p>工作内容：</p>
+    <ul id="empConten"></ul>
+
+    <p>任职要求：</p>
+    <ul id="empReq"></ul>
+
+    <p>公司福利：</p>
+    <ul id="empBonus"></ul>
+
+    <p>公司介绍：</p>
+    <ul id="empInfo"></ul>
+    <br>
+
+
+</div>
+<!-- 底部沟通分享栏 -->
+<!--    <div class="hideer">-->
+<!--      <div class="share">-->
+<!--        <p>分享</p><p>收藏</p>-->
+
+<!--      </div>-->
+<!--      <div class="shoucang">-->
+<!--        <button class="my-button">联系</button>-->
+<!--      </div>-->
+<!--    </div>-->
+
 </body>
+
+<script>
+    var baseUrl = "http://127.0.0.1:8089/api"
+
+    function showEmpInfo(empId) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", baseUrl + "/showEmpinfoById?empId=" + 1, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    var response = JSON.parse(xhr.response);
+
+                    var empName = response.data.empName;//empName
+                    var empQuantity = response.data.empQuantity;//empQuantity
+                    var empPay = response.data.empPay;//empPay
+                    var empPayMax = response.data.empPayMax;//empPayMax
+                    var cName = response.data.cName;//cName
+                    var cAddress = response.data.cAddress;//cAddress
+                    var cPhone = response.data.cPhone;//cPhone
+                    var empDes = response.data.empDes;//empDes
+                    var empConten = response.data.empConten;//empConten
+                    var empReq = response.data.empReq;//empReq
+                    var empBonus = response.data.empBonus;//empBonus
+                    var empInfo = response.data.empInfo;//empInfo
+
+                    var EmpName = document.getElementById("empName");//empName
+                    var EmpQuantity = document.getElementById("empQuantity");//empQuantity
+                    var EmpPay = document.getElementById("empPay");//empPay
+                    var EmpPayMax = document.getElementById("empPayMax");//empPayMax
+                    var CName = document.getElementById("cName");//cName
+                    var CAddress = document.getElementById("cAddress");//cAddress
+                    var CPhone = document.getElementById("cPhone");//cPhone
+                    var EmpDes = document.getElementById("empDes");//empDes
+                    var EmpConten = document.getElementById("empConten");//empConten
+                    var EmpReq = document.getElementById("empReq");//empReq
+                    var EmpBonus = document.getElementById("empBonus");//empBonus
+                    var EmpInfo = document.getElementById("empInfo");//empInfo
+
+                    EmpName.innerHTML = "";//empName
+                    EmpQuantity.innerHTML = "";//empQuantity
+                    EmpPay.innerHTML = "";//empPay
+                    EmpPayMax.innerHTML = "";//empPayMax
+                    CName.innerHTML = "";//cName
+                    CAddress.innerHTML = "";//cAddress
+                    CPhone.innerHTML = "";//cPhone
+                    EmpDes.innerHTML = "";//empDes
+                    EmpConten.innerHTML = "";//empConten
+                    EmpReq.innerHTML = "";//empReq
+                    EmpBonus.innerHTML = "";//empBonus
+                    EmpInfo.innerHTML = "";//empInfo
+
+                    showInfo(empName, EmpName);//empName
+                    showInfo(empQuantity, EmpQuantity);//empQuantity
+                    showInfo(empPay, EmpPay);//empPay
+                    showInfo(empPayMax, EmpPayMax);//empPayMax
+                    showInfo(cName, CName);//cName
+                    showInfo(cAddress, CAddress);//cAddress
+                    showInfo(cPhone, CPhone);//cPhone
+                    splitEmpInfo(empDes, EmpDes);//empDes
+                    splitEmpInfo(empConten, EmpConten);//empConten
+                    splitEmpInfo(empReq, EmpReq);//empReq
+                    splitEmpInfo(empBonus, EmpBonus);//empBonus
+                    splitEmpInfo(empInfo, EmpInfo);//empInfo
+                } else {
+                    console.log("请求失败，状态码：" + xhr.status);
+                }
+            }
+        };
+        xhr.onerror = function () {
+            console.log("请求出错");
+        };
+        xhr.send();
+    }
+
+    function showInfo(Info, EmpInfo) {
+        var span = document.createElement("span");
+
+        span.textContent = Info;
+
+        EmpInfo.appendChild(span);
+    }
+
+    function splitEmpInfo(text, EmpInfo) {
+        var splitTest = text.split('。');
+        for (var i = 0; i < splitTest.length; i++) {
+            var newText = splitTest[i].trim();
+
+            if (newText.length > 0) {
+                var ul = document.createElement("ul");
+                var li = document.createElement("li");
+
+                li.textContent = newText;
+
+                EmpInfo.appendChild(ul);
+                ul.appendChild(li);
+            }
+        }
+    }
+
+
+    window.onload = function () {
+        showEmpInfo();
+    };
+</script>
+
 </html>

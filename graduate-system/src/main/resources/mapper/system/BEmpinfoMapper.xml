@@ -5,36 +5,54 @@
 <mapper namespace="org.graduate.system.mapper.BEmpinfoMapper">
 
     <resultMap type="BEmpinfo" id="BEmpinfoResult">
-        <result property="empId"    column="emp_id"    />
-        <result property="cName"    column="c_name"    />
-        <result property="empName"    column="emp_name"    />
-        <result property="empDes"    column="emp_des"    />
-        <result property="empQuantity"    column="emp_quantity"    />
-        <result property="empPay"    column="emp_pay"    />
-        <result property="empBonus"    column="emp_bonus"    />
-        <result property="empConten"    column="emp_conten"    />
-        <result property="empReq"    column="emp_req"    />
-        <result property="cPhone"    column="c_phone"    />
-        <result property="cAddress"    column="c_address"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateTime"    column="update_time"    />
-        <result property="empInfo"    column="emp_info"    />
-        <result property="empStatus"    column="emp_status"    />
+        <result property="empId" column="emp_id"/>
+        <result property="cName" column="c_name"/>
+        <result property="empName" column="emp_name"/>
+        <result property="empDes" column="emp_des"/>
+        <result property="empQuantity" column="emp_quantity"/>
+        <result property="empPay" column="emp_pay"/>
+        <result property="empPayMax" column="emp_paymax"/>
+        <result property="empBonus" column="emp_bonus"/>
+        <result property="empConten" column="emp_conten"/>
+        <result property="empReq" column="emp_req"/>
+        <result property="cPhone" column="c_phone"/>
+        <result property="cAddress" column="c_address"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="empInfo" column="emp_info"/>
+        <result property="empStatus" column="emp_status"/>
     </resultMap>
 
     <sql id="selectBEmpinfoVo">
-        select emp_id, c_name, emp_name, emp_des, emp_quantity, emp_pay, emp_bonus, emp_conten, emp_req, c_phone, c_address, create_time, update_time, emp_info, emp_status from b_empinfo
+        select emp_id,
+               c_name,
+               emp_name,
+               emp_des,
+               emp_quantity,
+               emp_pay,
+               emp_paymax,
+               emp_bonus,
+               emp_conten,
+               emp_req,
+               c_phone,
+               c_address,
+               create_time,
+               update_time,
+               emp_info,
+               emp_status
+        from b_empinfo
     </sql>
 
     <select id="selectBEmpinfoList" parameterType="BEmpinfo" resultMap="BEmpinfoResult">
         <include refid="selectBEmpinfoVo"/>
         <where>
-            <if test="cName != null  and cName != ''"> and c_name = #{cName}</if>
-            <if test="empName != null  and empName != ''"> and emp_name like concat('%', #{empName}, '%')</if>
-            <if test="empQuantity != null "> and emp_quantity &gt;= #{empQuantity}</if>
-            <if test="empPay != null "> and emp_pay &gt;= #{empPay}</if>
-            <if test="cAddress != null  and cAddress != ''"> and c_address = #{cAddress}</if>
-            <if test="empStatus != null  and empStatus != ''"> and emp_status = #{empStatus}</if>
+            <if test="cName != null  and cName != ''">and c_name = #{cName}</if>
+            <if test="empName != null  and empName != ''">and emp_name like concat('%', #{empName}, '%')</if>
+            <if test="empQuantity != null ">and emp_quantity &gt;= #{empQuantity}</if>
+            <if test="empPay != null ">and emp_pay &gt;= #{empPay}</if>
+            <if test="empPayMax != null ">and #{empPayMax} &gt;= emp_paymax</if>
+            <if test="cAddress != null  and cAddress != ''">and c_address = #{cAddress}</if>
+            <if test="empStatus != null  and empStatus != ''">and emp_status = #{empStatus}</if>
         </where>
     </select>
 
@@ -51,6 +69,7 @@
             <if test="empDes != null">emp_des,</if>
             <if test="empQuantity != null">emp_quantity,</if>
             <if test="empPay != null">emp_pay,</if>
+            <if test="empPayMax != null">emp_paymax,</if>
             <if test="empBonus != null">emp_bonus,</if>
             <if test="empConten != null">emp_conten,</if>
             <if test="empReq != null">emp_req,</if>
@@ -67,6 +86,7 @@
             <if test="empDes != null">#{empDes},</if>
             <if test="empQuantity != null">#{empQuantity},</if>
             <if test="empPay != null">#{empPay},</if>
+            <if test="empPayMax != null">#{empPayMax},</if>
             <if test="empBonus != null">#{empBonus},</if>
             <if test="empConten != null">#{empConten},</if>
             <if test="empReq != null">#{empReq},</if>
@@ -87,6 +107,7 @@
             <if test="empDes != null">emp_des = #{empDes},</if>
             <if test="empQuantity != null">emp_quantity = #{empQuantity},</if>
             <if test="empPay != null">emp_pay = #{empPay},</if>
+            <if test="empPayMax != null">emp_paymax = #{empPayMax},</if>
             <if test="empBonus != null">emp_bonus = #{empBonus},</if>
             <if test="empConten != null">emp_conten = #{empConten},</if>
             <if test="empReq != null">emp_req = #{empReq},</if>
@@ -110,7 +131,9 @@
     </update>
 
     <delete id="deleteBEmpinfoByEmpId" parameterType="Long">
-        delete from b_empinfo where emp_id = #{empId}
+        delete
+        from b_empinfo
+        where emp_id = #{empId}
     </delete>
 
     <delete id="deleteBEmpinfoByEmpIds" parameterType="String">
