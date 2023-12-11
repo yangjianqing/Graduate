@@ -80,25 +80,25 @@ public class BCheckController extends BaseController
         return toAjax(bCheckService.insertBCheck(bCheck));
     }
 
-    /**
-     * 修改签到
-     */
-    @PreAuthorize("@ss.hasPermi('system:check:edit')")
-    @Log(title = "签到", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@RequestBody BCheck bCheck)
-    {
-        return toAjax(bCheckService.updateBCheck(bCheck));
-    }
-
-    /**
-     * 删除签到
-     */
-    @PreAuthorize("@ss.hasPermi('system:check:remove')")
-    @Log(title = "签到", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ckIds}")
-    public AjaxResult remove(@PathVariable Long[] ckIds)
-    {
-        return toAjax(bCheckService.deleteBCheckByCkIds(ckIds));
-    }
+//    /**
+//     * 修改签到
+//     */
+//    @PreAuthorize("@ss.hasPermi('system:check:edit')")
+//    @Log(title = "签到", businessType = BusinessType.UPDATE)
+//    @PutMapping
+//    public AjaxResult edit(@RequestBody BCheck bCheck)
+//    {
+//        return toAjax(bCheckService.updateBCheck(bCheck));
+//    }
+//
+//    /**
+//     * 删除签到
+//     */
+//    @PreAuthorize("@ss.hasPermi('system:check:remove')")
+//    @Log(title = "签到", businessType = BusinessType.DELETE)
+//	@DeleteMapping("/{ckIds}")
+//    public AjaxResult remove(@PathVariable Long[] ckIds)
+//    {
+//        return toAjax(bCheckService.deleteBCheckByCkIds(ckIds));
+//    }
 }

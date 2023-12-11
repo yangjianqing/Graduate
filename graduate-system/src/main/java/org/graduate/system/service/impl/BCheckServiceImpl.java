@@ -2,6 +2,10 @@ package org.graduate.system.service.impl;
 
 import java.util.List;
 
+import org.graduate.system.domain.BCompany;
+import org.graduate.system.domain.BStudent;
+import org.graduate.system.mapper.BCompanyMapper;
+import org.graduate.system.mapper.BStudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.graduate.system.mapper.BCheckMapper;
@@ -51,8 +55,7 @@ public class BCheckServiceImpl implements IBCheckService
      * @return 结果
      */
     @Override
-    public int insertBCheck(BCheck bCheck)
-    {
+    public int insertBCheck(BCheck bCheck) {
         return bCheckMapper.insertBCheck(bCheck);
     }
 

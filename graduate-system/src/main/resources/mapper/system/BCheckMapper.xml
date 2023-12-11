@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="ckName != null  and ckName != ''"> and ck_name like concat('%', #{ckName}, '%')</if>
             <if test="ckTime != null "> and ck_time = #{ckTime}</if>
-            <if test="ckAddress != null  and ckAddress != ''"> and ck_address = #{ckAddress}</if>
+            <if test="ckAddress != null  and ckAddress != ''"> and ck_address like concat('%', #{ckAddress}, '%')</if>
             <if test="bClass != null "> and b_class = #{bClass}</if>
             <if test="ckTpye != null  and ckTpye != ''"> and ck_tpye = #{ckTpye}</if>
         </where>
@@ -57,6 +57,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ckTpye != null">#{ckTpye},</if>
          </trim>
     </insert>
+
+
+
 
     <update id="updateBCheck" parameterType="BCheck">
         update b_check

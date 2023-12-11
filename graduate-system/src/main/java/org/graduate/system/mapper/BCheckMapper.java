@@ -2,6 +2,7 @@ package org.graduate.system.mapper;
 
 import org.graduate.system.domain.BCheck;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -59,4 +60,5 @@ public interface BCheckMapper
      * @return 结果
      */
     public int deleteBCheckByCkIds(Long[] ckIds);
+
 }

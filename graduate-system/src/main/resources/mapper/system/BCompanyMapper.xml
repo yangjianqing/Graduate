@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cName != null  and cName != ''"> and c_name like concat('%', #{cName}, '%')</if>
             <if test="cData != null "> and c_data = #{cData}</if>
             <if test="cType != null  and cType != ''"> and c_type = #{cType}</if>
-            <if test="cAddress != null  and cAddress != ''"> and c_address = #{cAddress}</if>
+            <if test="cAddress != null  and cAddress != ''"> and  c_address like concat ('%',#{cAddress},'%') </if>
         </where>
     </select>
     

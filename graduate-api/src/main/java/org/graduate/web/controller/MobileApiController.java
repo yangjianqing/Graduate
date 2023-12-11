@@ -8,15 +8,27 @@ import org.graduate.common.core.redis.RedisCache;
 import org.graduate.common.utils.uuid.IdUtils;
 import org.graduate.framework.web.service.TokenService;
 import org.graduate.system.domain.BStudent;
+import org.graduate.common.annotation.Log;
+import org.graduate.common.core.domain.AjaxResult;
+import org.graduate.common.enums.BusinessType;
+import org.graduate.common.utils.poi.ExcelUtil;
+import org.graduate.system.domain.BCheck;
 import org.graduate.system.domain.BTeacher;
 import org.graduate.system.service.IBStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.graduate.system.service.IBCheckService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.graduate.common.core.controller.BaseController;
 import org.graduate.common.core.page.TableDataInfo;
 
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -32,6 +44,10 @@ public class MobileApiController extends BaseController
      * 示例
      */
     //@Anonymous  该注解取消权限控制
+    @Resource
+    private IBCheckService ibCheckService;
+
+    @Anonymous  //该注解取消权限控制
     @GetMapping("/list")
     public TableDataInfo list(BTeacher bTeacher)
     {
@@ -87,5 +103,24 @@ public class MobileApiController extends BaseController
             return AjaxResult.error("手机号或验证码错误");
         }
     }
+    //签到页面的渲染
+    //@CrossOrigin允许跨域请求
+    @CrossOrigin
+    @Anonymous  //该注解取消权限控制
+    @GetMapping("/signin/getId")
+    public AjaxResult selectBCheck(BCheck bCheck)
+    {
+        startPage();
+        List<BCheck> list = ibCheckService.selectBCheckList(bCheck);
+        return AjaxResult.success((list));
+    }
+//    //存储经纬度
+//    @Anonymous  //该注解取消权限控制
+//    @PostMapping("/signin")
+//    public AjaxResult inputAddress(@RequestBody BCheck bCheck)
+//    {
+//      int i = ibCheckService.insertBCheck(bCheck);
+//        return AjaxResult.success(i);
+//    }
 
 }

@@ -77,7 +77,17 @@ public class BCheck extends BaseEntity
     @Excel(name = "公司Id")
     private Long cId;
 
-    public void setCkId(Long ckId) 
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setCkId(Long ckId)
     {
         this.ckId = ckId;
     }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>签到记录</title>
+    <link rel="stylesheet" href="../css/SigninPage.css"/>
+</head>
+<body>
+<table>
+    <caption>签到记录</caption>
+    <thead>
+    <tr>
+        <th>签到时间</th>
+        <th>签到地点</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+<script>
+    window.onload = function() {
+        console.log("页面加载完成");
+        getDataFromBackend();
+    };
+    var baseUrl="http://127.0.0.1:8089/api"
+    function getDataFromBackend() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", baseUrl + "/signin/getId", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText); // 调试语句，输出响应文本内容到控制台
+                    var response = JSON.parse(xhr.response);
+
+                    tableBody.innerHTML = "";
+
+                    for (var i = 0; i < response.data.length; i++) {
+                        var record = response.data[i];
+
+                        var row = document.createElement("tr");
+                        var timeCell = document.createElement("td");
+                        var locationCell = document.createElement("td");
+
+                        // 将后端返回的签到时间和签到地点分别填充到表格中
+                        timeCell.textContent = record.ckTime;
+                        locationCell.textContent = record.ckAddress;
+
+                        row.appendChild(timeCell);
+                        row.appendChild(locationCell);
+                        tableBody.appendChild(row);
+                    }
+                } else {
+                    console.log("请求失败，状态码：" + xhr.status);
+                }
+            }
+        };
+        xhr.onerror = function() {
+            console.log("请求出错");
+        };
+        xhr.send();
+    }
+</script>
+</body>
+</html>
