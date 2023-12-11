@@ -538,7 +538,7 @@ body * {
 .text-wrapper {
   padding: 5.63rem 0 1.63rem;
   filter: drop-shadow(0rem -1.75rem 1.06rem #0000000a);
-  background-image: url('/graduate-mobie/img/登录/背景图片.png');
+  background-image: url('/graduate-mobie/img/login/Baicre.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -552,7 +552,7 @@ body * {
 .image-wrapper {
   padding: 1.75rem 0;
   filter: drop-shadow(0rem 1rem 1rem #00000017);
-  background-image: url('/graduate-mobie/img/登录/图标背景.png');
+  background-image: url('/graduate-mobie/img/login/Icond.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 6.25rem;
@@ -612,7 +612,7 @@ body * {
 }
 .text-wrapper_2 {
   padding: 1rem 0 1.13rem;
-  background-image: url('/graduate-mobie/img/登录/登录按钮图片.png');
+  background-image: url('/graduate-mobie/img/login/Lbtton.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }

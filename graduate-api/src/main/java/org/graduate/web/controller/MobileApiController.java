@@ -87,11 +87,6 @@ public class MobileApiController extends BaseController
         String verKey = CacheConstants.PHONE_CODE_KEY + uuid;
         Object cacheObject = redisCache.getCacheObject(verKey);//获取redis缓存的验证码
         // TODO: 在这里进行用户名和密码的校验操作
-        if (cacheObject == null)
-        {
-            return AjaxResult.error("验证码已过期");
-        }
-
         String cacheString = cacheObject.toString();
         BStudent bStudent = bStudentService.selectBStudentPhone(phone);
         if (cacheString.equals(code) && bStudent != null)
