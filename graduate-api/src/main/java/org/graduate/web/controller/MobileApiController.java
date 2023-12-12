@@ -4,6 +4,7 @@ package org.graduate.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.graduate.common.annotation.Anonymous;
 import org.graduate.common.core.domain.AjaxResult;
+import org.graduate.common.core.domain.AjaxResult;
 import org.graduate.system.domain.BPublicInfo;
 import org.graduate.common.constant.CacheConstants;
 import org.graduate.common.constant.Constants;
@@ -22,6 +23,8 @@ import org.graduate.system.domain.BTeacher;
 import org.graduate.system.service.IBEmpinfoService;
 import org.graduate.system.service.IBPublicInfoService;
 import org.graduate.system.service.IBStudentService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.graduate.system.service.IBStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.graduate.system.service.IBCheckService;
@@ -31,45 +34,29 @@ import org.graduate.common.core.page.TableDataInfo;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Resource;
-import java.util.List;
-
-import java.util.concurrent.TimeUnit;
 
 
 @RestController
 @RequestMapping("/api")
-public class MobileApiController extends BaseController {
-
-
+public class MobileApiController extends BaseController
+{
     @Resource
     private IBPublicInfoService bPublicInfoService;
-
-
-    //    该注解取消权限控制
     @Autowired
     private IBStudentService bStudentService;
     @Autowired
     private RedisCache redisCache;
     @Autowired
     private TokenService tokenService;
-
     @Resource
     private IBEmpinfoService bEmpinfoService;
-
     @Resource
     private IBCheckService ibCheckService;
 
-    @Anonymous  //该注解取消权限控制
-    @GetMapping("/list")
-    public TableDataInfo list(BTeacher bTeacher) {
-        return getDataTable(null);
-    }
 
     /**
      * 验证码接口
@@ -124,6 +111,27 @@ public class MobileApiController extends BaseController {
         return AjaxResult.success((list));
     }
 
+
+
+    /**
+     * 发送手机验证码
+     * @param
+     * @return
+     */
+    @Anonymous
+    @GetMapping("/sendPhoneCode")
+    public AjaxResult sendCode(String phoneNum)
+    {
+        AjaxResult success = AjaxResult.success();
+        /**
+         *  1、生成uuid
+         *  2、生成验证码 随机生成的4位数
+         *  3、将 varifyKey添加到redis  varifyKey= 常量+uuid reids中验证码的唯一标识
+         *  4、发送手机验证码
+         */
+
+        return null;
+    }
     //存储经纬度
     @Anonymous  //该注解取消权限控制
     @PostMapping("/signin")

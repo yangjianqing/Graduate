@@ -2,7 +2,8 @@
     margin: 0px;
     padding: 0px;
 }
-body{    background-color: #f3f4f6;
+body{
+    background-color: #f3f4f6;
 }
 .status-bar {
     background-color: #0096AA; /* 状态栏的背景颜色 */
@@ -11,7 +12,8 @@ body{    background-color: #f3f4f6;
     font-size: 14px; /* 文本字体大小 */
     width: 100%;
     z-index: 9999; /* 设置层级较高，确保状态栏显示在顶部 */
-  }
+
+}
 
 .mine{
     display: flex;
@@ -22,7 +24,8 @@ body{    background-color: #f3f4f6;
     align-items: center;
     justify-content: center;
     font-weight: normal;
-  }
+
+}
 .information{
     display: flex;
     width: 100%;
@@ -37,6 +40,7 @@ body{    background-color: #f3f4f6;
     height: 50px;
     margin-left: 18px;
     margin-right: 22px;
+    border-top: 1px #808080 solid;
 }
 .select{
     display: flex;
@@ -78,7 +82,17 @@ body{    background-color: #f3f4f6;
 .peope_select img{
     width: 35px;
 }
-
+.sign-in{
+    padding-left: 16px;
+    padding-right: 13px;
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 .endqiehuan{
     display: flex;
     width: 100%;
@@ -88,16 +102,16 @@ body{    background-color: #f3f4f6;
     position: fixed;
     bottom: 0;
     left: 0;
-  }
-  .endqiehuan a{
+}
+.endqiehuan a{
     color: black;
     /* background-color: #0096AA; */
     font-size: 2rem;
     text-decoration: none;
-  }
-  .endqiehuan a:hover{
+}
+.endqiehuan a:hover{
     color: white;
     background-color: #0096AA;
-  }
+}
 
 

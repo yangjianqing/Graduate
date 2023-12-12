@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <title>Title</title>
-        <link rel="stylesheet" href="../graduate-mobie/js/Signin.js"/>
-        <link rel="stylesheet" href="../graduate-mobie/css/Signin.css" media="all"/>
+        <link rel="stylesheet" href="../js/Signin.js"/>
+    <link rel="stylesheet" href="../css/public.css">
+
+    <link rel="stylesheet" href="../css/Signin.css" media="all"/>
 <!--    引入百度api-->
         <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&amp;ak=emhCaO88OqIAnGU7MfsuXyyliu0ifXvC"></script>
 </head>
@@ -19,6 +21,26 @@
         <div class="circle " onclick="punch()">
             <div class="time"></div>
             <div>签到</div>
+        </div>
+
+        <!-- 底部导航栏 -->
+        <div class="toolbar">
+            <a href="../page/home_page.html">
+                <i class="iconfont icon-index-copy"></i>
+                <span>首页</span>
+            </a>
+            <a href="../page/notice.html">
+                <i class="iconfont icon-youhuiquan"></i>
+                <span>通知</span>
+            </a>
+            <a href="../page/employment_details.html" class="active">
+                <i class="iconfont icon-iconfront-"></i>
+                <span>就业</span>
+            </a>
+            <a href="../page/me.html">
+                <i class="iconfont icon-7"></i>
+                <span>我的</span>
+            </a>
         </div>
     </body>
 <!--创建地图，获取当前定位以及设置考勤地点定位，进行距离比较-->
@@ -113,7 +135,7 @@
         })
             .then(response => {
                 if (response.ok) {
-                    window.location.href="./page/SigninPage.html"
+                    window.location.href="SigninPage.html"
                 } else {
                     alert('发送数据到后端失败');
                 }

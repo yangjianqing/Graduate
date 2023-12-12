@@ -4,129 +4,169 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/Me.css">
-  <link rel="stylesheet" href="/css/public.css">
+  <link rel="stylesheet" href="../css/Me.css">
+  <link rel="stylesheet" href="../css/public.css">
+  <script src="../js/Me.js"></script>
   <!-- 引入图标库 -->
-  <link rel="stylesheet" href="/lib/iconfont/iconfont.css">
+  <link rel="stylesheet" href="../lib/iconfont/iconfont.css">
   <title>Document</title>
 </head>
 
 <body>
-  <div class="all">
-    <!-- 状态栏 -->
-    <div class="status-bar">
-      <!-- 在这里添加状态栏的内容 -->
+<div class="all">
+  <!-- 状态栏 -->
+  <div class="status-bar">
+    <!-- 在这里添加状态栏的内容 -->
 
-    </div>
-    <!-- 标题 -->
-    <div class="mine">
-      <p>我的</p>
-    </div>
-    <!-- 人物信息 -->
-    <div class="information">
-      <img src="/img/我的/头像默认图.svg" alt="">
-      <div style="display: flex;
+  </div>
+  <!-- 标题 -->
+  <div class="mine">
+    <p>我的</p>
+  </div>
+  <!-- 人物信息 -->
+  <div class="information">
+    <img src="../img/我的/QQ图片20231130082802.jpg" alt="">
+    <div style="display: flex;
       align-items: flex-start;
       flex-direction: column;">
-      <p>18231434432</p>
-      <p style="color: #616060;">昵称：蓝桥</p>
+      <p>小马哥</p>
+      <span style="color: #616060;" prop="sName" label="名字">昵称：马驰贵</span>
     </div>
-      </div>
-      <!-- 四个选项  -->
-      <div class="select">
-        <div style=" display: flex;
+  </div>
+  <!-- 四个选项  -->
+  <div class="select">
+    <div style=" display: flex;
         flex-direction: column;
         align-items: center;">
-          <img src="/img/我的/对勾.png" alt="">
-          <span>游览记录</span>
-        </div>
-        <div style=" display: flex;
+      <img src="../img/我的/打勾2.png" alt="">
+      <span>签到记录</span>
+    </div>
+    <div style=" display: flex;
         flex-direction: column;
         align-items: center;">
-          <img src="/img/我的/爱心.png" alt="">
-          <span>我的收藏</span>
-        </div>
+      <img src="../img/我的/爱心.png" alt="">
+      <span>公告收藏</span>
+    </div>
 
-          <div style=" display: flex;
+    <div style=" display: flex;
         flex-direction: column;
         align-items: center;">
-          <img src="/img/我的/工单列表.png" alt="">
-          <span>我的委托</span>
-        </div>
+      <img src="../img/我的/工单列表.png" alt="">
+      <span>委托</span>
+    </div>
 
-          <div style=" display: flex;
+    <div style=" display: flex;
         flex-direction: column;
         align-items: center;">
-          <img src="/img/我的/注意 感叹号.png"  alt="">
-          <span>问题反馈</span>
-        </div>
-      </div>
-      <!-- 个人中心 -->
-      <div class="peope">
-        <div style="display: flex;    
+      <img src="../img/我的/感叹号2.png"  alt="">
+      <span>问题反馈</span>
+    </div>
+  </div>
+  <!-- 个人中心 -->
+  <div class="peope">
+    <div style="display: flex;
         align-items: center;    padding-left: 16px;
     padding-right: 13px;">
-          <img src="/img/我的/设置.png" alt="">
-          <p>个人中心</p></div>
-        
-        <div style="    padding-left: 16px;
-        padding-right: 13px;">></div>
-      </div>
-      <!-- 三个选项 -->
+      <img src="../img/我的/设置.png" alt="">
+      <p>学生信息</p></div>
+
+  </div>
+  <!-- 三个选项 -->
     <div>
-      <div class="peope_select">
-        <div style="display: flex;    
-        align-items: center;        padding-left: 16px;
-    padding-right: 13px;">
-          <img src="/img/我的/vue.png" alt="">
-          <p>技术支持</p>
+      <div class="peope_select" id="sutndentInfo">
+        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
+          <p>学生学号</p>
         </div>
-        <div style="    padding-left: 16px;
-        padding-right: 13px;">18784453857</div>
+        <div style="padding-left: 16px;padding-right: 13px;"
+             id="studentId"></div>
       </div>
       <div class="peope_select">
-        <div style="display: flex;    
-        align-items: center;    padding-left: 16px;
-    padding-right: 13px;">
-          <img src="/img/我的/问号.png" alt="">
-          <p>常见问题</p>
-        </div>        
-        <div style="    padding-left: 16px;
-        padding-right: 13px;">></div>
-      
+        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
+          <p>电话号码</p>
+        </div>
+        <div style="padding-left: 16px;padding-right: 13px;"
+             prop="sNumbers" label="电话号码">
+          18784453857</div>
       </div>
       <div class="peope_select">
-        <div style="display: flex;    
-        align-items: center;     padding-left: 16px;
-    padding-right: 13px;">
-          <img src="/img/我的/五角星_空.png" alt="">
-          <p>关于我们</p></div>
-        
-        <div style="padding-left: 16px;
-        padding-right: 13px;">></div>
+        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
+          <p>性别</p>
+        </div>
+        <div style="padding-left: 16px;padding-right: 13px;"
+             prop="sGender" label="性别">
+          男</div>
       </div>
-  </div>
+      <div class="peope_select">
+        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
+          <p>学校</p>
+        </div>
+
+        <div style="padding-left: 16px;padding-right: 13px;"
+             prop="schoolId" label="学校">
+          泸职院</div>
+      </div>
+
+      <div class="peope_select">
+        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
+          <p>班级</p>
+        </div>
+
+        <div style="padding-left: 16px;padding-right: 13px;"
+             prop="classId" label="班级">
+          数据3班</div>
+      </div>
+      <div class="peope_select">
+        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
+          <p>就业状态</p>
+        </div>
+
+        <div style="padding-left: 16px;padding-right: 13px;"
+             prop="cStatus" label="就业状态">
+          已就业</div>
+      </div>
+    </div>
+      <div class="peope_select">
+        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
+          <p>辅导员</p>
+        </div>
+
+        <div style="padding-left: 16px;padding-right: 13px;"
+             prop="teacherId" label="辅导员">
+          蒲公英</div>
+      </div>
+    </div>
+      <div class="peope_select">
+        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
+          <p>创建时间</p>
+        </div>
+        <div style="padding-left: 16px;padding-right: 13px;"
+             prop="createTime" label="创建时间">
+          佛山</div>
+      </div>
+
+
 </div>
-  <!-- 底部导航栏 -->
-  <div class="toolbar">
-    <a href="/page/home_page.html " >
-      <i class="iconfont icon-index-copy"></i>
-      <span>首页</span>
-    </a>
-    <a href="/page/notice.html">
-      <i class="iconfont icon-youhuiquan"></i>
-      <span>通知</span>
-    </a>
-    <a href="/page/employment_details.html">
-      <i class="iconfont icon-iconfront-"></i>
-      <span>就业</span>
-    </a>
-    <a href="/page/me.html" class="active">
-      <i class="iconfont icon-7"></i>
-      <span>我的</span>
-    </a>
-  </div>
+<!-- 底部导航栏 -->
+<div class="toolbar">
+  <a href="../page/home_page.html " >
+    <i class="iconfont icon-index-copy"></i>
+    <span>首页</span>
+  </a>
+  <a href="../page/notice.html">
+    <i class="iconfont icon-youhuiquan"></i>
+    <span>通知</span>
+  </a>
+  <a href="../page/employment_details.html">
+    <i class="iconfont icon-iconfront-"></i>
+    <span>就业</span>
+  </a>
+  <a href="../page/me.html" class="active">
+    <i class="iconfont icon-7"></i>
+    <span>我的</span>
+  </a>
+</div>
 
 </body>
-
 </html>
+
+
