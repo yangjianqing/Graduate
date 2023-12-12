@@ -7,6 +7,9 @@
     <title>Title</title>
         <link rel="stylesheet" href="../js/Signin.js"/>
     <link rel="stylesheet" href="../css/public.css">
+    <link rel="stylesheet" href="../css/public.css">
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="../lib/iconfont/iconfont.css">
 
     <link rel="stylesheet" href="../css/Signin.css" media="all"/>
 <!--    引入百度api-->
@@ -15,7 +18,7 @@
     <body>
         <div class="title">
             <img src="../../images/back.png" alt="" class="back" />
-            <h4>地点打卡</h4>`
+            <h4>地点打卡</h4>
         </div>
         <div id="allmap"></div>
         <div class="circle " onclick="punch()">
@@ -23,13 +26,14 @@
             <div>签到</div>
         </div>
 
+
         <!-- 底部导航栏 -->
         <div class="toolbar">
-            <a href="../page/home_page.html">
+            <a href="../page/Signin.html">
                 <i class="iconfont icon-index-copy"></i>
                 <span>首页</span>
             </a>
-            <a href="../page/notice.html">
+            <a href="../page/announcement.html">
                 <i class="iconfont icon-youhuiquan"></i>
                 <span>通知</span>
             </a>
@@ -42,6 +46,7 @@
                 <span>我的</span>
             </a>
         </div>
+
     </body>
 <!--创建地图，获取当前定位以及设置考勤地点定位，进行距离比较-->
 <script type="text/javascript">

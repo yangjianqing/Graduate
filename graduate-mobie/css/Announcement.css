@@ -14,6 +14,10 @@
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
+  width: 100%;
+  /*height: 13rem;*/
+  background-color: #FFFFFF;
+  float: left;
 }
 .section {
   padding: 0.88rem 1rem;
@@ -52,10 +56,14 @@
 }
 .group_2 {
   margin-top: 0.88rem;
-  padding: 1rem 1rem;
+  padding: 0rem 1rem;
 }
 .view {
-  margin-top: -0.8rem;
+   margin-top: -0.6rem;
+  width: 100%;
+  /*height: 13rem;*/
+  background-image: linear-gradient(to bottom, #12ACA8, white);
+  float: left;
 }
 .group_3 {
   padding: 0.3rem 0;
@@ -156,6 +164,8 @@
   background-color: #ffffff;
   filter: drop-shadow(0rem 0.061rem 0.092rem #0000001a, 0rem 0.061rem 0.061rem #0000000f);
   overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 2px 4px 6px  #585757;
 }
 .list-item_2:first-child {
   margin-top: 0;
@@ -213,16 +223,19 @@
 }
 
 
+
+
+
+
 /* 按钮悬浮时样式 */
-.btnsearch:hover{
-  background-color: #ff5900;
+.btnsearch:hover {
+  border: 2px solid #f5f5f5; /* 使用柔和一点的白色边框 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
 }
 
 
-
 .searchcontainer {
-  background-color: #ffffff;
-  padding: 0.15rem 1rem;
+  background-color: #12ACA8;
   height: 10%;
   display: flex;
   justify-content: center;
@@ -231,7 +244,7 @@
 
 .search {
   width: 100%;
-  max-width: 400px;
+  margin: 15px;
   height: 45px;
   background-image:url("../img/InFo/sousuo.png");
   background-size: 20px 20px ;
@@ -240,22 +253,22 @@
   /*border-radius: 30px 0 0 30px;*/
   padding-left: 50px;
   background-position:0.5rem 0.8rem;
-  color: darkgray;
-  font-size: 0.86rem;
+  background-color:   transparent;
+  font-size: 1rem;
   font-family: SourceHanSansCN;
-  border: none;
+  border: 1px solid #51B9BD;
 }
-/* 搜索框获得焦点时样式 */
 .search:focus {
-  outline: coral solid 1px;
-  /*添加外边框*/
+  outline: none;
+  border: 2px solid #f5f5f5; /* 设置白色边框 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
 }
 .btnsearch {
   width: 25%;
   max-width: 90px;
   height: 47px;
   border: none;
-  background-color: coral;
+  background-color:#51B9BD;
   color: #fff;
   border-radius: 0 20px 20px 0;
   font-size: 0.86rem;
@@ -270,13 +283,13 @@
   }
 
   .search {
-    width: 79%;
+    width: 70%;
     max-width: none; /* 移除最大宽度限制 */
-    padding-left: 30px; /* 减小左边距 */
+    padding-left: 37px; /* 减小左边距 */
   }
 
   .btnsearch {
-    width: 30%;
+    width: 18%;
     max-width: none; /* 移除最大宽度限制 */
   }
 
@@ -289,5 +302,9 @@
     text-overflow: ellipsis;
 
   }
+
+
+
+
 
 }
