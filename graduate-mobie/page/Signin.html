@@ -17,7 +17,6 @@
 </head>
     <body>
         <div class="title">
-            <img src="../../images/back.png" alt="" class="back" />
             <h4>地点打卡</h4>
         </div>
         <div id="allmap"></div>
@@ -50,15 +49,18 @@
     </body>
 <!--创建地图，获取当前定位以及设置考勤地点定位，进行距离比较-->
 <script type="text/javascript">
-
+    //获取地址
+    var geoc = new BMap.Geocoder();
     var address ="";
     var time = document.querySelector('.time')
     var myDate = new Date();
     time.innerHTML = myDate.getFullYear() + '-' + (myDate.getMonth()+1)+'-'+myDate.getDate(); // 获取当前时间
 
     var map = new BMap.Map("allmap");
-    var point = new BMap.Point(116.404, 39.915);
-    map.centerAndZoom(point, 20);
+    //公司地址
+    var point = new BMap.Point(28.8776683, 105.44852407);
+
+    map.centerAndZoom(point, 18);
     var pointAttendance
     var geolocation = new BMap.Geolocation();
     geolocation.getCurrentPosition(function (r) {
@@ -66,7 +68,8 @@
             var mk = new BMap.Marker(r.point);
             map.addOverlay(mk); // 标出自己的当前所在地
             map.panTo(r.point); // 地图中心移动到自己的当前位置
-            point = new BMap.Point(r.point.lng, r.point.lat); // 获取自己当前位置经纬度
+            // point = new BMap.Point(r.point.lng, r.point.lat); // 获取自己当前位置经纬度
+
             var coordinate = "28.8776683, 105.44852407";// 设置考勤点经纬度
             var arr = coordinate.split(",");// 切割经纬度
             var lon = arr[1];
@@ -89,47 +92,53 @@
     // 签到
     // 在签到函数中调用sendLocationData，将经度和纬度传递给后端
     function signIn() {
-        var distance = map.getDistance(point, pointAttendance).toFixed(2);
+        var distance = map.getDistance(point, pointAttendance);
+        alert(distance);
+        //计算自己和公司距离判断考勤类型
+        var ckTpye=(distance >1000)? "1":"2";
         if (distance <= 1000) {
-            sendLocationData(point.lng, point.lat);
-            GetLocation();
-        } else {
-            alert("超出考勤地点范围，签到失败");
+            if (address===""){
+                geoc.getLocation(point,function (rs){
+                    var addComp = rs.addressComponents;
+                    address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+                    sendLocationData(point.lng, point.lat,ckTpye);
+                    GetLocation();
+                })
+            }
         }
     }
     // 地址逆解析
     function GetLocation() {
-        var geoc = new BMap.Geocoder();
+
         geoc.getLocation(point, function (rs) {// 获取当前定位所在详细地址
             var addComp = rs.addressComponents;
-             address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+            address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
             alert("您已在" + address + "签到成功")
+            location.reload();
         });
     }
     // 点击签到
     function punch() {
-        // var lng = point.lng; // 获取经度
-        // var lat = point.lat; // 获取纬度
+        var lng = point.lng; // 获取经度
+        var lat = point.lat; // 获取纬度
         this.signIn()
     }
-    function sendLocationData(lng, lat) {
-
+    function sendLocationData(lng, lat,ckTpye) {
         var myDate = new Date();
         // 构造要发送的数据对象
-       var stu= localStorage.getItem("bStudent")
-          stu=JSON.parse(stu);
+        var stu= localStorage.getItem("bStudent")
+        stu=JSON.parse(stu);
         var data = {
             phone:stu.sNumbers,
-            ckLongitude: lng,
-            ckLatitude: lat,
             ckName:stu.sName,
+            bClass:stu.classId,
+            cId: stu.compenyId,//就是这个
             ckAddress:address,
-            cName:stu.className,
-            comName:stu.className,
-            ckTpye:"内勤",
-            ckTime: myDate
+            ckTpye:ckTpye,
+            ckTime: myDate,
+            ckLongitude: lng,
+            ckLatitude: lat
         };
-
         // 发送POST请求
         fetch('http://127.0.0.1:8089/api/signin', {
             method: 'POST',
@@ -140,7 +149,7 @@
         })
             .then(response => {
                 if (response.ok) {
-                    window.location.href="SigninPage.html"
+                    // window.location.href="./page/SigninPage.html"
                 } else {
                     alert('发送数据到后端失败');
                 }

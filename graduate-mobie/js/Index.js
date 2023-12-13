@@ -85,6 +85,10 @@ function submitForm() {
 
 // 监听浏览器关闭事件
 window.onbeforeunload = function() {
+    // 清除localStorage中存储的数据
+    // localStorage.removeItem('uuid');
+    // localStorage.removeItem('token');
+    // localStorage.removeItem('bStudent');
     // 清除localStorage中存储的uuid
     localStorage.removeItem('uuid');
 };

@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="bClass != null "> and b_class = #{bClass}</if>
             <if test="ckTpye != null  and ckTpye != ''"> and ck_tpye = #{ckTpye}</if>
         </where>
+        ORDER BY ck_time DESC
     </select>
     
     <select id="selectBCheckByCkId" parameterType="Long" resultMap="BCheckResult">
@@ -46,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ckLatitude != null">ck_latitude,</if>
             <if test="bClass != null">b_class,</if>
             <if test="ckTpye != null">ck_tpye,</if>
+            <if test="cId !=null">c_id</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="ckName != null">#{ckName},</if>
@@ -55,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ckLatitude != null">#{ckLatitude},</if>
             <if test="bClass != null">#{bClass},</if>
             <if test="ckTpye != null">#{ckTpye},</if>
+            <if test="cId != null">#{cId},</if>
          </trim>
     </insert>
 
