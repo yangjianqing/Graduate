@@ -20,7 +20,7 @@
             <h4>地点打卡</h4>
         </div>
         <div id="allmap"></div>
-        <div class="circle " onclick="punch()">
+        <div class="circle " onclick="signIn()">
             <div class="time"></div>
             <div>签到</div>
         </div>
@@ -49,6 +49,8 @@
     </body>
 <!--创建地图，获取当前定位以及设置考勤地点定位，进行距离比较-->
 <script type="text/javascript">
+    var singLong=8000; // 签到范围阈值
+
     //获取地址
     var geoc = new BMap.Geocoder();
     var address ="";
@@ -57,33 +59,30 @@
     time.innerHTML = myDate.getFullYear() + '-' + (myDate.getMonth()+1)+'-'+myDate.getDate(); // 获取当前时间
 
     var map = new BMap.Map("allmap");
-    //公司地址
-    var point = new BMap.Point(28.8776683, 105.44852407);
-
-    map.centerAndZoom(point, 18);
-    var pointAttendance
+    // 地图初始化的位置
+    map.centerAndZoom("泸州市", 12);
+    var myPoint;
+    var comPoint;
+    var ckTpye;
     var geolocation = new BMap.Geolocation();
     geolocation.getCurrentPosition(function (r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
             var mk = new BMap.Marker(r.point);
             map.addOverlay(mk); // 标出自己的当前所在地
-            map.panTo(r.point); // 地图中心移动到自己的当前位置
-            // point = new BMap.Point(r.point.lng, r.point.lat); // 获取自己当前位置经纬度
-
-            var coordinate = "28.8776683, 105.44852407";// 设置考勤点经纬度
-            var arr = coordinate.split(",");// 切割经纬度
-            var lon = arr[1];
-            var lat = arr[0];
-            pointAttendance = new BMap.Point(lon, lat);
-            var circle = new BMap.Circle(pointAttendance, 1000, { // 考勤地点范围
+            // map.panTo(r.point); // 地图中心移动到自己的当前位置
+            //当前位置
+            myPoint = new BMap.Point(r.point.lng, r.point.lat);
+            // 创建公司的位置
+             comPoint  = new BMap.Marker(new BMap.Point(105.53594, 28.69932));
+            var circle = new BMap.Circle(comPoint.point, singLong, { // 考勤地点范围
                 fillColor: "blue", // 圆形颜色
                 strokeWeight: 1,
                 fillOpacity: 0.2,
                 strokeOpacity: 0.2
             });
-            map.addOverlay(circle);
-            var r = new BMap.Marker(pointAttendance);
-            map.addOverlay(r); // 标出考勤点的位置
+            map.addOverlay(circle); // 添加范围圈
+            map.addOverlay(comPoint); //将考勤点范围添加到地图中
+            map.panTo(comPoint.point); // 移动到制定位置
         } else {
             alert('failed' + this.getStatus());
         }
@@ -92,38 +91,15 @@
     // 签到
     // 在签到函数中调用sendLocationData，将经度和纬度传递给后端
     function signIn() {
-        var distance = map.getDistance(point, pointAttendance);
-        alert(distance);
+        var distance = map.getDistance(myPoint, comPoint);
         //计算自己和公司距离判断考勤类型
-        var ckTpye=(distance >1000)? "1":"2";
-        if (distance <= 1000) {
-            if (address===""){
-                geoc.getLocation(point,function (rs){
-                    var addComp = rs.addressComponents;
-                    address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
-                    sendLocationData(point.lng, point.lat,ckTpye);
-                    GetLocation();
-                })
-            }
-        }
-    }
-    // 地址逆解析
-    function GetLocation() {
-
-        geoc.getLocation(point, function (rs) {// 获取当前定位所在详细地址
+        ckTpye=(distance >singLong)? "1":"2";
+        //根据经纬度 获取具体地址
+        geoc.getLocation(myPoint,function (rs){
             var addComp = rs.addressComponents;
             address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
-            alert("您已在" + address + "签到成功")
-            location.reload();
-        });
-    }
-    // 点击签到
-    function punch() {
-        var lng = point.lng; // 获取经度
-        var lat = point.lat; // 获取纬度
-        this.signIn()
-    }
-    function sendLocationData(lng, lat,ckTpye) {
+        })
+
         var myDate = new Date();
         // 构造要发送的数据对象
         var stu= localStorage.getItem("bStudent")
@@ -136,8 +112,8 @@
             ckAddress:address,
             ckTpye:ckTpye,
             ckTime: myDate,
-            ckLongitude: lng,
-            ckLatitude: lat
+            ckLongitude: myPoint.point.lng,
+            ckLatitude: myPoint.point.lat
         };
         // 发送POST请求
         fetch('http://127.0.0.1:8089/api/signin', {
@@ -157,6 +133,10 @@
             .catch(error => {
                 console.error('发生错误:', error);
             });
+
     }
+
+
+
 </script>
 </html>
