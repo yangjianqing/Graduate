@@ -73,6 +73,7 @@ function submitForm() {
             // 登录成功，存储token和bStudent到localStorage
             localStorage.setItem('token', token);
             localStorage.setItem('bStudent', JSON.stringify(bStudent));
+
             window.location.href = "./page/Signin.html";
 
             // TODO:其他需要处理的逻辑
@@ -81,3 +82,11 @@ function submitForm() {
             console.error('Error:', error);
         });
 }
+
+// 监听浏览器关闭事件
+window.onbeforeunload = function() {
+    // 清除localStorage中存储的数据
+    localStorage.removeItem('uuid');
+    localStorage.removeItem('token');
+    localStorage.removeItem('bStudent');
+};

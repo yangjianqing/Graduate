@@ -33,7 +33,10 @@ import org.graduate.common.core.controller.BaseController;
 import org.graduate.common.core.page.TableDataInfo;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import java.util.concurrent.TimeUnit;
@@ -88,6 +91,15 @@ public class MobileApiController extends BaseController
     public AjaxResult logins(String phone, String code, String uuid) {
         String verKey = CacheConstants.PHONE_CODE_KEY + uuid;
         Object cacheObject = redisCache.getCacheObject(verKey);//获取redis缓存的验证码
+
+        // 去重电话号码和验证码
+        String[] phones = phone.split(",");
+        String[] codes = code.split(",");
+        Set<String> phoneSet = new HashSet<>(Arrays.asList(phones));
+        Set<String> codeSet = new HashSet<>(Arrays.asList(codes));
+        phone = phoneSet.iterator().next();
+        code = codeSet.iterator().next();
+
         // TODO: 在这里进行用户名和密码的校验操作
         String cacheString = cacheObject.toString();
         BStudent bStudent = bStudentService.selectBStudentPhone(phone);
@@ -96,7 +108,7 @@ public class MobileApiController extends BaseController
             return AjaxResult.success("登录成功").put("token", token).put("bStudent", bStudent);
         } else {
             // 验证码或手机号错误
-            return AjaxResult.error("手机号或验证码错误");
+            return AjaxResult.success("手机号或验证码错误");
         }
     }
 
