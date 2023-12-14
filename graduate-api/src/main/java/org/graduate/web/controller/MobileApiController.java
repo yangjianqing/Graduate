@@ -123,8 +123,16 @@ public class MobileApiController extends BaseController
         return getDataTable(list);
     }
 
-
-
+    /**
+     * 根据学生id查询学生信息
+     * @param sId
+     * @return
+     */
+    @GetMapping(value = "student/{sId}")
+    public AjaxResult getInfo(@PathVariable("sId") Long sId)
+    {
+        return AjaxResult.success(bStudentService.selectBStudentBySId(sId));
+    }
     /**
      * 发送手机验证码
      * @param

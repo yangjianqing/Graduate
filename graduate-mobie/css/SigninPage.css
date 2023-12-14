@@ -34,13 +34,6 @@ td {
     text-align: center;
 }
 
-caption {
-    font-size: 1.5em;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-}
 
 td.time, td.location {
     font-size: 1.2em;

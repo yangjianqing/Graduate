@@ -12,35 +12,18 @@
 </head>
 
 <body>
+<header>
+    <span>就业</span>
+</header>
 <div class="all background">
     <!-- 搜索框 -->
     <div class="searchDiv">
         <input type="text" name="searchEmpName" autocomplete="name" placeholder="搜索职位名称" class="search" id="search-input">
         <button class="searchBtn" onclick="">搜索</button>
     </div>
-<!--    &lt;!&ndash; 多选项 &ndash;&gt;-->
-<!--    <div class="device_hander">-->
-<!--        <div class="device">-->
-<!--            <img src="../img/就业详情/定位.png" alt="">-->
-<!--            <img src="../img/就业详情/时间.png" alt="">-->
-<!--            <img src="../img/就业详情/袋类.png" alt="">-->
-<!--            <img src="../img/就业详情/彩色描边图标集3-15.png" alt="">-->
-<!--            <img src="../img/就业详情/日历.png" alt="">-->
-<!--        </div>-->
-<!--        &lt;!&ndash; 职位定制 &ndash;&gt;-->
-<!--        <div class="device_p">-->
-<!--            <div class="devicep_p_demo">-->
-<!--                <p>职位定制&nbsp;<span style="font-size: 0.8rem;color: #E1DCDC;">找工作无需大海捞针</span></p>-->
-
-<!--                <p class="device_p_one">根据地区/职位类型等推荐更精确职位</p>-->
-<!--            </div>-->
-<!--            <button>添加意向</button>-->
-<!--        </div>-->
-<!--    </div>-->
     <!-- 简介信息 -->
     <div class="infomation">
         <div id="infoContainer"></div>
-        <div style="height: 3.3rem;"></div>
     </div>
 
 </div>
@@ -133,7 +116,7 @@
                         //职位描述
                         var description = document.createElement("div");
                         description.className = "description";
-                        description.style.cssText = "width: 100%;padding-left: 3.9rem;";
+                        description.style.cssText = "width: 80%;margin 0 auto";
 
                         var empDesP = document.createElement("p");
                         var empDesSpans = empDes.split(/[，。]/);

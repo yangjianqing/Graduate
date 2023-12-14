@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>签到记录</title>
     <link rel="stylesheet" href="../css/SigninPage.css"/>
+    <link rel="stylesheet" href="../css/public.css">
+
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
 <table>
     <caption>
-            <input  name="Submit" type="button" value="返回" onclick="javascript:history.back(-1);">
-        签到记录
+        <a style="float: left;font-size: 1rem" onclick="javascript:history.back(-1);">返回</a>
+        <span>签到记录</span>
     </caption>
     <thead>
     <tr>
@@ -23,7 +25,7 @@
 
     </tbody>
 </table>
-
+<script src="../js/public.js"></script>
 <script>
     var pageNum=1;
     var pageSize=15;
@@ -31,12 +33,10 @@
 
     window.onload = function() {
         console.log("页面加载完成");
-
         iniData(pageNum,pageSize);
         document.addEventListener("scroll", handleScroll);
     };
 
-    var baseUrl="http://127.0.0.1:8089/api";
 
     //初始化数据
     function iniData(pageNum,pageSize) {
