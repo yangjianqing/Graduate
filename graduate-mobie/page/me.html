@@ -4,6 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- bootStarp5的应用 -->
+  <!-- 新 Bootstrap5 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+  <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
+  <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+  <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+  </script>
   <link rel="stylesheet" href="../css/Me.css">
   <link rel="stylesheet" href="../css/public.css">
   <script src="../js/Me.js"></script>
@@ -13,142 +22,42 @@
 </head>
 
 <body>
+<header>
+  <span>签到打卡</span>
+</header>
 <div class="all">
-  <!-- 状态栏 -->
-  <div class="status-bar">
-    <!-- 在这里添加状态栏的内容 -->
 
-  </div>
-  <!-- 标题 -->
-  <div class="mine">
-    <p>我的</p>
-  </div>
   <!-- 人物信息 -->
-  <div class="information">
-    <img src="../img/我的/QQ图片20231130082802.jpg" alt="">
-    <div style="display: flex;
-      align-items: flex-start;
-      flex-direction: column;">
-      <p>小马哥</p>
-      <span style="color: #616060;" prop="sName" label="名字">昵称：马驰贵</span>
-    </div>
-  </div>
-  <!-- 四个选项  -->
-  <div class="select">
-    <div style=" display: flex;
-        flex-direction: column;
-        align-items: center;">
-      <img src="../img/我的/打勾2.png" alt="">
-      <span>签到记录</span>
-    </div>
-    <div style=" display: flex;
-        flex-direction: column;
-        align-items: center;">
-      <img src="../img/我的/爱心.png" alt="">
-      <span>公告收藏</span>
-    </div>
+  <div class="information" id="studentInformation">
 
-    <div style=" display: flex;
-        flex-direction: column;
-        align-items: center;">
-      <img src="../img/我的/工单列表.png" alt="">
-      <span>委托</span>
-    </div>
-
-    <div style=" display: flex;
-        flex-direction: column;
-        align-items: center;">
-      <img src="../img/我的/感叹号2.png"  alt="">
-      <span>问题反馈</span>
-    </div>
   </div>
   <!-- 个人中心 -->
   <div class="peope">
-    <div style="display: flex;
-        align-items: center;    padding-left: 16px;
-    padding-right: 13px;">
+    <div >
       <img src="../img/我的/设置.png" alt="">
-      <p>学生信息</p></div>
+      <p><a href="./SigninPage.html">签到记录</a></p>
+    </div>
 
   </div>
   <!-- 三个选项 -->
-    <div>
-      <div class="peope_select" id="sutndentInfo">
-        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
-          <p>学生学号</p>
-        </div>
-        <div style="padding-left: 16px;padding-right: 13px;"
-             id="studentId"></div>
-      </div>
-      <div class="peope_select">
-        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
-          <p>电话号码</p>
-        </div>
-        <div style="padding-left: 16px;padding-right: 13px;"
-             prop="sNumbers" label="电话号码">
-          18784453857</div>
-      </div>
-      <div class="peope_select">
-        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
-          <p>性别</p>
-        </div>
-        <div style="padding-left: 16px;padding-right: 13px;"
-             prop="sGender" label="性别">
-          男</div>
-      </div>
-      <div class="peope_select">
-        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
-          <p>学校</p>
-        </div>
 
-        <div style="padding-left: 16px;padding-right: 13px;"
-             prop="schoolId" label="学校">
-          泸职院</div>
-      </div>
+  <div class="peope_select" >
+    <table class="table table-hover">
+      <tbody id="studentInfo">
+      <ul class="list-group list-group-flush">
 
-      <div class="peope_select">
-        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
-          <p>班级</p>
-        </div>
-
-        <div style="padding-left: 16px;padding-right: 13px;"
-             prop="classId" label="班级">
-          数据3班</div>
-      </div>
-      <div class="peope_select">
-        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
-          <p>就业状态</p>
-        </div>
-
-        <div style="padding-left: 16px;padding-right: 13px;"
-             prop="cStatus" label="就业状态">
-          已就业</div>
-      </div>
-    </div>
-      <div class="peope_select">
-        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
-          <p>辅导员</p>
-        </div>
-
-        <div style="padding-left: 16px;padding-right: 13px;"
-             prop="teacherId" label="辅导员">
-          蒲公英</div>
-      </div>
-    </div>
-      <div class="peope_select">
-        <div style="display: flex;align-items: center;padding-left: 16px;padding-right: 13px;">
-          <p>创建时间</p>
-        </div>
-        <div style="padding-left: 16px;padding-right: 13px;"
-             prop="createTime" label="创建时间">
-          佛山</div>
-      </div>
-
+      </ul>
+      </tbody>
+    </table>
+  </div>
 
 </div>
+
+<!-- 底部导航栏 -->
+
 <!-- 底部导航栏 -->
 <div class="toolbar">
-  <a href="../page/Signin.html">
+  <a href="../page/Signin.html"  class="active">
     <i class="iconfont icon-index-copy"></i>
     <span>首页</span>
   </a>
@@ -156,7 +65,7 @@
     <i class="iconfont icon-youhuiquan"></i>
     <span>通知</span>
   </a>
-  <a href="../page/employment_details.html" class="active">
+  <a href="../page/employment_details.html">
     <i class="iconfont icon-iconfront-"></i>
     <span>就业</span>
   </a>
@@ -168,5 +77,65 @@
 
 </body>
 </html>
+
+<script src="../js/public.js"></script>
+<script>
+  //加载jquery
+  var stuNo = 3;
+
+  window.onload=function(){
+    //调用 初始数据方法、
+    iniData(stuNo);
+  }
+  //初始化数据
+  function iniData(stuNo){
+    // 加载后台数据
+    $.ajax({
+      url: baseUrl+'/student/'+stuNo,
+      type: 'get',
+      // 设置的是请求参数
+      data: { },
+      dataType: 'json',
+      success: function (res) {
+        var studentInfo =  document.getElementById("studentInfo");
+        //通过innHtml给我的tbody赋值
+        var data = res.data;
+        // 将for循环的赋值给他htmlVal
+        var htmlVal = "";
+        //  根据json内容拼接字符串
+        htmlVal+=`
+        <ul class="list-group list-group-flush ">
+          <li class="list-group-item  list-group-item-action text-end" style="display: flex;justify-content: space-between;"><span>学号</span>${res.data.sNumber}</li>
+          <li class="list-group-item  list-group-item-action text-end " style="display: flex;justify-content: space-between;"><span>姓名</span>${res.data.sName}</li>
+          <li class="list-group-item  list-group-item-action text-end" style="display: flex;justify-content: space-between;"><span>联系电话</span>${res.data.sNumbers}</li>
+          <li class="list-group-item  list-group-item-action text-end" style="display: flex;justify-content: space-between;"><span>性别</span>${res.data.sGender===0?"男":"女"}</li>
+          <li class="list-group-item  list-group-item-action text-end" style="display: flex;justify-content: space-between;"><span>学校</span>${res.data.schoolName}</li>
+          <li class="list-group-item  list-group-item-action text-end" style="display: flex;justify-content: space-between;"><span>公司</span>${res.data.compenyName}</li>
+          <li class="list-group-item  list-group-item-action text-end" style="display: flex;justify-content: space-between;"><span>辅导员</span>${res.data.teacherName}</li>
+          <li class="list-group-item  list-group-item-action text-end" style="display: flex;justify-content: space-between;"><span>班级</span>${res.data.className}</li>
+        </ul>
+      `
+        //全部替换成htmlVal
+        studentInfo.innerHTML=htmlVal;
+        var studentInformation =  document.getElementById("studentInformation");
+        var htmlRal="";
+        htmlRal+=`
+      <img style="border-radius: 50%" src="../img/headImg.jpg" alt="">
+      <div class="userInfo">
+      <p>小马哥</p>
+      <span style="color: #616060;" id="sName">昵称：${res.data.sName}</span>
+    </div>
+      `
+        studentInformation.innerHTML=htmlRal;
+      }
+    });
+
+  }
+
+
+
+
+
+</script>
 
 

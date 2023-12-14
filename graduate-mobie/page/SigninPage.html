@@ -5,77 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>签到记录</title>
     <link rel="stylesheet" href="../css/SigninPage.css"/>
+    <link rel="stylesheet" href="../css/public.css">
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
 <table>
-    <caption>签到记录</caption>
+    <caption>
+        <a style="float: left;font-size: 1rem" onclick="javascript:history.back(-1);">返回</a>
+        <span>签到记录</span>
+    </caption>
     <thead>
     <tr>
         <th>签到时间</th>
         <th>签到地点</th>
     </tr>
     </thead>
-    <tbody id="tableBody"></tbody>
-</table>
+    <tbody id="tableBody">
 
+    </tbody>
+</table>
+<script src="../js/public.js"></script>
 <script>
+    var pageNum=1;
+    var pageSize=15;
+    var get_Total=0;
+
     window.onload = function() {
         console.log("页面加载完成");
-        getDataFromBackend();
+        iniData(pageNum,pageSize);
         document.addEventListener("scroll", handleScroll);
     };
 
-    var baseUrl="http://127.0.0.1:8089/api";
-    var currentPage = 1;
-    var pageSize = 20;
-    var isLoading = false;
 
-    function getDataFromBackend() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", baseUrl + "/signin/getId?page=" + currentPage + "&limit=" + pageSize, true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                isLoading = false;
-                if (xhr.status === 200) {
-                    console.log(xhr.responseText);
-                    var response = JSON.parse(xhr.response);
-
-                    for (var i = 0; i < response.data.length; i++) {
-                        var record = response.data[i];
-
-                        var row = document.createElement("tr");
-                        var timeCell = document.createElement("td");
-                        var locationCell = document.createElement("td");
-
-                        timeCell.textContent = record.ckTime;
-                        locationCell.textContent = record.ckAddress;
-
-                        row.appendChild(timeCell);
-                        row.appendChild(locationCell);
-                        tableBody.appendChild(row);
-                    }
-                } else {
-                    console.log("请求失败，状态码：" + xhr.status);
+    //初始化数据
+    function iniData(pageNum,pageSize) {
+        // 加载后台数据
+        $.ajax({
+            url: baseUrl + '/getSignList',
+            type: 'get',
+            // 设置的是请求参数
+            data: {
+                "pageSize":pageSize,
+                "pageNum":pageNum,
+            },
+            dataType: 'json',
+            success: function (res) {
+                console.log(res);
+                get_Total=res.total;
+                var table = document.getElementById("tableBody")
+                var html=table.innerHTML;
+                for(var i=0;i<res.rows.length;i++){
+                    html+=`  <tr>
+                                <th>${res.rows[i].ckTime}</th>
+                                <th>${res.rows[i].ckAddress}</th>
+                            </tr>`
                 }
+                table.innerHTML=html;
             }
-        };
-        xhr.onerror = function() {
-            isLoading = false;
-            console.log("请求出错");
-        };
-        xhr.send();
-
-        isLoading = true;
+        });
     }
 
     function handleScroll(event) {
         var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
         var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-
-        if (scrollTop + clientHeight >= scrollHeight && !isLoading) {
-            currentPage++;
-            getDataFromBackend();
+        if (scrollTop + clientHeight >= scrollHeight ) {
+            pageNum=pageNum+pageSize;
+            if ((pageNum)<get_Total){
+                iniData(pageNum,pageSize);
+            }
         }
     }
 </script>

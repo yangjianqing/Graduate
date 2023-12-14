@@ -5,7 +5,7 @@ var baseUrl="http://127.0.0.1:8089/api"
 //页面加载完成后执行
 window.onload=function (){
     //调用 初始数据
-    initData();
+    iniData();
 }
 //初始化
 function iniData(){

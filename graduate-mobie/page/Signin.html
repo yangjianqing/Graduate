@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <title>Title</title>
-        <link rel="stylesheet" href="../js/Signin.js"/>
-    <link rel="stylesheet" href="../css/public.css">
     <link rel="stylesheet" href="../css/public.css">
     <!-- 引入图标库 -->
     <link rel="stylesheet" href="../lib/iconfont/iconfont.css">
@@ -14,21 +12,22 @@
     <link rel="stylesheet" href="../css/Signin.css" media="all"/>
 <!--    引入百度api-->
         <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&amp;ak=emhCaO88OqIAnGU7MfsuXyyliu0ifXvC"></script>
+
 </head>
     <body>
-        <div class="title">
-            <h4>地点打卡</h4>
-        </div>
+        <header>
+            <span>签到打卡</span>
+        </header>
         <div id="allmap"></div>
-        <div class="circle " onclick="signIn()">
+        <div class="circle " id="singIn" onclick="signIn()">
             <div class="time"></div>
-            <div>签到</div>
+            <div id="singin_text">签到</div>
         </div>
 
 
         <!-- 底部导航栏 -->
         <div class="toolbar">
-            <a href="../page/Signin.html">
+            <a href="../page/Signin.html"  class="active">
                 <i class="iconfont icon-index-copy"></i>
                 <span>首页</span>
             </a>
@@ -36,7 +35,7 @@
                 <i class="iconfont icon-youhuiquan"></i>
                 <span>通知</span>
             </a>
-            <a href="../page/employment_details.html" class="active">
+            <a href="../page/employment_details.html">
                 <i class="iconfont icon-iconfront-"></i>
                 <span>就业</span>
             </a>
@@ -47,6 +46,9 @@
         </div>
 
     </body>
+
+
+<script src="../js/public.js"></script>
 <!--创建地图，获取当前定位以及设置考勤地点定位，进行距离比较-->
 <script type="text/javascript">
     var singLong=8000; // 签到范围阈值
@@ -64,16 +66,18 @@
     var myPoint;
     var comPoint;
     var ckTpye;
+    var distance;
     var geolocation = new BMap.Geolocation();
     geolocation.getCurrentPosition(function (r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
             var mk = new BMap.Marker(r.point);
+
             map.addOverlay(mk); // 标出自己的当前所在地
             // map.panTo(r.point); // 地图中心移动到自己的当前位置
             //当前位置
             myPoint = new BMap.Point(r.point.lng, r.point.lat);
             // 创建公司的位置
-             comPoint  = new BMap.Marker(new BMap.Point(105.53594, 28.69932));
+             comPoint  = new BMap.Marker(new BMap.Point(107.44852, 29.87766));
             var circle = new BMap.Circle(comPoint.point, singLong, { // 考勤地点范围
                 fillColor: "blue", // 圆形颜色
                 strokeWeight: 1,
@@ -83,6 +87,21 @@
             map.addOverlay(circle); // 添加范围圈
             map.addOverlay(comPoint); //将考勤点范围添加到地图中
             map.panTo(comPoint.point); // 移动到制定位置
+            //计算自己和公司距离判断考勤类型
+             distance = map.getDistance(myPoint, comPoint.point);
+            ckTpye=(distance >singLong)? "1":"2";
+           if(ckTpye==="1"){
+               let singIn = document.getElementById("singIn");
+                singIn.classList="out_circle";
+               let text = document.getElementById("singin_text");
+               text.innerText="外勤";
+
+           }else{
+               document.getElementById("singIn").classList="circle";
+               let text = document.getElementById("singin_text");
+               text.innerText="内勤";
+           }
+
         } else {
             alert('failed' + this.getStatus());
         }
@@ -91,9 +110,6 @@
     // 签到
     // 在签到函数中调用sendLocationData，将经度和纬度传递给后端
     function signIn() {
-        var distance = map.getDistance(myPoint, comPoint);
-        //计算自己和公司距离判断考勤类型
-        ckTpye=(distance >singLong)? "1":"2";
         //根据经纬度 获取具体地址
         geoc.getLocation(myPoint,function (rs){
             var addComp = rs.addressComponents;
@@ -112,11 +128,11 @@
             ckAddress:address,
             ckTpye:ckTpye,
             ckTime: myDate,
-            ckLongitude: myPoint.point.lng,
-            ckLatitude: myPoint.point.lat
+            ckLongitude: myPoint.lng,
+            ckLatitude: myPoint.lat
         };
         // 发送POST请求
-        fetch('http://127.0.0.1:8089/api/signin', {
+        fetch(baseUrl+'/signin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -125,7 +141,7 @@
         })
             .then(response => {
                 if (response.ok) {
-                    // window.location.href="./page/SigninPage.html"
+                    window.location.href="./SigninPage.html"
                 } else {
                     alert('发送数据到后端失败');
                 }

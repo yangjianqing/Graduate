@@ -27,19 +27,13 @@ table, th, td {
 th {
     background-color: #f2f2f2;
     text-align: center;
+    font-weight: normal;
 }
 
 td {
     text-align: center;
 }
 
-caption {
-    font-size: 1.5em;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-}
 
 td.time, td.location {
     font-size: 1.2em;

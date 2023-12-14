@@ -28,3 +28,60 @@
 .toolbar a.active {
     color: #1DB0AC;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+th {
+    background-color: #f2f2f2;
+    text-align: center;
+    font-weight: normal;
+}
+
+td {
+    text-align: center;
+}
+
+
+td.time, td.location {
+    font-size: 1.2em;
+}
+
+
+caption {
+    font-size: 1.2em;
+    padding: 10px;
+    background-color: #12ACA8;
+    color: #070000;
+    text-align: center;
+}
+header {
+    font-size: 1.2em;
+    padding: 10px;
+    background-color: #12ACA8;
+    color: #070000;
+    text-align: center;
+}
