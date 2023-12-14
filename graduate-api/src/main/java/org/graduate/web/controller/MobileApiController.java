@@ -2,6 +2,8 @@ package org.graduate.web.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.graduate.common.annotation.Anonymous;
 import org.graduate.common.core.domain.AjaxResult;
 import org.graduate.common.core.domain.AjaxResult;
@@ -187,13 +189,13 @@ public class MobileApiController extends BaseController
      * @return 返回公告数据的 JSON 格式字符串
      */
     @GetMapping("/announcement") // 使用@GetMapping注解，映射该方法到"/announcement"路径
-    public String getAnnouncements() throws Exception {
+    public TableDataInfo getAnnouncements() {
         // 调用 BPulicInfoService 的 selectBPublicInfoList 方法获取公告数据列表
+        startPage();
         List<BPublicInfo> list = bPublicInfoService.selectBPublicInfoList(new BPublicInfo());
-
-        ObjectMapper objectMapper = new ObjectMapper(); // 创建ObjectMapper实例，用于对象序列化成JSON
-        return objectMapper.writeValueAsString(list); // 将列表对象序列化为JSON字符串并返回
+        return getDataTable(list);
     }
+
 
 
     /**
@@ -215,11 +217,9 @@ public class MobileApiController extends BaseController
      * @return
      */
 
-    @Anonymous
-    @GetMapping("/search/details")
-    public AjaxResult selectById(long nId) {
-        BPublicInfo bPublicInfo = bPublicInfoService.selectBPublicInfoByNId(nId);
-        return AjaxResult.success(bPublicInfo);
+    @GetMapping("/details")
+    public AjaxResult selectById(Long nId) {
+        return AjaxResult.success(bPublicInfoService.selectBPublicInfoByNId(nId));
     }
 
 

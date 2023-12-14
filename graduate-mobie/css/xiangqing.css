@@ -2,6 +2,7 @@
   margin-top: 1.31rem;
 }
 .page {
+
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -11,14 +12,14 @@
   height: 5.83rem;
 }
 .section {
-  padding: 1rem 1rem 1rem;
+  border-bottom: 1px solid #ccc;
   background-color: #ffffff;
   overflow: hidden;
 }
 .group {
   overflow: hidden;
   width: 2.63rem;
-  height: 1.76rem;
+  height: 2.76rem;
 }
 .image {
   width: 0.63rem;
@@ -31,9 +32,11 @@
   line-height: 0.68rem;
 }
 .group_2 {
+  /*justify-content: center;*/
+  /*align-items: center;*/
   overflow: hidden;
   width: 66%;
-  height: 3rem;
+  height: 2.5rem;
 }
 .text_2 {
   margin-left: 1.18rem;
@@ -41,7 +44,7 @@
   font-size: 0.9rem;
   font-family: SourceHanSansCN;
   font-weight: 800;
-  line-height: 1.5rem;
+  line-height: 2.76rem;
 }
 .group_3 {
   overflow-y: auto;

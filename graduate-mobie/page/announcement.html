@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>公告</title>
+    <link rel="stylesheet" href="../css/Announcement_ding.css" />
+    <link rel="stylesheet" href="../css/announcement.css" />
+    <link rel="stylesheet" href="../css/public.css">
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="../lib/iconfont/iconfont.css">
+
+    <script type="text/javascript" src="../js/announcement.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      html {
+        font-size: 16px;
+      }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+        'Droid Sans', 'Helvetica Neue', 'Microsoft Yahei', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        width: 100vw;
+        height: 93vh;
+      }
+      body * {
+        box-sizing: border-box;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+  <body >
+    <div >
+  <body>
+  <header>
+    <span>通知</span>
+  </header>
+
+    <div class="flex-col page">
+      <!-- 搜索框 -->
+      <div class="searchcontainer">
+        <input type="text" name="myname" autocomplete="name" placeholder="搜索通知" class="search" id="search-input">
+        <button class="btnsearch" >搜索</button>
+      </div>
+
+
+
+      <div class="flex-col group_2 view">
+        <div class="flex-row justify-between items-center group_3">
+          <span class="font_2 text_2">通知列表</span>
+          <div class="flex-col justify-start items-center text-wrapper_2">
+          </div>
+        </div>
+
+          <div id="announcement-list" onclick="fetchData()"  ></div>
+      </div>
+      </div>
+
+
+    <!-- 底部导航栏 -->
+    <div class="toolbar">
+      <a href="../page/Signin.html">
+        <i class="iconfont icon-index-copy"></i>
+        <span>首页</span>
+      </a>
+      <a href="../page/announcement.html" class="active">
+        <i class="iconfont icon-youhuiquan"></i>
+        <span>通知</span>
+      </a>
+      <a href="../page/employment_details.html">
+        <i class="iconfont icon-iconfront-"></i>
+        <span>就业</span>
+      </a>
+      <a href="../page/me.html">
+        <i class="iconfont icon-7"></i>
+        <span>我的</span>
+      </a>
+    </div>
+  </body>
+</html>
+
+<script>
+
+  $(document).ready(function() {
+    let nextPage = 2; // 初始化下一页页码为2
+    let isLoading = false; // 初始化加载状态为 false
+    $(document).scroll(function() {
+      var scrollTop = $(window).scrollTop();
+      var windowHeight = $(window).height();
+      var scrollHeight = $(document).height();
+      var distance = scrollHeight - scrollTop - windowHeight;
+      console.log(distance)
+      if (distance < 1 && !isLoading) {
+        isLoading = true; // 设置加载状态为 true
+        setTimeout(function () {
+          $.ajax({
+            url: 'http://127.0.0.1:8089/api/announcement', // 后端接口的 URL
+            method: 'GET', // 请求方法
+            data: {pageNum: nextPage, pageSize: 5}, // 可能需要传递的参数，例如当前页数
+            dataType: 'json', // 响应数据的类型为 JSON
+            success: function(response) {
+              // 处理成功响应的逻辑
+              console.log('请求成功');
+              console.log(response);
+              // 更新页面内容
+              const listContainer = document.getElementById('announcement-list'); // 获取存放公告列表的容器元素
+              response.rows.forEach(info => {
+                const listItem = document.createElement('div'); // 创建一个 div 元素用于存放单条公告信息
+                listItem.classList.add('flex-col', 'mt-16', 'list-item_2'); // 添加样式类
+                listItem.innerHTML = `
+                              <span class="self-start font_4 text_13" id="nTitle">${info.nTitle}</span>
+                              <span class="self-start font_3 text_14 mt-15" id="nContent">${info.nContent}</span>
+                              <div class="flex-row items-center self-stretch mt-15">
+                                  <img class="image_4" src="../img/InFo/chuangjianren.png" />
+                                  <span class="font text_15 ml-9" id="nPeople">${info.nPeople}</span>
+                                  <span class="font text_15 ml-9" id="nTime">${info.createTime}</span>
+                              </div>
+                          `;
+                listContainer.appendChild(listItem); // 将单条公告信息添加到公告列表容器中
+              });
+              nextPage++; // 更新下一页页码
+              if (response.rows.length < 5) {
+                isLoading = false; // 如果数据不足5条，将加载状态改为 false
+                $(document).off('scroll'); // 停止监听滚动事件
+              }
+            },
+            error: function(error) {
+              // 处理错误响应的逻辑
+              console.log('请求失败');
+              console.log(error);
+            }
+          });
+          isLoading = false; // 在请求成功的回调函数外面将 isLoading 设置为 false
+        }, 500); // 设置延迟执行时间为500毫秒
+      }
+    });
+  });
+
+
+
+
+</script>

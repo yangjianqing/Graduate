@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="../css/xiangqing_ding.css" />
     <link rel="stylesheet" href="../css/xiangqing.css" />
     <link rel="stylesheet" href="../css/Employment_Information.css">
-    <script type="text/javascript" src="."></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   </head>
   <style>
     body {
@@ -30,29 +31,28 @@
     <div class="flex-col page">
       <div class="flex-col header">
         <div class="flex-row justify-between self-stretch section">
-          <div class="flex-row items-center group">
-            <img
-              class="shrink-0 image"
-              src="../img/InFo/jiantou.png"
-            />
-            <span class="ml-8 font">返回</span>
-          </div>
+          <a href="../page/announcement.html" style="text-decoration: none;">
+            <div class="flex-row items-center group">
+              <img class="shrink-0 image" src="../img/InFo/jiantou.png" />
+              <span class="ml-8 font">返回</span>
+            </div>
+          </a>
           <div class="group_2"> <span class="self-start text_2 mt-21">通知详情</span></div>
         </div>
 
       </div>
       <div class="flex-col justify-start flex-1 group_3">
         <div class="flex-col group_4">
-          <span class="self-start text_3">#第二十二届“代英”校园文化艺术节#</span>
+          <span class="self-start text_3"></span>
           <span class="mt-12 self-stretch font_2">
-            春天是一个充满生机和活力的季节，也是摄影爱好者最喜欢的季节之一。本主题汇集了各种春天的美景，让您尽情地感受春天的美好。
+
           </span>
         </div>
       </div>
       <div class="flex-row items-center self-stretch mt-15">
       <img class="image_4" src="../img/InFo/chuangjianren.png" />
-      <span class="font text_15 ml-9" id="nPeople">蒲金玉</span>
-      <span class="font text_15 ml-9" id="nTime">2023年12月12日</span>
+      <span class="font text_15 ml-9" id="nPeople"></span>
+      <span class="font text_15 ml-9" id="nTime"></span>
       </div>
     </div>
     <!-- 底部沟通分享栏 -->
@@ -67,3 +67,24 @@
     </div>
   </body>
 </html>
+
+
+
+<!--根据id获取回显内容-->
+<script>
+  // 获取 URL 参数
+  const urlParams = new URLSearchParams(window.location.search);
+  const nId = urlParams.get('nId');
+
+  // 发送获取公告详情数据的请求
+  $.get("http://127.0.0.1:8089/api/details", { nId: nId }, function(data) {
+    $(".text_3").text(data.data.nTitle);
+    $(".font_2").text(data.data.nContent);
+    $("#nPeople").text(data.data.nPeople);
+    $("#nTime").text(data.data.createTime);
+  });
+
+
+
+
+</script>

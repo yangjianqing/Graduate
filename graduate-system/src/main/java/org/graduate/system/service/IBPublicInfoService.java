@@ -68,4 +68,5 @@ public interface IBPublicInfoService
      * @return 结果
      */
     public int deleteBPublicInfoByNId(Long nId);
+
 }
