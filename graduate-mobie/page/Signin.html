@@ -20,9 +20,9 @@
             <h4>地点打卡</h4>
         </div>
         <div id="allmap"></div>
-        <div class="circle " onclick="signIn()">
+        <div class="circle " id="singIn" onclick="signIn()">
             <div class="time"></div>
-            <div>签到</div>
+            <div id="singin_text">签到</div>
         </div>
 
 
@@ -68,12 +68,13 @@
     geolocation.getCurrentPosition(function (r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
             var mk = new BMap.Marker(r.point);
+
             map.addOverlay(mk); // 标出自己的当前所在地
             // map.panTo(r.point); // 地图中心移动到自己的当前位置
             //当前位置
             myPoint = new BMap.Point(r.point.lng, r.point.lat);
             // 创建公司的位置
-             comPoint  = new BMap.Marker(new BMap.Point(105.53594, 28.69932));
+             comPoint  = new BMap.Marker(new BMap.Point(107.44852, 29.87766));
             var circle = new BMap.Circle(comPoint.point, singLong, { // 考勤地点范围
                 fillColor: "blue", // 圆形颜色
                 strokeWeight: 1,
@@ -83,6 +84,21 @@
             map.addOverlay(circle); // 添加范围圈
             map.addOverlay(comPoint); //将考勤点范围添加到地图中
             map.panTo(comPoint.point); // 移动到制定位置
+            //计算自己和公司距离判断考勤类型
+            var distance = map.getDistance(myPoint, comPoint.point);
+            ckTpye=(distance >singLong)? "1":"2";
+           if(ckTpye==="1"){
+               let singIn = document.getElementById("singIn");
+                singIn.classList="out_circle";
+               let text = document.getElementById("singin_text");
+               text.innerText="外勤";
+
+           }else{
+               document.getElementById("singIn").classList="circle";
+               let text = document.getElementById("singin_text");
+               text.innerText="内勤";
+           }
+
         } else {
             alert('failed' + this.getStatus());
         }
@@ -92,8 +108,6 @@
     // 在签到函数中调用sendLocationData，将经度和纬度传递给后端
     function signIn() {
         var distance = map.getDistance(myPoint, comPoint);
-        //计算自己和公司距离判断考勤类型
-        ckTpye=(distance >singLong)? "1":"2";
         //根据经纬度 获取具体地址
         geoc.getLocation(myPoint,function (rs){
             var addComp = rs.addressComponents;
@@ -125,7 +139,7 @@
         })
             .then(response => {
                 if (response.ok) {
-                    // window.location.href="./page/SigninPage.html"
+                    window.location.href="./page/SigninPage.html"
                 } else {
                     alert('发送数据到后端失败');
                 }

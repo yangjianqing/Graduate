@@ -116,11 +116,11 @@ public class MobileApiController extends BaseController
     //@CrossOrigin允许跨域请求
     @CrossOrigin
     @Anonymous  //该注解取消权限控制
-    @GetMapping("/signin/getId")
-    public AjaxResult selectBCheck(BCheck bCheck) {
+    @GetMapping("/getSignList")
+    public TableDataInfo selectBCheck(BCheck bCheck) {
         startPage();
         List<BCheck> list = ibCheckService.selectBCheckList(bCheck);
-        return AjaxResult.success((list));
+        return getDataTable(list);
     }
 
 

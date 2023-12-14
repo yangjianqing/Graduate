@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="ckAddress != null  and ckAddress != ''"> and ck_address like concat('%', #{ckAddress}, '%')</if>
             <if test="bClass != null "> and b_class = #{bClass}</if>
             <if test="ckTpye != null  and ckTpye != ''"> and ck_tpye = #{ckTpye}</if>
+            <if test="stuId != null  and stuId != ''"> and stu_id = #{stuId}</if>
         </where>
         ORDER BY ck_time DESC
     </select>
@@ -40,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertBCheck" parameterType="BCheck" useGeneratedKeys="true" keyProperty="ckId">
         insert into b_check
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stuId != null">stu_id,</if>
             <if test="ckName != null">ck_name,</if>
             <if test="ckTime != null">ck_time,</if>
             <if test="ckAddress != null">ck_address,</if>
@@ -50,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cId !=null">c_id</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stuId != null">#{stuId},</if>
             <if test="ckName != null">#{ckName},</if>
             <if test="ckTime != null">#{ckTime},</if>
             <if test="ckAddress != null">#{ckAddress},</if>
