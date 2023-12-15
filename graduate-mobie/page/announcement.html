@@ -44,7 +44,7 @@
       <!-- 搜索框 -->
       <div class="searchcontainer">
         <input type="text" name="myname" autocomplete="name" placeholder="搜索通知" class="search" id="search-input">
-        <button class="btnsearch" >搜索</button>
+        <button class="btnsearch" onclick=" searchAnnouncements()" >搜索</button>
       </div>
 
 
@@ -56,7 +56,7 @@
           </div>
         </div>
 
-          <div id="announcement-list" onclick="fetchData()"  ></div>
+          <div id="announcement-list" ></div>
       </div>
       </div>
 
@@ -93,6 +93,7 @@
       var windowHeight = $(window).height();
       var scrollHeight = $(document).height();
       var distance = scrollHeight - scrollTop - windowHeight;
+
       console.log(distance)
       if (distance < 1 && !isLoading) {
         isLoading = true; // 设置加载状态为 true
@@ -112,15 +113,19 @@
                 const listItem = document.createElement('div'); // 创建一个 div 元素用于存放单条公告信息
                 listItem.classList.add('flex-col', 'mt-16', 'list-item_2'); // 添加样式类
                 listItem.innerHTML = `
-                              <span class="self-start font_4 text_13" id="nTitle">${info.nTitle}</span>
-                              <span class="self-start font_3 text_14 mt-15" id="nContent">${info.nContent}</span>
-                              <div class="flex-row items-center self-stretch mt-15">
-                                  <img class="image_4" src="../img/InFo/chuangjianren.png" />
-                                  <span class="font text_15 ml-9" id="nPeople">${info.nPeople}</span>
-                                  <span class="font text_15 ml-9" id="nTime">${info.createTime}</span>
-                              </div>
-                          `;
+                  <span class="self-start font_4 text_13" id="nTitle">${info.nTitle}</span>
+                  <span class="self-start font_3 text_14 mt-15" id="nContent">${info.nContent}</span>
+                  <div class="flex-row items-center self-stretch mt-15">
+                      <img class="image_4" src="../img/InFo/chuangjianren.png" />
+                      <span class="font text_15 ml-9" id="nPeople">${info.nPeople}</span>
+                      <span class="font text_15 ml-9" id="nTime">${info.createTime}</span>
+                  </div>
+              `;
                 listContainer.appendChild(listItem); // 将单条公告信息添加到公告列表容器中
+                listItem.addEventListener('click', () => {
+                  // 在这里执行页面跳转逻辑，例如跳转到详情页
+                  window.location.href = `../page/announcement_information.html?nId=${info.nId}`;
+                });
               });
               nextPage++; // 更新下一页页码
               if (response.rows.length < 5) {

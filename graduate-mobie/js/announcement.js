@@ -94,13 +94,19 @@ function renderAnnouncements(announcements, joinData, searchText) {
             <span class="font text_15 ml-9" id="nTime">${joinInfo.createTime}</span>
         </div>
       `;
-
+        listItem.addEventListener('click', () => {
+            window.location.href = `../page/announcement_information.html?nId=${announcement.nId}`;
+        });
         announcementList.appendChild(listItem);
     });
 
-
-
-
+    if (announcements.length === 0) {
+        // 没有搜索到结果
+        var noResultItem = document.createElement('div');
+        noResultItem.classList.add('text-center', 'mt-20', 'font_2', 'text_13');
+        noResultItem.textContent = '没有搜索到相关内容';
+        announcementList.appendChild(noResultItem);
+    }
 
 }
 
