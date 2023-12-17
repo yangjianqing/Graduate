@@ -52,10 +52,9 @@
 <!--创建地图，获取当前定位以及设置考勤地点定位，进行距离比较-->
 <script type="text/javascript">
     var singLong=8000; // 签到范围阈值
-
     //获取地址
     var geoc = new BMap.Geocoder();
-    var address ="";
+    var address="";
     var time = document.querySelector('.time')
     var myDate = new Date();
     time.innerHTML = myDate.getFullYear() + '-' + (myDate.getMonth()+1)+'-'+myDate.getDate(); // 获取当前时间
@@ -68,6 +67,7 @@
     var ckTpye;
     var distance;
     var geolocation = new BMap.Geolocation();
+
     geolocation.getCurrentPosition(function (r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
             var mk = new BMap.Marker(r.point);
@@ -77,7 +77,7 @@
             //当前位置
             myPoint = new BMap.Point(r.point.lng, r.point.lat);
             // 创建公司的位置
-             comPoint  = new BMap.Marker(new BMap.Point(107.44852, 29.87766));
+                 comPoint  = new BMap.Marker(new BMap.Point(107.44852, 29.87766));
             var circle = new BMap.Circle(comPoint.point, singLong, { // 考勤地点范围
                 fillColor: "blue", // 圆形颜色
                 strokeWeight: 1,
@@ -108,13 +108,20 @@
     }, { enableHighAccuracy: true })
 
     // 签到
-    // 在签到函数中调用sendLocationData，将经度和纬度传递给后端
-    function signIn() {
-        //根据经纬度 获取具体地址
-        geoc.getLocation(myPoint,function (rs){
-            var addComp = rs.addressComponents;
-            address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
-        })
+    // 使用async/await：将获取地址的异步操作放在一个async函数中，并使用await关键字来等待返回的地址值
+    async function getAddress() {
+        return new Promise(function(resolve, reject) {
+            geoc.getLocation(myPoint, function(rs) {
+                var addComp = rs.addressComponents;
+                address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+                resolve(address);
+            });
+        });
+    }
+    // 签到
+    async function signIn() {
+        var address = await getAddress();
+
 
         var myDate = new Date();
         // 构造要发送的数据对象
@@ -124,6 +131,7 @@
             phone:stu.sNumbers,
             ckName:stu.sName,
             bClass:stu.classId,
+            stuId:stu.sId,
             cId: stu.compenyId,//就是这个
             ckAddress:address,
             ckTpye:ckTpye,
@@ -141,7 +149,7 @@
         })
             .then(response => {
                 if (response.ok) {
-                    window.location.href="./SigninPage.html"
+                    // window.location.href="./SigninPage.html"
                 } else {
                     alert('发送数据到后端失败');
                 }

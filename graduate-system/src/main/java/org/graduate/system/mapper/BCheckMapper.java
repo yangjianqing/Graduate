@@ -4,6 +4,7 @@ import org.graduate.system.domain.BCheck;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 签到Mapper接口
@@ -60,5 +61,14 @@ public interface BCheckMapper
      * @return 结果
      */
     public int deleteBCheckByCkIds(Long[] ckIds);
+
+    /**
+     * 统计类型数
+     *
+     * @param
+     * @return 结果
+     */
+     Map<Integer,Integer> CountCkTpye();
+
 
 }

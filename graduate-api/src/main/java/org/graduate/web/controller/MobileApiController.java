@@ -1,44 +1,40 @@
 package org.graduate.web.controller;
 
 
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.graduate.common.annotation.Anonymous;
 import org.graduate.common.core.domain.AjaxResult;
 import org.graduate.common.core.domain.AjaxResult;
-import org.graduate.system.domain.BPublicInfo;
+import org.graduate.system.domain.*;
 import org.graduate.common.constant.CacheConstants;
 import org.graduate.common.constant.Constants;
 import org.graduate.common.core.redis.RedisCache;
 import org.graduate.common.utils.uuid.IdUtils;
 import org.graduate.framework.web.service.TokenService;
-import org.graduate.system.domain.BStudent;
 import org.graduate.common.core.domain.AjaxResult;
-import org.graduate.system.domain.BEmpinfo;
 import org.graduate.common.annotation.Log;
 import org.graduate.common.core.domain.AjaxResult;
 import org.graduate.common.enums.BusinessType;
 import org.graduate.common.utils.poi.ExcelUtil;
-import org.graduate.system.domain.BCheck;
-import org.graduate.system.domain.BTeacher;
-import org.graduate.system.service.IBEmpinfoService;
-import org.graduate.system.service.IBPublicInfoService;
-import org.graduate.system.service.IBStudentService;
+import org.graduate.system.service.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.graduate.system.service.IBStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.graduate.system.service.IBCheckService;
 
 import org.graduate.common.core.controller.BaseController;
 import org.graduate.common.core.page.TableDataInfo;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import java.util.concurrent.TimeUnit;
@@ -61,6 +57,8 @@ public class MobileApiController extends BaseController
     private IBEmpinfoService bEmpinfoService;
     @Resource
     private IBCheckService ibCheckService;
+    @Resource
+    private IBCompanyService ibCompanyService;
 
 
     /**
@@ -161,7 +159,12 @@ public class MobileApiController extends BaseController
         int i = ibCheckService.insertBCheck(bCheck);
         return AjaxResult.success(i);
     }
-
+    @Anonymous // 该注解取消权限控制
+    @GetMapping("/locations")
+    public AjaxResult getCompanyLocations() {
+        List<Location> locations = ibCompanyService.selectBCompanyByPoint();
+        return AjaxResult.success(locations);
+    }
     /**
      * 就业信息页面接口
      **/
@@ -234,6 +237,41 @@ public class MobileApiController extends BaseController
         return AjaxResult.success(bPublicInfoService.selectBPublicInfoByNId(nId));
     }
 
+    //柱状图
+    /**
+     * 柱状图
+     *
+     * @param
+     * @return
+     */
+//
+//    @GetMapping("/getCountCktpye")
+//    public AjaxResult countCkTpye(HttpServletResponse response) {
+//        Map<Integer, Integer> countCKTpye = ibCheckService.CountCkTpye();
+//        JSONArray jsonArray = new JSONArray();
+//        for (Map.Entry<Integer, Integer> entry : countCKTpye.entrySet()) {
+//            JSONObject jsonObject = new JSONObject();
+//            // 获取类型
+//            Integer ckCount = entry.getKey();
+//            // 获取总数
+//            Integer ckBai = entry.getValue();
+//            // 通过jsonobject存数据
+//            jsonObject.put("count", ckCount);
+//            jsonObject.put("ckbai", ckBai);
+//            // 发送数据到前端
+//            jsonArray.add(jsonObject);
+//        }
+//        String s = jsonArray.toJSONString();
+//        // 发送编码格式
+//        response.setContentType("text/html;charset=UTF-8");
+//        try (PrintWriter writer = response.getWriter()) {
+//            writer.print(s);
+//            writer.flush();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return AjaxResult.success(countCKTpye);
+//    }
 
 }
 

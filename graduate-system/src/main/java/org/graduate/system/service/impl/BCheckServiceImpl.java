@@ -1,6 +1,7 @@
 package org.graduate.system.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.graduate.system.domain.BCompany;
 import org.graduate.system.domain.BStudent;
@@ -94,4 +95,16 @@ public class BCheckServiceImpl implements IBCheckService
     {
         return bCheckMapper.deleteBCheckByCkId(ckId);
     }
+    /**
+     * 删除签到信息
+     *
+     * @param
+     * @return 结果
+     */
+    @Override
+    public Map<Integer ,Integer> CountCkTpye()
+    {
+        return bCheckMapper.CountCkTpye();
+    }
+
 }

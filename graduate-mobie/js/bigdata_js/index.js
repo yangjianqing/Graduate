@@ -1,4 +1,6 @@
 // 柱状图模块1
+// import result from "../../../graduate-ui/src/components/Crontab/result";
+
 (function() {
   // 1实例化对象
   var myChart = echarts.init(document.querySelector(".bar .chart"));
@@ -89,7 +91,7 @@
     myChart.resize();
   });
 })();
-// 柱状图2
+// 就业
 (function() {
   var myColor = ["#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6"];
   // 1. 实例化对象
@@ -110,7 +112,7 @@
       {
         type: "category",
         inverse: true,
-        data: ["HTML5", "CSS3", "javascript", "VUE", "NODE"],
+        data: ["国企", "央企", "民企", "外企","自由职业"],
         // 不显示y轴的线
         axisLine: {
           show: false
@@ -125,7 +127,7 @@
         }
       },
       {
-        data: [702, 350, 610, 793, 664],
+        data: [],
         inverse: true,
         // 不显示y轴的线
         axisLine: {

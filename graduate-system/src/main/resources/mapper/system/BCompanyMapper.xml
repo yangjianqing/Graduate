@@ -20,6 +20,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectBCompanyVo">
         select c_id, c_name, c_data, c_type, c_address, c_phone, create_time, update_time, c_longitude, c_latitude from b_company
     </sql>
+    <sql id="selectPiontVo">
+        SELECT b_company.c_longitude, b_company.c_latitude FROM b_student JOIN b_company ON b_student.compeny_id = b_company.c_id
+    </sql>
 
     <select id="selectBCompanyList" parameterType="BCompany" resultMap="BCompanyResult">
         <include refid="selectBCompanyVo"/>
@@ -30,7 +33,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cAddress != null  and cAddress != ''"> and  c_address like concat ('%',#{cAddress},'%') </if>
         </where>
     </select>
-    
+
+<!--    查询经纬度-->
+    <select id="selectBCompanyByPoint" parameterType="Long" resultMap="BCompanyResult">
+        <include refid="selectPiontVo"/>
+        WHERE b_student.s_id = #{sId}
+    </select>
+
     <select id="selectBCompanyByCId" parameterType="Long" resultMap="BCompanyResult">
         <include refid="selectBCompanyVo"/>
         where c_id = #{cId}

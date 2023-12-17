@@ -19,6 +19,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectBCheckVo">
         select ck_id, ck_name, ck_time, ck_address, ck_longitude, ck_latitude, b_class, ck_tpye ,c_id from b_check
     </sql>
+    <sql id="countTpyeVo">
+        SELECT ck_tpye AS type, COUNT(*) AS count, ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM b_check)) AS percentage  FROM b_check
+    </sql>
 
     <select id="selectBCheckList" parameterType="BCheck" resultMap="BCheckResult">
         <include refid="selectBCheckVo"/>
@@ -32,10 +35,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
         ORDER BY ck_time DESC
     </select>
+
     
     <select id="selectBCheckByCkId" parameterType="Long" resultMap="BCheckResult">
         <include refid="selectBCheckVo"/>
         where ck_id = #{ckId}
+    </select>
+<!--    统计公司类型-->
+    <select id="CountCkTpye" parameterType="BCheck" resultMap="BCheckResult">
+        <include refid="countTpyeVo"/>
+       GROUP BY ck_tpye
     </select>
         
     <insert id="insertBCheck" parameterType="BCheck" useGeneratedKeys="true" keyProperty="ckId">

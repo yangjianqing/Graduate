@@ -1,8 +1,11 @@
 package org.graduate.system.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.graduate.common.utils.DateUtils;
+import org.graduate.system.domain.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.graduate.system.mapper.BCompanyMapper;
@@ -20,6 +23,7 @@ public class BCompanyServiceImpl implements IBCompanyService
 {
     @Autowired
     private BCompanyMapper bCompanyMapper;
+
 
     /**
      * 查询公司管理
@@ -99,4 +103,15 @@ public class BCompanyServiceImpl implements IBCompanyService
     public List<BCompany> selectBCompanyAll() {
         return bCompanyMapper.selectBCompanyAll();
     }
+    /**
+     * 查询公司经纬度
+     *
+     * @return 结果
+     */
+    @Override
+    public List<Location> selectBCompanyByPoint() {
+        return bCompanyMapper.selectBCompanyByPoint();
+    }
 }
+
+

@@ -27,53 +27,52 @@
 </table>
 <script src="../js/public.js"></script>
 <script>
-    var pageNum=1;
-    var pageSize=15;
-    var get_Total=0;
+    var pageNum = 1;
+    var pageSize = 15;
+    var get_Total = 0;
 
     window.onload = function() {
         console.log("页面加载完成");
-        iniData(pageNum,pageSize);
+        iniData(pageNum, pageSize);
         document.addEventListener("scroll", handleScroll);
     };
 
-
-    //初始化数据
-    function iniData(pageNum,pageSize) {
+    // 初始化数据
+    function iniData(pageNum, pageSize) {
         // 加载后台数据
-        $.ajax({
-            url: baseUrl + '/getSignList',
-            type: 'get',
-            // 设置的是请求参数
-            data: {
-                "pageSize":pageSize,
-                "pageNum":pageNum,
-            },
-            dataType: 'json',
-            success: function (res) {
+        var xhr = new XMLHttpRequest();
+        var url = baseUrl + '/getSignList';
+        url += "?pageNum=" + pageNum + "&pageSize=" + pageSize;
+
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var res = JSON.parse(xhr.responseText);
                 console.log(res);
-                get_Total=res.total;
-                var table = document.getElementById("tableBody")
-                var html=table.innerHTML;
-                for(var i=0;i<res.rows.length;i++){
-                    html+=`  <tr>
-                                <th>${res.rows[i].ckTime}</th>
-                                <th>${res.rows[i].ckAddress}</th>
-                            </tr>`
+                get_Total = res.total;
+
+                var table = document.getElementById("tableBody");
+                var html = table.innerHTML;
+                for (var i = 0; i < res.rows.length; i++) {
+                    html += "<tr>";
+                    html += "<th>" + res.rows[i].ckTime + "</th>";
+                    html += "<th>" + res.rows[i].ckAddress + "</th>";
+                    html += "</tr>";
                 }
-                table.innerHTML=html;
+                table.innerHTML = html;
             }
-        });
+        };
+        xhr.send();
     }
 
     function handleScroll(event) {
         var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
         var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-        if (scrollTop + clientHeight >= scrollHeight ) {
-            pageNum=pageNum+pageSize;
-            if ((pageNum)<get_Total){
-                iniData(pageNum,pageSize);
+        if (scrollTop + clientHeight >= scrollHeight) {
+            pageNum += pageSize;
+            if (pageNum < get_Total) {
+                iniData(pageNum, pageSize);
             }
         }
     }

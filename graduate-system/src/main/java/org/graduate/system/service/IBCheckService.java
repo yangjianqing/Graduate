@@ -3,6 +3,7 @@ package org.graduate.system.service;
 import org.graduate.system.domain.BCheck;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 签到Service接口
@@ -59,5 +60,13 @@ public interface IBCheckService
      * @return 结果
      */
     public int deleteBCheckByCkId(Long ckId);
+
+    /**
+     * 删除签到信息
+     *
+     * @param
+     * @return 结果
+     */
+    public Map<Integer,Integer> CountCkTpye();
 
 }

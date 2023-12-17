@@ -39,6 +39,7 @@ public class BCheck extends BaseEntity
     public void setComName(String comName) {
         this.comName = comName;
     }
+    //学生Id
     private Long stuId;
     /** 公司名称 */
     private String comName;

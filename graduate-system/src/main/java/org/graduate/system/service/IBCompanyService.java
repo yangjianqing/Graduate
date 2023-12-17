@@ -1,7 +1,11 @@
 package org.graduate.system.service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+
 import org.graduate.system.domain.BCompany;
+import org.graduate.system.domain.Location;
 
 /**
  * 公司管理Service接口
@@ -64,4 +68,9 @@ public interface IBCompanyService
      * @return
      */
     public List<BCompany> selectBCompanyAll();
+    /**
+     * 查询公司经纬度
+     * @return 公司坐标列表
+     */
+    List<Location> selectBCompanyByPoint();
 }
