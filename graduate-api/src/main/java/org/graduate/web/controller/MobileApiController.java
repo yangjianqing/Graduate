@@ -159,6 +159,7 @@ public class MobileApiController extends BaseController
         int i = ibCheckService.insertBCheck(bCheck);
         return AjaxResult.success(i);
     }
+    //把经纬度发送到前端
     @Anonymous // 该注解取消权限控制
     @GetMapping("/locations")
     public AjaxResult getCompanyLocations() {

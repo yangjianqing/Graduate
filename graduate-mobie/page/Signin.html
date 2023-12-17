@@ -67,6 +67,10 @@
     var ckTpye;
     var distance;
     var geolocation = new BMap.Geolocation();
+    //获取浏览器存储的经纬度
+    var latitude = companyList[0].cLatitude;
+    var longitude = companyList[0].cLongitude;
+
 
     geolocation.getCurrentPosition(function (r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
@@ -77,7 +81,9 @@
             //当前位置
             myPoint = new BMap.Point(r.point.lng, r.point.lat);
             // 创建公司的位置
-                 comPoint  = new BMap.Marker(new BMap.Point(107.44852, 29.87766));
+            comPoint = new BMap.Marker(new BMap.Point(longitude, latitude));
+
+
             var circle = new BMap.Circle(comPoint.point, singLong, { // 考勤地点范围
                 fillColor: "blue", // 圆形颜色
                 strokeWeight: 1,
@@ -121,8 +127,6 @@
     // 签到
     async function signIn() {
         var address = await getAddress();
-
-
         var myDate = new Date();
         // 构造要发送的数据对象
         var stu= localStorage.getItem("bStudent")
@@ -138,6 +142,7 @@
             ckTime: myDate,
             ckLongitude: myPoint.lng,
             ckLatitude: myPoint.lat
+
         };
         // 发送POST请求
         fetch(baseUrl+'/signin', {
