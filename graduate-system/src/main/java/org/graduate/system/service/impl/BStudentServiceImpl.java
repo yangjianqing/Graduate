@@ -188,11 +188,19 @@ public class BStudentServiceImpl implements IBStudentService
         return bStudentMapper.deleteBStudentBySId(sId);
     }
 
+    /**
+     * 根据手机号查询学生对象 顺便查询出学生对应的公司信息
+     * @param sNumbers 电话
+     * @return
+     */
     @Override
     public BStudent selectBStudentPhone(String sNumbers)
-            
     {
+        BCompany company = new BCompany();
+        company.setcPhone(sNumbers);
+        List<BCompany> bCompanies = bCompanyMapper.selectBCompanyList(company); //学生对应的公司
         BStudent bStudent = bStudentMapper.selectBStudentPhone(sNumbers);
+        bStudent.setCompanyList(bCompanies);
         return bStudent;
     }
 }

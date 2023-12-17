@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.graduate.common.annotation.Excel;
 import org.graduate.common.core.domain.BaseEntity;
 
+import java.util.List;
+
 /**
  * 学生管理对象 b_student
  * 
@@ -47,7 +49,17 @@ public class BStudent extends BaseEntity
     @Excel(name = "公司")
     private Long compenyId;
 
+    private List<BCompany> companyList;
+
     private String token;
+
+    public List<BCompany> getCompanyList() {
+        return companyList;
+    }
+
+    public void setCompanyList(List<BCompany> companyList) {
+        this.companyList = companyList;
+    }
 
     public String getSchoolName() {
         return schoolName;

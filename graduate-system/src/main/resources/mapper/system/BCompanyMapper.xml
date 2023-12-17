@@ -31,6 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cData != null "> and c_data = #{cData}</if>
             <if test="cType != null  and cType != ''"> and c_type = #{cType}</if>
             <if test="cAddress != null  and cAddress != ''"> and  c_address like concat ('%',#{cAddress},'%') </if>
+            <if test="cPhone != null and cPhone!=''" >and c_phone= #{cPhone}</if>
+
         </where>
     </select>
 
