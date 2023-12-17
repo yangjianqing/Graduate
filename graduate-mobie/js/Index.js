@@ -1,7 +1,7 @@
 //登录按钮
 window.onload = function() {
     document.getElementById('div_sid2').addEventListener('click', function() {
-        document.querySelector('#div_sid2 input[type="submit"]').click();
+        document.querySelector('#div_sid2 input[type="button"]').click();
     });
 };
 
