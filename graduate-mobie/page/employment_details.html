@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../css/public.css">
     <!-- 引入图标库 -->
     <link rel="stylesheet" href="../lib/iconfont/iconfont.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../js/employment_details.js"></script>
 </head>
 
 <body>
@@ -18,12 +20,33 @@
 <div class="all background">
     <!-- 搜索框 -->
     <div class="searchDiv">
-        <input type="text" name="searchEmpName" autocomplete="name" placeholder="搜索职位名称" class="search" id="search-input">
-        <button class="searchBtn" onclick="">搜索</button>
+        <input type="text" name="searchEmpName" autocomplete="name" placeholder="搜索职位名称" class="search"
+               id="search-input">
+        <button class="searchBtn" onclick="searchEmpDetails()">搜索</button>
     </div>
+    <!--    &lt;!&ndash; 多选项 &ndash;&gt;-->
+    <!--    <div class="device_hander">-->
+    <!--        <div class="device">-->
+    <!--            <img src="../img/就业详情/定位.png" alt="">-->
+    <!--            <img src="../img/就业详情/时间.png" alt="">-->
+    <!--            <img src="../img/就业详情/袋类.png" alt="">-->
+    <!--            <img src="../img/就业详情/彩色描边图标集3-15.png" alt="">-->
+    <!--            <img src="../img/就业详情/日历.png" alt="">-->
+    <!--        </div>-->
+    <!--        &lt;!&ndash; 职位定制 &ndash;&gt;-->
+    <!--        <div class="device_p">-->
+    <!--            <div class="devicep_p_demo">-->
+    <!--                <p>职位定制&nbsp;<span style="font-size: 0.8rem;color: #E1DCDC;">找工作无需大海捞针</span></p>-->
+
+    <!--                <p class="device_p_one">根据地区/职位类型等推荐更精确职位</p>-->
+    <!--            </div>-->
+    <!--            <button>添加意向</button>-->
+    <!--        </div>-->
+    <!--    </div>-->
     <!-- 简介信息 -->
     <div class="infomation">
         <div id="infoContainer"></div>
+        <div style="margin-bottom: 5rem"></div><!--空行保留，避免信息被导航栏遮挡-->
     </div>
 
 </div>
@@ -49,117 +72,138 @@
 </body>
 
 <script>
-    var baseUrl = "http://127.0.0.1:8089/api"
+    $(document).ready(function() {
+        let nextPage = 2; // 初始化下一页页码为2
+        let isLoading = false; // 初始化加载状态为 false
+        $(document).scroll(function() {
+            var scrollTop = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var scrollHeight = $(document).height();
+            var distance = scrollHeight - scrollTop - windowHeight;
 
-    function getEmpInfo() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", baseUrl + "/selectEmpinfo", true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    console.log(xhr.responseText);
-                    var response = JSON.parse(xhr.response);
+            console.log(distance)
+            if (distance < 1 && !isLoading) {
+                isLoading = true; // 设置加载状态为 true
+                setTimeout(function () {
+                    $.ajax({
+                        url: 'http://127.0.0.1:8089/api/selectEmpinfo', // 后端接口的 URL
+                        method: 'GET', // 请求方法
+                        data: {pageNum: nextPage, pageSize: 5}, // 可能需要传递的参数，例如当前页数
+                        dataType: 'json', // 响应数据的类型为 JSON
+                        success: function(response) {
+                            // 处理成功响应的逻辑
+                            console.log('请求成功');
+                            console.log(response);
+                            // 更新页面内容
+                            const infoContainer = document.getElementById("infoContainer");
+                            // infoContainer.innerHTML = ""; // 清空原有内容
+                            response.rows.forEach(record => {
+                                const empId = record.empId;//empId
+                                const empName = record.empName; //empName
+                                const empPay = record.empPay; //empPay
+                                const empPayMax = record.empPayMax; //empPayMax
+                                const cName = record.cName; //cName
+                                const cAddress = record.cAddress; //cAddress
+                                const empDes = record.empDes; //empDes
 
-                    var infoContainer = document.getElementById("infoContainer");
-                    infoContainer.innerHTML = ""; // 清空原有内容
+                                var div = document.createElement("div");
+                                div.className = "infomation_one";
+                                div.style.cssText = "display: flex;flex-direction: column;"
 
-                    for (var i = 0; i < response.rows.length; i++) {
-                        var record = response.rows[i];
+                                // 职位与薪资
+                                var infomationXinxi = document.createElement("div");
+                                infomationXinxi.className = "infomation_xinxi";
+                                infomationXinxi.style.cssText = "width: 100%";
 
-                        var empName = record.empName; //empName
-                        var empPay = record.empPay; //empPay
-                        var empPayMax = record.empPayMax; //empPayMax
-                        var cName = record.cName; //cName
-                        var cAddress = record.cAddress; //cAddress
-                        var empDes = record.empDes; //empDes
+                                var workPost = document.createElement("p");
+                                workPost.className = "work_post";
+                                workPost.style.cssText = "display: inline-block;float: left;margin-left: 2rem;font-size: 1.5rem;";
+                                var empNameSpan = document.createElement("div");
+                                empNameSpan.textContent = empName;
+                                workPost.appendChild(empNameSpan);
+                                infomationXinxi.appendChild(workPost);
 
-                        var div = document.createElement("div");
-                        div.className = "infomation_one";
-                        div.style.cssText = "display: flex;flex-direction: column;"
+                                var h1 = document.createElement("h1");
+                                h1.style.cssText = "color: #51B9BD; padding-right: 1rem;padding-top: 0.4rem; display: inline-block; float: right; margin-right: 1rem;";
+                                var salarySpan = document.createElement("span");
+                                salarySpan.textContent = "月薪：";
+                                var empPaySpan = document.createElement("span");
+                                empPaySpan.id = "empPay";
+                                empPaySpan.textContent = empPay;
+                                var subSpan = document.createElement("span");
+                                subSpan.textContent = "-";
+                                var empPayMaxSpan = document.createElement("span");
+                                empPayMaxSpan.id = "empPayMax";
+                                empPayMaxSpan.textContent = empPayMax;
+                                var kSpan = document.createElement("span");
+                                kSpan.textContent = "K";
+                                h1.appendChild(salarySpan);
+                                h1.appendChild(empPaySpan);
+                                h1.appendChild(subSpan);
+                                h1.appendChild(empPayMaxSpan);
+                                h1.appendChild(kSpan);
+                                infomationXinxi.appendChild(h1);
 
-                        // 职位与薪资
-                        var infomationXinxi = document.createElement("div");
-                        infomationXinxi.className = "infomation_xinxi";
-                        infomationXinxi.style.cssText = "width: 100%";
+                                div.appendChild(infomationXinxi);
 
-                        var workPost = document.createElement("p");
-                        workPost.className = "work_post";
-                        workPost.style.cssText = "display: inline-block;float: left;margin-left: 2rem;font-size: 1.5rem;";
-                        var empNameSpan = document.createElement("div");
-                        empNameSpan.textContent = empName;
-                        workPost.appendChild(empNameSpan);
-                        infomationXinxi.appendChild(workPost);
+                                //职位描述
+                                var description = document.createElement("div");
+                                description.className = "description";
+                                description.style.cssText = "width: 100%;";
 
-                        var h1 = document.createElement("h1");
-                        h1.style.cssText = "color: #51B9BD; padding-right: 1rem;padding-top: 0.4rem; display: inline-block; float: right; margin-right: 1rem;";
-                        var salarySpan = document.createElement("span");
-                        salarySpan.textContent = "月薪：";
-                        var empPaySpan = document.createElement("span");
-                        empPaySpan.id = "empPay";
-                        empPaySpan.textContent = empPay;
-                        var subSpan = document.createElement("span");
-                        subSpan.textContent = "-";
-                        var empPayMaxSpan = document.createElement("span");
-                        empPayMaxSpan.id = "empPayMax";
-                        empPayMaxSpan.textContent = empPayMax;
-                        var kSpan = document.createElement("span");
-                        kSpan.textContent = "K";
-                        h1.appendChild(salarySpan);
-                        h1.appendChild(empPaySpan);
-                        h1.appendChild(subSpan);
-                        h1.appendChild(empPayMaxSpan);
-                        h1.appendChild(kSpan);
-                        infomationXinxi.appendChild(h1);
+                                var empDesP = document.createElement("p");
+                                empDesP.style.cssText = "padding-left: 2.2rem;";
+                                var empDesSpans = empDes.split(/[，。]/);
+                                var length = 0;
+                                for (var j = 0; j < 5 && j < empDesSpans.length && length <= 12; j++) {
+                                    var span = document.createElement("span");
+                                    span.textContent = empDesSpans[j];
+                                    length += empDesSpans[j].length;
+                                    span.style.cssText = "font-size: 0.7rem; color: #616060; background-color: #f2f2f2; padding: 0.2em 0.5em; border-radius: 10px; margin-right: 5px;";
+                                    empDesP.appendChild(span);
+                                }
+                                description.appendChild(empDesP);
 
-                        div.appendChild(infomationXinxi);
+                                div.appendChild(description);
 
-                        //职位描述
-                        var description = document.createElement("div");
-                        description.className = "description";
-                        description.style.cssText = "width: 80%;margin 0 auto";
+                                var companyInfo = document.createElement("div");
+                                companyInfo.style.width = "100%";
+                                var cNameSpan = document.createElement("div");
+                                cNameSpan.style.cssText = "font-size: 0.7rem; display: inline-block; float: left; margin-left: 2.3rem;";
+                                cNameSpan.textContent = cName;
+                                var cAddressSpan = document.createElement("div");
+                                cAddressSpan.style.cssText = "font-size: 0.7rem; padding-right: 1rem; display: inline-block; float: right; margin-right: 1rem;";
+                                cAddressSpan.textContent = cAddress;
+                                companyInfo.appendChild(cNameSpan);
+                                companyInfo.appendChild(cAddressSpan);
+                                div.appendChild(companyInfo);
 
-                        var empDesP = document.createElement("p");
-                        var empDesSpans = empDes.split(/[，。]/);
-                        var length = 0;
-                        for (var j = 0; j < 5 && j < empDesSpans.length && length <= 12; j++) {
-                            var span = document.createElement("span");
-                            span.textContent = empDesSpans[j];
-                            length += empDesSpans[j].length;
-                            span.style.cssText = "font-size: 0.7rem; color: #616060; padding: 0.3rem; background-color: #f2f2f2; padding: 0.2em 0.5em; border-radius: 10px; margin-right: 5px;";
-                            empDesP.appendChild(span);
+                                div.addEventListener('click', () => {
+                                    window.location.href = `../page/employment_Information.html?empId=${empId}`;
+                                });
+
+                                infoContainer.appendChild(div);
+                            });
+                            nextPage++; // 更新下一页页码
+                            if (response.rows.length < 5) {
+                                isLoading = false; // 如果数据不足5条，将加载状态改为 false
+                                $(document).off('scroll'); // 停止监听滚动事件
+                            }
+                        },
+                        error: function(error) {
+                            // 处理错误响应的逻辑
+                            console.log('请求失败');
+                            console.log(error);
                         }
-                        description.appendChild(empDesP);
-
-                        div.appendChild(description);
-
-                        var companyInfo = document.createElement("div");
-                        companyInfo.style.width = "100%";
-                        var cNameSpan = document.createElement("div");
-                        cNameSpan.style.cssText = "font-size: 0.7rem; display: inline-block; float: left; margin-left: 2.3rem;";
-                        cNameSpan.textContent = cName;
-                        var cAddressSpan = document.createElement("div");
-                        cAddressSpan.style.cssText = "font-size: 0.7rem; padding-right: 1rem; display: inline-block; float: right; margin-right: 1rem;";
-                        cAddressSpan.textContent = cAddress;
-                        companyInfo.appendChild(cNameSpan);
-                        companyInfo.appendChild(cAddressSpan);
-                        div.appendChild(companyInfo);
-
-                        infoContainer.appendChild(div);
-                    }
-                } else {
-                    console.log("请求失败，状态码：" + xhr.status);
-                }
+                    });
+                    isLoading = false; // 在请求成功的回调函数外面将 isLoading 设置为 false
+                }, 500); // 设置延迟执行时间为500毫秒
             }
-        };
-        xhr.onerror = function () {
-            console.log("请求出错");
-        };
-        xhr.send();
-    }
+        });
+    });
 
-    window.onload = function () {
-        getEmpInfo();
-    };
+
+
 </script>
 
 </html>

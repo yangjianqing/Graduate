@@ -170,7 +170,7 @@ public class MobileApiController extends BaseController
     public TableDataInfo selectEmpinfo(BEmpinfo bEmpinfo) {
         startPage();
         List<BEmpinfo> list = bEmpinfoService.selectBEmpinfoList(bEmpinfo);
-        list = list.stream().filter(e -> e.getEmpStatus().equals("1")).collect(Collectors.toList());
+//        list = list.stream().filter(e -> e.getEmpStatus().equals("1")).collect(Collectors.toList());
         return getDataTable(list);
     }
 
@@ -181,6 +181,18 @@ public class MobileApiController extends BaseController
     @GetMapping(value = "/showEmpinfoById")
     public AjaxResult showEmpinfoById(Long empId) {
         return AjaxResult.success(bEmpinfoService.selectBEmpinfoByEmpId(empId));
+    }
+
+    /**
+     * 查询就业详情列表
+     */
+
+    @GetMapping("/searchEmpDetails")
+    public AjaxResult selectEmpDetails(@RequestParam("keyword") String keyword) {
+        BEmpinfo bEmpinfo = new BEmpinfo();
+        bEmpinfo.setEmpName(keyword); //
+        List<BEmpinfo> bEmpinfos = bEmpinfoService.selectBEmpinfoList(bEmpinfo);
+        return AjaxResult.success(bEmpinfos);
     }
 
     /**

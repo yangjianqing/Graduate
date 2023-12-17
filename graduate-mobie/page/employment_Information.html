@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/Employment_Information.css">
     <link rel="stylesheet" href="../css/public.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 <body>
@@ -14,14 +15,14 @@
 </header>
 <div id="u3578" class="ax_default _默认样式">
     <div id="u3578_div" class="" style="padding-top: 0.5rem;padding-left: 0.5rem">
-        <svg t="1702287882855" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-             p-id="4217" width="1.5rem" height="1.5rem">
-            <path d="M700.371228 394.525472 174.028569 394.525472l255.952416-227.506551c12.389168-11.011798 13.505595-29.980825 2.492774-42.369993-11.011798-12.386098-29.977755-13.506619-42.367947-2.492774L76.425623 400.975371c-6.960529 5.496178-11.434423 14.003945-11.434423 23.561625 0 0.013303 0.001023 0.026606 0.001023 0.039909 0 0.01228-0.001023 0.025583-0.001023 0.037862 0 0.473791 0.01535 0.946558 0.037862 1.418302 0.001023 0.016373 0.001023 0.032746 0.001023 0.049119 0.39295 8.030907 3.992941 15.595186 10.034541 20.962427l315.040163 280.028764c5.717212 5.083785 12.83533 7.580652 19.925818 7.580652 8.274454 0 16.514115-3.403516 22.442128-10.07445 11.011798-12.387122 9.896394-31.357172-2.492774-42.367947l-256.128425-227.665163 526.518668 0c109.219517 0 198.075241 88.855724 198.075241 198.075241s-88.855724 198.075241-198.075241 198.075241L354.324888 850.696955c-16.57449 0-30.011524 13.437034-30.011524 30.011524s13.437034 30.011524 30.011524 30.011524l346.046341 0c142.31631 0 258.098289-115.783003 258.098289-258.098289S842.686515 394.525472 700.371228 394.525472z"
-                  fill="#2c2c2c" p-id="4218"></path>
-        </svg>
-    </div>
-    <div id="u3578_text" class="text ">
-        <p><span>详情信息</span></p>
+        <a href="../page/employment_details.html" style="display: inline-block; width: 1.5rem;height: 1.5rem">
+            <svg t="1702287882855" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 p-id="4217" width="1.5rem" height="1.5rem">
+                <path d="M700.371228 394.525472 174.028569 394.525472l255.952416-227.506551c12.389168-11.011798 13.505595-29.980825 2.492774-42.369993-11.011798-12.386098-29.977755-13.506619-42.367947-2.492774L76.425623 400.975371c-6.960529 5.496178-11.434423 14.003945-11.434423 23.561625 0 0.013303 0.001023 0.026606 0.001023 0.039909 0 0.01228-0.001023 0.025583-0.001023 0.037862 0 0.473791 0.01535 0.946558 0.037862 1.418302 0.001023 0.016373 0.001023 0.032746 0.001023 0.049119 0.39295 8.030907 3.992941 15.595186 10.034541 20.962427l315.040163 280.028764c5.717212 5.083785 12.83533 7.580652 19.925818 7.580652 8.274454 0 16.514115-3.403516 22.442128-10.07445 11.011798-12.387122 9.896394-31.357172-2.492774-42.367947l-256.128425-227.665163 526.518668 0c109.219517 0 198.075241 88.855724 198.075241 198.075241s-88.855724 198.075241-198.075241 198.075241L354.324888 850.696955c-16.57449 0-30.011524 13.437034-30.011524 30.011524s13.437034 30.011524 30.011524 30.011524l346.046341 0c142.31631 0 258.098289-115.783003 258.098289-258.098289S842.686515 394.525472 700.371228 394.525472z"
+                      fill="#2c2c2c" p-id="4218"></path>
+            </svg>
+        </a>
+        <span style="padding-left: 35%">详情信息</span>
     </div>
 </div>
 
@@ -95,94 +96,67 @@
     <ul id="empInfo"></ul>
     <br>
 
-
+    <div style="margin-bottom: 3rem"></div><!--空行保留，避免信息被导航栏遮挡-->
 </div>
- 底部沟通分享栏
-    <div class="hideer">
-      <div class="share">
-        <p>分享</p><p>收藏</p>
+<div class="hideer">
+    <div class="share">
+        <p>分享</p>
+        <p>收藏</p>
 
-      </div>
-      <div class="shoucang">
-        <button class="my-button">联系</button>
-      </div>
     </div>
+    <div class="shoucang">
+        <button class="my-button">联系</button>
+    </div>
+</div>
 
 </body>
 
 <script>
-    var baseUrl = "http://127.0.0.1:8089/api"
+    const urlParams = new URLSearchParams(window.location.search);
+    const empId = urlParams.get('empId');
 
-    function showEmpInfo(empId) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", baseUrl + "/showEmpinfoById?empId=" + 1, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    console.log(xhr.responseText);
-                    var response = JSON.parse(xhr.response);
+    $.get("http://127.0.0.1:8089/api/showEmpinfoById", { empId: empId }, function(data) {
+        console.log(data);
 
-                    var empName = response.data.empName;//empName
-                    var empQuantity = response.data.empQuantity;//empQuantity
-                    var empPay = response.data.empPay;//empPay
-                    var empPayMax = response.data.empPayMax;//empPayMax
-                    var cName = response.data.cName;//cName
-                    var cAddress = response.data.cAddress;//cAddress
-                    var cPhone = response.data.cPhone;//cPhone
-                    var empDes = response.data.empDes;//empDes
-                    var empConten = response.data.empConten;//empConten
-                    var empReq = response.data.empReq;//empReq
-                    var empBonus = response.data.empBonus;//empBonus
-                    var empInfo = response.data.empInfo;//empInfo
+        var empName = data.data.empName;//empName
+        var empQuantity = data.data.empQuantity;//empQuantity
+        var empPay = data.data.empPay;//empPay
+        var empPayMax = data.data.empPayMax;//empPayMax
+        var cName = data.data.cName;//cName
+        var cAddress = data.data.cAddress;//cAddress
+        var cPhone = data.data.cPhone;//cPhone
+        var empDes = data.data.empDes;//empDes
+        var empConten = data.data.empConten;//empConten
+        var empReq = data.data.empReq;//empReq
+        var empBonus = data.data.empBonus;//empBonus
+        var empInfo = data.data.empInfo;//empInfo
 
-                    var EmpName = document.getElementById("empName");//empName
-                    var EmpQuantity = document.getElementById("empQuantity");//empQuantity
-                    var EmpPay = document.getElementById("empPay");//empPay
-                    var EmpPayMax = document.getElementById("empPayMax");//empPayMax
-                    var CName = document.getElementById("cName");//cName
-                    var CAddress = document.getElementById("cAddress");//cAddress
-                    var CPhone = document.getElementById("cPhone");//cPhone
-                    var EmpDes = document.getElementById("empDes");//empDes
-                    var EmpConten = document.getElementById("empConten");//empConten
-                    var EmpReq = document.getElementById("empReq");//empReq
-                    var EmpBonus = document.getElementById("empBonus");//empBonus
-                    var EmpInfo = document.getElementById("empInfo");//empInfo
+        var EmpName = document.getElementById("empName");//empName
+        var EmpQuantity = document.getElementById("empQuantity");//empQuantity
+        var EmpPay = document.getElementById("empPay");//empPay
+        var EmpPayMax = document.getElementById("empPayMax");//empPayMax
+        var CName = document.getElementById("cName");//cName
+        var CAddress = document.getElementById("cAddress");//cAddress
+        var CPhone = document.getElementById("cPhone");//cPhone
+        var EmpDes = document.getElementById("empDes");//empDes
+        var EmpConten = document.getElementById("empConten");//empConten
+        var EmpReq = document.getElementById("empReq");//empReq
+        var EmpBonus = document.getElementById("empBonus");//empBonus
+        var EmpInfo = document.getElementById("empInfo");//empInfo
 
-                    EmpName.innerHTML = "";//empName
-                    EmpQuantity.innerHTML = "";//empQuantity
-                    EmpPay.innerHTML = "";//empPay
-                    EmpPayMax.innerHTML = "";//empPayMax
-                    CName.innerHTML = "";//cName
-                    CAddress.innerHTML = "";//cAddress
-                    CPhone.innerHTML = "";//cPhone
-                    EmpDes.innerHTML = "";//empDes
-                    EmpConten.innerHTML = "";//empConten
-                    EmpReq.innerHTML = "";//empReq
-                    EmpBonus.innerHTML = "";//empBonus
-                    EmpInfo.innerHTML = "";//empInfo
-
-                    showInfo(empName, EmpName);//empName
-                    showInfo(empQuantity, EmpQuantity);//empQuantity
-                    showInfo(empPay, EmpPay);//empPay
-                    showInfo(empPayMax, EmpPayMax);//empPayMax
-                    showInfo(cName, CName);//cName
-                    showInfo(cAddress, CAddress);//cAddress
-                    showInfo(cPhone, CPhone);//cPhone
-                    splitEmpInfo(empDes, EmpDes);//empDes
-                    splitEmpInfo(empConten, EmpConten);//empConten
-                    splitEmpInfo(empReq, EmpReq);//empReq
-                    splitEmpInfo(empBonus, EmpBonus);//empBonus
-                    splitEmpInfo(empInfo, EmpInfo);//empInfo
-                } else {
-                    console.log("请求失败，状态码：" + xhr.status);
-                }
-            }
-        };
-        xhr.onerror = function () {
-            console.log("请求出错");
-        };
-        xhr.send();
-    }
+        showInfo(empName, EmpName);//empName
+        showInfo(empQuantity, EmpQuantity);//empQuantity
+        showInfo(empPay, EmpPay);//empPay
+        showInfo(empPayMax, EmpPayMax);//empPayMax
+        showInfo(cName, CName);//cName
+        showInfo(cAddress, CAddress);//cAddress
+        showInfo(cPhone, CPhone);//cPhone
+        splitEmpInfo(empDes, EmpDes);//empDes
+        splitEmpInfo(empConten, EmpConten);//empConten
+        splitEmpInfo(empReq, EmpReq);//empReq
+        splitEmpInfo(empBonus, EmpBonus);//empBonus
+        splitEmpInfo(empInfo, EmpInfo);//empInfo
+    });
 
     function showInfo(Info, EmpInfo) {
         var span = document.createElement("span");
@@ -208,11 +182,6 @@
             }
         }
     }
-
-
-    window.onload = function () {
-        showEmpInfo();
-    };
 </script>
 
 </html>
