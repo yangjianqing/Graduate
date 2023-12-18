@@ -52,6 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </select>
 
+    <select id="selectSchoolName" resultType="java.lang.String">
+        SELECT s_name FROM b_school WHERE s_id = #{sId}
+    </select>
+
     <insert id="insertBSchool" parameterType="BSchool">
         insert into b_school
         <trim prefix="(" suffix=")" suffixOverrides=",">

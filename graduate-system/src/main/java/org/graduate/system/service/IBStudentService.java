@@ -1,6 +1,8 @@
 package org.graduate.system.service;
 
 import java.util.List;
+import java.util.Map;
+
 import org.graduate.system.domain.BStudent;
 
 /**
@@ -66,4 +68,11 @@ public interface IBStudentService
      * @return 结果
      */
     public BStudent selectBStudentPhone(String sNumbers);
+
+    /**
+     * 根据每个school_id学习id，查询里面有多少个就业的学生(c_status=0)，利用cont计数
+     *
+     * @return 结果
+     */
+    public List<Map<String,String>> selectBStudentCountMap();
 }

@@ -126,7 +126,7 @@
 
     <el-table v-loading="loading" :data="studentList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="学生ID" align="center" prop="sId" />
+      <el-table-column label="学生ID" align="center" prop="sId" width="60"/>
       <el-table-column label="学生学号" align="center" prop="sNumber" />
       <el-table-column label="学生姓名" align="center" prop="sName" />
       <el-table-column label="性别" align="center" prop="sGender">
@@ -134,8 +134,8 @@
           <dict-tag :options="dict.type.b_gender" :value="scope.row.sGender"/>
         </template>
       </el-table-column>
-      <el-table-column label="联系方式" align="center" prop="sNumbers" />
-      <el-table-column label="学校" align="center" prop="schoolName" />
+      <el-table-column label="联系方式" align="center" prop="sNumbers" width="110"/>
+      <el-table-column label="学校" align="center" prop="schoolName"/>
       <el-table-column label="公司" align="center" prop="compenyName" />
       <el-table-column label="就业状态" align="center" prop="cStatus">
         <template slot-scope="scope">
@@ -144,12 +144,12 @@
       </el-table-column>
       <el-table-column label="辅导员" align="center" prop="teacherName" />
       <el-table-column label="班级" align="center" prop="className" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="118">
+      <el-table-column label="创建时间" align="center" prop="createTime" width="150">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="修改时间" align="center" prop="updateTime" width="180">
+      <el-table-column label="修改时间" align="center" prop="updateTime" width="150">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>
@@ -200,8 +200,9 @@
         <el-form-item label="联系方式" prop="sNumbers">
           <el-input v-model="form.sNumbers" placeholder="请输入联系方式" />
         </el-form-item>
+
         <el-form-item label="学校" prop="schoolId">
-          <el-select v-model="queryParams.schoolId" :data="schools" clearable placeholder="请选择学校"  @keyup.enter.native="handleQuery">
+          <el-select v-model="form.schoolId" :data="schools" clearable placeholder="请选择学校">
             <el-option
               v-for="item in schools"
               :key="item.sId"
@@ -210,8 +211,9 @@
             ></el-option>
           </el-select>
         </el-form-item>
+
         <el-form-item label="公司" prop="compenyId">
-          <el-select v-model="queryParams.compenyId" :data="companys" clearable placeholder="请选择公司" @keyup.enter.native="handleQuery">
+          <el-select v-model="form.compenyId" :data="companys" clearable placeholder="请选择公司">
             <el-option
               v-for="item in companys"
               :key="item.cId"
@@ -220,6 +222,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
+
         <el-form-item label="就业状态">
           <el-radio-group v-model="form.cStatus">
             <el-radio
@@ -229,8 +232,9 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
+
         <el-form-item label="辅导员" prop="teacherId">
-          <el-select v-model="queryParams.teacherId" :data="teachers" clearable placeholder="请选择辅导员"  @keyup.enter.native="handleQuery">
+          <el-select v-model="form.teacherId" :data="teachers" clearable placeholder="请选择辅导员">
             <el-option
               v-for="item in teachers"
               :key="item.tchrId"
@@ -239,8 +243,9 @@
             ></el-option>
           </el-select>
         </el-form-item>
+
         <el-form-item label="班级" prop="classId">
-          <el-select v-model="queryParams.classId" :data="clasei" clearable placeholder="请选择班级" @keyup.enter.native="handleQuery">
+          <el-select v-model="form.classId" :data="clasei" clearable placeholder="请选择班级">
             <el-option
               v-for="item in clasei"
               :key="item.cId"

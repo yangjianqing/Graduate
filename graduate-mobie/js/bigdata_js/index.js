@@ -1,6 +1,5 @@
 // 柱状图模块1
 // import result from "../../../graduate-ui/src/components/Crontab/result";
-
 (function() {
   // 1实例化对象
   var myChart = echarts.init(document.querySelector(".bar .chart"));
@@ -25,15 +24,7 @@
     xAxis: [
       {
         type: "category",
-        data: [
-          "旅游行业",
-          "教育培训",
-          "游戏行业",
-          "医疗行业",
-          "电商行业",
-          "社交行业",
-          "金融行业"
-        ],
+        data: [],
         axisTick: {
           alignWithLabel: true
         },
@@ -76,7 +67,7 @@
         name: "直接访问",
         type: "bar",
         barWidth: "35%",
-        data: [200, 300, 300, 900, 1500, 1200, 600],
+        data: [],
         itemStyle: {
           // 修改柱子圆角
           barBorderRadius: 5
@@ -86,11 +77,70 @@
   };
   // 3. 把配置项给实例对象
   myChart.setOption(option);
-  // 4. 让图表跟随屏幕自动的去适应
+  // 4. 让图表跟随屏幕自动去适应
   window.addEventListener("resize", function() {
     myChart.resize();
   });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    var arrName = [];
+    var arrCount = [];
+    fetch('http://localhost:8089/api/graduation', {
+      method: 'GET'
+    })
+        .then(response => response.json())
+        .then(data => {
+          // 接收后端返回的数据
+          console.log(data);
+
+          for (var i = 0 ;i<data.length; i++){
+            //将遍历出来的值存到新数组中
+            arrName.push(data[i].name);
+            arrCount.push(data[i].Count);
+            //隐藏加载动画
+            myChart.hideLoading();
+            //覆盖上面data数据
+            myChart.setOption({
+              xAxis: [
+                {
+                  type: "category",
+                  data: arrName,
+                  axisTick: {
+                    alignWithLabel: true
+                  },
+                  // 修改刻度标签 相关样式
+                  axisLabel: {
+                    interval:0,//将横轴信息全部显示出来
+                    color: "rgba(255,255,255,.6) ",
+                    fontSize: "12"
+                  },
+                  // 不显示x坐标轴的样式
+                  axisLine: {
+                    show: false
+                  }
+                }
+              ],
+              series: [
+                {
+                  name: "直接访问",
+                  type: "bar",
+                  barWidth: "35%",
+                  data: arrCount,
+                  itemStyle: {
+                    // 修改柱子圆角
+                    barBorderRadius: 5
+                  }
+                }
+              ]
+
+            })
+          }
+        })
+  });
+
 })();
+
+
 // 就业
 (function() {
   var myColor = ["#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6"];
@@ -200,7 +250,7 @@
 (function() {
   var yearData = [
     {
-      year: "2020", // 年份
+      year: "2023", // 年份
       data: [
         // 两个数组是因为有两条线
         [24, 40, 101, 134, 90, 230, 210, 230, 120, 230, 210, 120],
@@ -208,7 +258,7 @@
       ]
     },
     {
-      year: "2021", // 年份
+      year: "2024", // 年份
       data: [
         // 两个数组是因为有两条线
         [123, 175, 112, 197, 121, 67, 98, 21, 43, 64, 76, 38],
@@ -290,14 +340,14 @@
     },
     series: [
       {
-        name: "新增粉丝",
+        name: "毕业生人数",
         type: "line",
         // true 可以让我们的折线显示带有弧度
         smooth: true,
         data: yearData[0].data[0]
       },
       {
-        name: "新增游客",
+        name: "就业生人数",
         type: "line",
         smooth: true,
         data: yearData[0].data[1]

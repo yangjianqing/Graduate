@@ -70,4 +70,10 @@ public interface BSchoolMapper
      * @return
      */
     public List<BSchool> selectBSchoolAll();
+
+    /**
+     * 查询学校名称
+     * @return
+     */
+    public String selectSchoolName(String sId);
 }

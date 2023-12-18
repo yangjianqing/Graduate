@@ -51,6 +51,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where s_numbers = #{sNumbers}
     </select>
 
+    <select id="selectBStudentCountMap" resultType="java.util.Map">
+        SELECT school_id, COUNT(*) AS employment_count
+        FROM b_student
+        WHERE c_status = 0
+        GROUP BY school_id
+    </select>
 
     <insert id="insertBStudent" parameterType="BStudent" useGeneratedKeys="true" keyProperty="sId">
         insert into b_student

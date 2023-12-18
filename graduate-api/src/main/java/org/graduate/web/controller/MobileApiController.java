@@ -6,6 +6,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.models.auth.In;
 import org.graduate.common.annotation.Anonymous;
 import org.graduate.common.core.domain.AjaxResult;
 import org.graduate.common.core.domain.AjaxResult;
@@ -59,7 +60,8 @@ public class MobileApiController extends BaseController
     private IBCheckService ibCheckService;
     @Resource
     private IBCompanyService ibCompanyService;
-
+    @Resource
+    private IBSchoolService ibSchoolService;
 
     /**
      * 验证码接口
@@ -237,6 +239,26 @@ public class MobileApiController extends BaseController
     public AjaxResult selectById(Long nId) {
         return AjaxResult.success(bPublicInfoService.selectBPublicInfoByNId(nId));
     }
+
+    /**
+     * 柱形图-毕业信息
+     */
+    @Anonymous
+    @GetMapping("/graduation")
+    public AjaxResult selectGraduation() {
+        List<Map<String, String>> maps = bStudentService.selectBStudentCountMap();
+        System.out.println(maps);
+        for (Map<String, String> map : maps) {
+                String schoolId = map.get("school_id");
+                String name = ibSchoolService.selectSchoolName(schoolId);
+                String Count = map.get("employment_count");
+                // 在这里可以根据需要进行进一步处理
+                return AjaxResult.success("调用成功").put("name",name).put("Count",Count);
+        }
+        return AjaxResult.success("调用失败");
+    }
+
+
 
     //柱状图
     /**

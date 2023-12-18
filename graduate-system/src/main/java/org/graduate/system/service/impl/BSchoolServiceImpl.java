@@ -98,4 +98,10 @@ public class BSchoolServiceImpl implements IBSchoolService
     public List<BSchool> selectBSchoolAll() {
         return bSchoolMapper.selectBSchoolAll();
     }
+
+    @Override
+    public String selectSchoolName(String sId)
+    {
+        return bSchoolMapper.selectSchoolName(sId);
+    }
 }

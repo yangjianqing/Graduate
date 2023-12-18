@@ -1,6 +1,9 @@
 package org.graduate.system.mapper;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.MapKey;
 import org.graduate.system.domain.BStudent;
 
 /**
@@ -66,4 +69,12 @@ public interface BStudentMapper
      * @return 结果
      */
     public BStudent selectBStudentPhone(String sNumbers);
+
+    /**
+     * 根据每个school_id学习id，查询里面有多少个就业的学生(c_status=0)，利用cont计数
+     *
+     * @return 结果
+     */
+    @MapKey("school_id")
+    public List<Map<String,String>> selectBStudentCountMap();
 }

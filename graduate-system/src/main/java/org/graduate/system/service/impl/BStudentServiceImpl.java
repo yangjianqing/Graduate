@@ -145,8 +145,7 @@ public class BStudentServiceImpl implements IBStudentService
      * @return 结果
      */
     @Override
-    public int insertBStudent(BStudent bStudent)
-    {
+    public int insertBStudent(BStudent bStudent) {
         bStudent.setCreateTime(DateUtils.getNowDate());
         return bStudentMapper.insertBStudent(bStudent);
     }
@@ -158,8 +157,7 @@ public class BStudentServiceImpl implements IBStudentService
      * @return 结果
      */
     @Override
-    public int updateBStudent(BStudent bStudent)
-    {
+    public int updateBStudent(BStudent bStudent) {
         bStudent.setUpdateTime(DateUtils.getNowDate());
         return bStudentMapper.updateBStudent(bStudent);
     }
@@ -194,13 +192,18 @@ public class BStudentServiceImpl implements IBStudentService
      * @return
      */
     @Override
-    public BStudent selectBStudentPhone(String sNumbers)
-    {
+    public BStudent selectBStudentPhone(String sNumbers) {
         BCompany company = new BCompany();
         company.setcPhone(sNumbers);
         List<BCompany> bCompanies = bCompanyMapper.selectBCompanyList(company); //学生对应的公司
         BStudent bStudent = bStudentMapper.selectBStudentPhone(sNumbers);
         bStudent.setCompanyList(bCompanies);
         return bStudent;
+    }
+
+    @Override
+    public List<Map<String,String>> selectBStudentCountMap()
+    {
+        return bStudentMapper.selectBStudentCountMap();
     }
 }
