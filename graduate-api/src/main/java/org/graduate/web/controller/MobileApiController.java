@@ -249,9 +249,9 @@ public class MobileApiController extends BaseController
         List<Map<String, String>> maps = bStudentService.selectBStudentCountMap();
         System.out.println(maps);
         for (Map<String, String> map : maps) {
-                String schoolId = map.get("school_id");
+                String schoolId = String.valueOf(map.get("school_id"));
                 String name = ibSchoolService.selectSchoolName(schoolId);
-                String Count = map.get("employment_count");
+                String Count = String.valueOf(map.get("employment_count"));
                 // 在这里可以根据需要进行进一步处理
                 return AjaxResult.success("调用成功").put("name",name).put("Count",Count);
         }
