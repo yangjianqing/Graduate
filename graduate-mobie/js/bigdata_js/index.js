@@ -82,66 +82,63 @@
     myChart.resize();
   });
 
-  document.addEventListener("DOMContentLoaded", function() {
+  //ajax请求
+  // function(){}
+  //当页面加载的时候发送ajax请求到后台
+  $(function (){
+    //定义新数组来存储后端发送过来的值
     var arrName = [];
     var arrCount = [];
-    fetch('http://localhost:8089/api/graduation', {
-      method: 'GET'
-    })
-        .then(response => response.json())
-        .then(data => {
-          // 接收后端返回的数据
-          console.log(data);
-
-          for (var i = 0 ;i<data.length; i++){
-            //将遍历出来的值存到新数组中
-            arrName.push(data[i].name);
-            arrCount.push(data[i].Count);
-            //隐藏加载动画
-            myChart.hideLoading();
-            //覆盖上面data数据
-            myChart.setOption({
-              xAxis: [
-                {
-                  type: "category",
-                  data: arrName,
-                  axisTick: {
-                    alignWithLabel: true
-                  },
-                  // 修改刻度标签 相关样式
-                  axisLabel: {
-                    interval:0,//将横轴信息全部显示出来
-                    color: "rgba(255,255,255,.6) ",
-                    fontSize: "12"
-                  },
-                  // 不显示x坐标轴的样式
-                  axisLine: {
-                    show: false
-                  }
-                }
-              ],
-              series: [
-                {
-                  name: "直接访问",
-                  type: "bar",
-                  barWidth: "35%",
-                  data: arrCount,
-                  itemStyle: {
-                    // 修改柱子圆角
-                    barBorderRadius: 5
-                  }
-                }
-              ]
-
-            })
-          }
+    //url,data
+    $.get('http://localhost:8089/api/graduation',function (data){
+      console.log(data.data);
+      //遍历后端发送过来的值
+      for (var i = 0 ;i<data.data.length; i++){
+        //将遍历出来的值存到新数组中
+        arrName.push(data.data[i].name);
+        arrCount.push(data.data[i].employment_count);
+        //隐藏加载动画
+        myChart.hideLoading();
+        //覆盖上面data数据
+        myChart.setOption({
+          xAxis: [
+            {
+              type: "category",
+              data: arrName,
+              axisTick: {
+                alignWithLabel: true
+              },
+              // 修改刻度标签 相关样式
+              axisLabel: {
+                interval:0,//将横轴信息全部显示出来
+                color: "rgba(255,255,255,.6) ",
+                fontSize: "12"
+              },
+              // 不显示x坐标轴的样式
+              axisLine: {
+                show: false
+              }
+            }
+          ],
+          series: [
+            {
+              name: "直接访问",
+              type: "bar",
+              barWidth: "35%",
+              data: arrCount,
+              itemStyle: {
+                // 修改柱子圆角
+                barBorderRadius: 5
+              }
+            }
+          ]
         })
+      }
+    },"json");
   });
-
 })();
 
 
-// 就业
 (function() {
   var myColor = ["#1089E7", "#F57474", "#56D0E3", "#F8B448", "#8B78F6"];
   // 1. 实例化对象
@@ -246,52 +243,37 @@
     myChart.resize();
   });
 })();
-// 折线图1模块制作
+
+
+// 折线图定制
 (function() {
-  var yearData = [
-    {
-      year: "2023", // 年份
-      data: [
-        // 两个数组是因为有两条线
-        [24, 40, 101, 134, 90, 230, 210, 230, 120, 230, 210, 120],
-        [40, 64, 191, 324, 290, 330, 310, 213, 180, 200, 180, 79]
-      ]
-    },
-    {
-      year: "2024", // 年份
-      data: [
-        // 两个数组是因为有两条线
-        [123, 175, 112, 197, 121, 67, 98, 21, 43, 64, 76, 38],
-        [143, 131, 165, 123, 178, 21, 82, 64, 43, 60, 19, 34]
-      ]
-    }
-  ];
-  // 1. 实例化对象
+  // 1. 基于准备好的dom，初始化echarts实例
   var myChart = echarts.init(document.querySelector(".line .chart"));
-  // 2.指定配置
+  // 2. 指定配置和数据
   var option = {
-    // 通过这个color修改两条线的颜色
     color: ["#00f2f1", "#ed3f35"],
     tooltip: {
+      // 通过坐标轴来触发
       trigger: "axis"
     },
     legend: {
-      // 如果series 对象有name 值，则 legend可以不用写data
-      // 修改图例组件 文字颜色
+      // 距离容器10%
+      right: "10%",
+      // 修饰图例文字的颜色
       textStyle: {
         color: "#4c9bfd"
-      },
-      // 这个10% 必须加引号
-      right: "10%"
+      }
+      // 如果series 里面设置了name，此时图例组件的data可以省略
+      // data: ["邮件营销", "联盟广告"]
     },
     grid: {
       top: "20%",
       left: "3%",
       right: "4%",
       bottom: "3%",
-      show: true, // 显示边框
-      borderColor: "#012f4a", // 边框颜色
-      containLabel: true // 包含刻度文字在内
+      show: true,
+      borderColor: "#012f4a",
+      containLabel: true
     },
 
     xAxis: {
@@ -311,49 +293,52 @@
         "11月",
         "12月"
       ],
+      // 去除刻度
       axisTick: {
-        show: false // 去除刻度线
+        show: false
       },
+      // 修饰刻度标签的颜色
       axisLabel: {
-        color: "#4c9bfd" // 文本颜色
+        color: "rgba(255,255,255,.7)"
       },
+      // 去除x坐标轴的颜色
       axisLine: {
-        show: false // 去除轴线
+        show: false
       }
     },
     yAxis: {
       type: "value",
+      // 去除刻度
       axisTick: {
-        show: false // 去除刻度线
+        show: false
       },
+      // 修饰刻度标签的颜色
       axisLabel: {
-        color: "#4c9bfd" // 文本颜色
+        color: "rgba(255,255,255,.7)"
       },
-      axisLine: {
-        show: false // 去除轴线
-      },
+      // 修改y轴分割线的颜色
       splitLine: {
         lineStyle: {
-          color: "#012f4a" // 分割线颜色
+          color: "#012f4a"
         }
       }
     },
     series: [
       {
-        name: "毕业生人数",
-        type: "line",
-        // true 可以让我们的折线显示带有弧度
-        smooth: true,
-        data: yearData[0].data[0]
+        name: '就业生人数',
+        type: 'line',
+        stack: 'Total',
+        data: []
       },
       {
-        name: "就业生人数",
-        type: "line",
-        smooth: true,
-        data: yearData[0].data[1]
+        name: '毕业生人数',
+        type: 'line',
+        stack: 'Total',
+        data: []
       }
     ]
   };
+
 
   // 3. 把配置给实例对象
   myChart.setOption(option);
@@ -374,6 +359,85 @@
     // 需要重新渲染
     myChart.setOption(option);
   });
+
+//页面加载的时候发送请求1
+  $(function (){
+    var arrMonth = [];
+    var arrCount = [];
+    // 发送AJAX异步请求去Servlet后台获取用户数量的数据
+    $.get("http://localhost:8089/api/Personnel",function (pes){
+      for (var i = 0; i<pes.pes.length;i++){
+        arrMonth.push(pes.pes[i].month);
+        arrCount.push(pes.pes[i].count);
+        myChart.hideLoading(); //隐藏加载动画
+        myChart.setOption({
+          xAxis: {
+            type: "category",
+            boundaryGap: false,
+            data: arrMonth,
+            axisTick: {
+              show: false // 去除刻度线
+            },
+            axisLabel: {
+              interval:0,//将横轴信息全部显示出来
+              color: "#4c9bfd" // 文本颜色
+            },
+            axisLine: {
+              show: false // 去除轴线
+            }
+          },
+          series: [
+            {
+              name: '就业生人数',
+              type: 'line',
+              stack: 'Total',
+              data: arrCount
+            }
+          ]
+        });
+      }
+    },"json")
+  });
+
+  //页面加载的时候发送请求2
+  $(function (){
+    var arrMonth = [];
+    var arCount = [];
+    // 发送AJAX异步请求去Servlet后台获取用户数量的数据
+    $.get("http://localhost:8089/api/PersonnelS",function (peS){
+      for (var i = 0; i<peS.pes.length;i++){
+        arrMonth.push(peS.pes[i].month);
+        arCount.push(peS.pes[i].count);
+        myChart.hideLoading(); //隐藏加载动画
+        myChart.setOption({
+          xAxis: {
+            type: "category",
+            boundaryGap: false,
+            data: arrMonth,
+            axisTick: {
+              show: false // 去除刻度线
+            },
+            axisLabel: {
+              interval:0,//将横轴信息全部显示出来
+              color: "#4c9bfd" // 文本颜色
+            },
+            axisLine: {
+              show: false // 去除轴线
+            }
+          },
+          series: [
+            {
+              name: '毕业生人数',
+              type: 'line',
+              stack: 'Total',
+              data: arCount
+            }
+          ]
+        });
+      }
+    },"json")
+  });
+
 })();
 // 折线图2 模块制作
 (function() {
