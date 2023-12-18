@@ -246,19 +246,52 @@ public class MobileApiController extends BaseController
     @Anonymous
     @GetMapping("/graduation")
     public AjaxResult selectGraduation() {
-        List<Map<String, String>> maps = bStudentService.selectBStudentCountMap();
-        System.out.println(maps);
-        for (Map<String, String> map : maps) {
+        List<Map<String, String>> data = bStudentService.selectBStudentCountMap();
+        for (Map<String, String> map : data) {
                 String schoolId = String.valueOf(map.get("school_id"));
                 String name = ibSchoolService.selectSchoolName(schoolId);
                 String Count = String.valueOf(map.get("employment_count"));
-                // 在这里可以根据需要进行进一步处理
-                return AjaxResult.success("调用成功").put("name",name).put("Count",Count);
+                // 将school_id替换为name
+                map.put("name", name);
+                map.remove("school_id");
+                map.put("employment_count", Count);
         }
-        return AjaxResult.success("调用失败");
+        // 在这里可以根据需要进行进一步处理
+        return AjaxResult.success("调用成功").put("data",data);
     }
 
-
+    /**
+     * 折线图-人员变化一
+     */
+    @Anonymous
+    @GetMapping("/Personnel")
+    public AjaxResult selectPersonnel() {
+        List<Map<String, String>> pes = bStudentService.selectBStudentTimeMap();
+        for (Map<String, String> map : pes) {
+            String month = String.valueOf(map.get("month"));
+            String count = String.valueOf(map.get("count"));
+            map.put("month", month);
+            map.put("count", count);
+        }
+        // 在这里可以根据需要进行进一步处理
+        return AjaxResult.success("调用成功").put("pes",pes);
+    }
+    /**
+     * 折线图-人员变化二
+     */
+    @Anonymous
+    @GetMapping("/PersonnelS")
+    public AjaxResult selectPersonnelS() {
+        List<Map<String, String>> peS = bStudentService.selectBStudentTimesMap();
+        for (Map<String, String> map : peS) {
+            String month = String.valueOf(map.get("month"));
+            String count = String.valueOf(map.get("count"));
+            map.put("month", month);
+            map.put("count", count);
+        }
+        // 在这里可以根据需要进行进一步处理
+        return AjaxResult.success("调用成功").put("pes",peS);
+    }
 
     //柱状图
     /**

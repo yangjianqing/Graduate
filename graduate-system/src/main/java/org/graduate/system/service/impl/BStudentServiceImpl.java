@@ -206,4 +206,16 @@ public class BStudentServiceImpl implements IBStudentService
     {
         return bStudentMapper.selectBStudentCountMap();
     }
+
+    @Override
+    public List<Map<String, String>> selectBStudentTimeMap()
+    {
+        return bStudentMapper.selectBStudentTimeMap();
+    }
+
+    @Override
+    public List<Map<String, String>> selectBStudentTimesMap()
+    {
+        return bStudentMapper.selectBStudentTimesMap();
+    }
 }

@@ -77,4 +77,20 @@ public interface BStudentMapper
      */
     @MapKey("school_id")
     public List<Map<String,String>> selectBStudentCountMap();
+
+    /**
+     * 根据create_time(数据类型为datetime)查询出，每个月有多少个就业生,根据c_status=0
+     *
+     * @return 结果
+     */
+    @MapKey("month")
+    public List<Map<String,String>> selectBStudentTimeMap();
+
+    /**
+     * 根据create_time(数据类型为datetime)查询出，每个月有多少个就业生,根据c_status=1
+     *
+     * @return 结果
+     */
+    @MapKey("month")
+    public List<Map<String,String>> selectBStudentTimesMap();
 }
