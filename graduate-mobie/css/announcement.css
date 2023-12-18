@@ -247,14 +247,14 @@
   width: 100%;
   margin: 15px;
   height: 45px;
-  background-image:url("../img/InFo/sousuo.png");
-  background-size: 20px 20px ;
+  background-image: url(../img/InFo/sousuo.png);
+  background-size: 20px 20px;
   background-repeat: no-repeat;
   outline: none;
-  /*border-radius: 30px 0 0 30px;*/
+  border-radius: 30px 0 0 30px;
   padding-left: 50px;
-  background-position:0.5rem 0.8rem;
-  background-color:   transparent;
+  background-position: 0.5rem 0.8rem;
+  background-color: #fff;
   font-size: 1rem;
   font-family: SourceHanSansCN;
   border: 1px solid #51B9BD;

@@ -70,7 +70,7 @@
     </a>
 </div>
 </body>
-
+<script src="../js/public.js"></script>
 <script>
     $(document).ready(function() {
         let nextPage = 2; // 初始化下一页页码为2
@@ -86,7 +86,7 @@
                 isLoading = true; // 设置加载状态为 true
                 setTimeout(function () {
                     $.ajax({
-                        url: 'http://127.0.0.1:8089/api/selectEmpinfo', // 后端接口的 URL
+                        url: baseUrl+'/selectEmpinfo', // 后端接口的 URL
                         method: 'GET', // 请求方法
                         data: {pageNum: nextPage, pageSize: 5}, // 可能需要传递的参数，例如当前页数
                         dataType: 'json', // 响应数据的类型为 JSON
@@ -117,7 +117,7 @@
 
                                 var workPost = document.createElement("p");
                                 workPost.className = "work_post";
-                                workPost.style.cssText = "display: inline-block;float: left;margin-left: 2rem;font-size: 1.5rem;";
+                                workPost.style.cssText = "display: inline-block;float: left;margin-left: 2rem;font-size: 1.2rem;";
                                 var empNameSpan = document.createElement("div");
                                 empNameSpan.textContent = empName;
                                 workPost.appendChild(empNameSpan);

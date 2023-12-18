@@ -1,9 +1,11 @@
+var baseUrl="http://127.0.0.1:8089/api";
+
 // 获取公告数据的页数和每页数量
 const pageNum = 1; // 页数
 const pageSize = 5; // 每页数量
 
 // 构建带有查询参数的URL
-const url = new URL("http://127.0.0.1:8089/api/announcement");
+const url = new URL(baseUrl+"/announcement");
 url.searchParams.append('pageNum', pageNum);
 url.searchParams.append('pageSize', pageSize);
 
@@ -53,7 +55,7 @@ function searchAnnouncements() {
     var searchText = document.getElementById('search-input').value;
 
     // 发送搜索请求给后端
-    fetch('http://127.0.0.1:8089/api/search?keyword=' + searchText)
+    fetch(baseUrl+'/search?keyword=' + searchText)
         .then(response => response.json())
         .then(data => {
             // 假设从后端获取到了 joinData 数据

@@ -25,17 +25,14 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         width: 100vw;
-        height: 93vh;
-      }
+        height: 100%;      }
       body * {
         box-sizing: border-box;
         flex-shrink: 0;
       }
     </style>
   </head>
-  <body >
-    <div >
-  <body>
+
   <header>
     <span>通知</span>
   </header>
@@ -83,6 +80,7 @@
   </body>
 </html>
 
+<script src="../js/public.js"></script>
 <script>
 
   $(document).ready(function() {
@@ -99,7 +97,7 @@
         isLoading = true; // 设置加载状态为 true
         setTimeout(function () {
           $.ajax({
-            url: 'http://127.0.0.1:8089/api/announcement', // 后端接口的 URL
+            url: baseUrl+'/announcement', // 后端接口的 URL
             method: 'GET', // 请求方法
             data: {pageNum: nextPage, pageSize: 5}, // 可能需要传递的参数，例如当前页数
             dataType: 'json', // 响应数据的类型为 JSON
@@ -144,8 +142,4 @@
       }
     });
   });
-
-
-
-
 </script>

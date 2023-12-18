@@ -1,4 +1,5 @@
-var baseUrl="http://127.0.0.1:8089/api"
+var baseUrl="http://127.0.0.1:8089/api";
+
 //加载jqurey
 //ajax在什么时候开始执行
 //页面加载完成以后 才请求数据

@@ -1,9 +1,11 @@
+var baseUrl="http://127.0.0.1:8089/api";
+
 // 获取公告数据的页数和每页数量
 const pageNum = 1; // 页数
 const pageSize = 5; // 每页数量
 
 // 构建带有查询参数的URL
-const url = new URL("http://127.0.0.1:8089/api/selectEmpinfo");
+const url = new URL(baseUrl+"/selectEmpinfo");
 url.searchParams.append('pageNum', pageNum);
 url.searchParams.append('pageSize', pageSize);
 
@@ -41,7 +43,7 @@ fetch(url, {
 
             const workPost = document.createElement("p");
             workPost.className = "work_post";
-            workPost.style.cssText = "display: inline-block;float: left;margin-left: 2rem;font-size: 1.5rem;";
+            workPost.style.cssText = "display: inline-block;float: left;margin-left: 2rem;font-size: 1.2rem;";
             const empNameSpan = document.createElement("div");
             empNameSpan.textContent = empName;
             workPost.appendChild(empNameSpan);
@@ -119,7 +121,7 @@ function searchEmpDetails() {
     var searchText = document.getElementById('search-input').value;
 
     // 发送搜索请求给后端
-    fetch('http://127.0.0.1:8089/api/searchEmpDetails?keyword=' + searchText)
+    fetch(baseUrl+'/searchEmpDetails?keyword=' + searchText)
         .then(response => response.json())
         .then(data => {
             // 假设从后端获取到了 joinData 数据

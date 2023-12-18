@@ -19,7 +19,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       width: 100vw;
-      height: 15rem;
+      width: 100vw;
     }
 
     body * {
@@ -69,7 +69,7 @@
 </html>
 
 
-
+<script src="../js/public.js"></script>
 <!--根据id获取回显内容-->
 <script>
   // 获取 URL 参数
@@ -77,7 +77,7 @@
   const nId = urlParams.get('nId');
 
   // 发送获取公告详情数据的请求
-  $.get("http://127.0.0.1:8089/api/details", { nId: nId }, function(data) {
+  $.get(baseUrl+"/details", { nId: nId }, function(data) {
     $(".text_3").text(data.data.nTitle);
     $(".font_2").text(data.data.nContent);
     $("#nPeople").text(data.data.nPeople);
