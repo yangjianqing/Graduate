@@ -122,7 +122,7 @@
           ],
           series: [
             {
-              name: "直接访问",
+              name: "毕业人数",
               type: "bar",
               barWidth: "35%",
               data: arrCount,
