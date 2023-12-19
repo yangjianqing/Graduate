@@ -250,7 +250,7 @@ public class MobileApiController extends BaseController
         for (Map<String, String> map : data) {
                 String schoolId = String.valueOf(map.get("school_id"));
                 String abb = ibSchoolService.selectSchoolName(schoolId);
-                String name = abb.replaceAll("职业技术", "");
+                String name = abb.replaceAll("技术", "");
                 String Count = String.valueOf(map.get("employment_count"));
                 // 将school_id替换为name
                 map.put("name", name);

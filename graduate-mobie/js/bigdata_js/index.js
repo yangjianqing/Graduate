@@ -325,13 +325,13 @@
     },
     series: [
       {
-        name: '就业生人数',
+        name: '已就业生人数',
         type: 'line',
         stack: 'Total',
         data: []
       },
       {
-        name: '毕业生人数',
+        name: '未就业生人数',
         type: 'line',
         stack: 'Total',
         data: []
@@ -388,7 +388,7 @@
           },
           series: [
             {
-              name: '就业生人数',
+              name: '已就业生人数',
               type: 'line',
               stack: 'Total',
               data: arrCount
@@ -427,7 +427,7 @@
           },
           series: [
             {
-              name: '毕业生人数',
+              name: '未就业生人数',
               type: 'line',
               stack: 'Total',
               data: arCount
