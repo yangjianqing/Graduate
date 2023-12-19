@@ -903,9 +903,6 @@ $(function() {
 
 
 
-
-
-
 // 模拟飞行路线模块地图模块
 (function() {
   var myChart = echarts.init(document.querySelector(".map .chart"));
@@ -1023,32 +1020,9 @@ $(function() {
     长治: [112.8625, 36.4746],
     阳泉: [113.4778, 38.0951],
     青岛: [120.4651, 36.3373],
-    韶关: [113.7964, 24.7028]
+    韶关: [113.7964, 24.7028],
+    泸州: [105.4078, 28.9124]
   };
-
-  var XAData = [
-    [{ name: "西安" }, { name: "拉萨", value: 100 }],
-    [{ name: "西安" }, { name: "上海", value: 100 }],
-    [{ name: "西安" }, { name: "广州", value: 100 }],
-    [{ name: "西安" }, { name: "西宁", value: 100 }],
-    [{ name: "西安" }, { name: "银川", value: 100 }]
-  ];
-
-  var XNData = [
-    [{ name: "西宁" }, { name: "北京", value: 100 }],
-    [{ name: "西宁" }, { name: "上海", value: 100 }],
-    [{ name: "西宁" }, { name: "广州", value: 100 }],
-    [{ name: "西宁" }, { name: "西安", value: 100 }],
-    [{ name: "西宁" }, { name: "银川", value: 100 }]
-  ];
-
-  var YCData = [
-    [{ name: "拉萨" }, { name: "潍坊", value: 100 }],
-    [{ name: "拉萨" }, { name: "哈尔滨", value: 100 }],
-    [{ name: "银川" }, { name: "上海", value: 100 }],
-    [{ name: "银川" }, { name: "西安", value: 100 }],
-    [{ name: "银川" }, { name: "西宁", value: 100 }]
-  ];
 
   var planePath =
     "path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z";
@@ -1074,10 +1048,21 @@ $(function() {
 
   var color = ["#a6c84c", "#ffa022", "#46bee9"]; //航线的颜色
   var series = [];
+
+
+  $.get("http://localhost:8089/api/graduatesNumber",function (res){
+
+    $("#totalStu").prepend(res.other.sTotal);
+    $("#graduationStu").prepend(res.other.gTotal);
+    var com=res.other.company;
+    var LDData = [];
+    for(var i=0;i<com.length;i++){
+      var arr= [{ name: "泸州" }, { name: com[i].cAddress, value: 1 }];
+       LDData.push(arr);
+    }
   [
-    ["西安", XAData],
-    ["西宁", XNData],
-    ["银川", YCData]
+    ["泸州", LDData],
+
   ].forEach(function(item, i) {
     series.push(
       {
@@ -1158,6 +1143,7 @@ $(function() {
       }
     );
   });
+
   var option = {
     tooltip: {
       trigger: "item",
@@ -1181,7 +1167,7 @@ $(function() {
       orient: "vertical",
       top: "bottom",
       left: "right",
-      data: ["西安 Top3", "西宁 Top3", "银川 Top3"],
+      data: ["重庆 Top3", "广州 Top3", "重庆 Top3"],
       textStyle: {
         color: "#fff"
       },
@@ -1217,4 +1203,5 @@ $(function() {
   window.addEventListener("resize", function() {
     myChart.resize();
   });
+  })
 })();
