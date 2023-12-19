@@ -62,11 +62,18 @@ public interface IBCheckService
     public int deleteBCheckByCkId(Long ckId);
 
     /**
-     * 删除签到信息
+     * 统计各个类型的数量
      *
      * @param
      * @return 结果
      */
-    public Map<Integer,Integer> CountCkTpye();
+    public List<Map<String,Object>> CountCkTpye();   /**
+     * 统计教师下毕业人数
+     *
+     * @param
+     * @return 结果
+     */
+    public List<Map<String,Object>> countStu();
+
 
 }

@@ -68,7 +68,16 @@ public interface BCheckMapper
      * @param
      * @return 结果
      */
-     Map<Integer,Integer> CountCkTpye();
+
+    public List<Map<String,Object>> CountCkTpye();
+    /**
+     * 查询教师毕业人数
+     *
+     * @param
+     * @return 结果
+     */
+    public List<Map<String,Object>> countStu();
+
 
 
 }

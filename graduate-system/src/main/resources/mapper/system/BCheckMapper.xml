@@ -19,9 +19,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <sql id="selectBCheckVo">
         select ck_id, ck_name, ck_time, ck_address, ck_longitude, ck_latitude, b_class, ck_tpye ,c_id from b_check
     </sql>
-    <sql id="countTpyeVo">
-        SELECT ck_tpye AS type, COUNT(*) AS count, ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM b_check)) AS percentage  FROM b_check
-    </sql>
 
     <select id="selectBCheckList" parameterType="BCheck" resultMap="BCheckResult">
         <include refid="selectBCheckVo"/>
@@ -42,10 +39,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where ck_id = #{ckId}
     </select>
 <!--    统计公司类型-->
-    <select id="CountCkTpye" parameterType="BCheck" resultMap="BCheckResult">
-        <include refid="countTpyeVo"/>
-       GROUP BY ck_tpye
+    <select id="CountCkTpye" parameterType="BCheck" resultType="map">
+        SELECT c.c_type as name,COUNT(*) AS count, CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*)
+	    FROM b_student
+	    WHERE compeny_id IS NOT NULL), 2) AS decimal(10)) AS percentage
+        FROM b_student s JOIN b_company c ON s.compeny_id = c.c_id
+        GROUP BY c.c_type
+            LIMIT 4;
     </select>
+
+    <!--    查询每个教师毕业的人数，取前五-->
+    <select id="countStu" parameterType="BStudent" resultType="map">
+        SELECT t.tchr_name, COUNT(*) AS student_count
+        FROM b_student s
+        JOIN b_teacher t ON s.teacher_id = t.tchr_id
+        GROUP BY s.teacher_id
+        ORDER BY student_count DESC
+        LIMIT 5;
+    </select>
+
         
     <insert id="insertBCheck" parameterType="BCheck" useGeneratedKeys="true" keyProperty="ckId">
         insert into b_check

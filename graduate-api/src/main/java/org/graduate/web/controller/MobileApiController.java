@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.models.auth.In;
+import org.aspectj.weaver.loadtime.Aj;
 import org.graduate.common.annotation.Anonymous;
 import org.graduate.common.core.domain.AjaxResult;
 import org.graduate.common.core.domain.AjaxResult;
@@ -302,6 +303,21 @@ public class MobileApiController extends BaseController
      * @param
      * @return
      */
+    @Anonymous
+    @GetMapping("/getCountCktpye")
+    public AjaxResult countCkTpye() {
+       List<Map<String, Object>> maps = ibCheckService.CountCkTpye();
+        System.out.println(maps);
+        return AjaxResult.success(maps);
+    }
+    //饼状图-统计教师下毕业人数
+    @Anonymous
+    @GetMapping("/getCountStu")
+    public AjaxResult countStu() {
+        List<Map<String, Object>> maps = ibCheckService.countStu();
+        System.out.println(maps);
+        return AjaxResult.success(maps);
+    }
 
 
 }

@@ -159,7 +159,7 @@
       {
         type: "category",
         inverse: true,
-        data: ["国企", "央企", "民企", "外企","自由职业"],
+        data: [],
         // 不显示y轴的线
         axisLine: {
           show: false
@@ -194,7 +194,7 @@
       {
         name: "条",
         type: "bar",
-        data: [70, 34, 60, 78, 69],
+        data: [],
         yAxisIndex: 0,
         // 修改第一组柱子的圆角
         itemStyle: {
@@ -225,7 +225,7 @@
         barCategoryGap: 50,
         barWidth: 15,
         yAxisIndex: 1,
-        data: [100, 100, 100, 100, 100],
+        data: [100, 100, 100, 100],
         itemStyle: {
           color: "none",
           borderColor: "#00c1de",
@@ -242,10 +242,125 @@
   window.addEventListener("resize", function() {
     myChart.resize();
   });
+
+  //ajax请求
+  $(function (){
+    //定义新数组来存储后端发送过来的值
+    var arrType=[];
+    var arrCount=[];
+    var arrPercentage=[];
+    $.get("http://127.0.0.1:8089/api/getCountCktpye",function (maps){
+      //遍历后端发送过来的值
+     for (var i=0;i<maps.data.length;i++){
+       var type=maps.data[i].name
+       if (type==0){
+         type="私企"
+       }else if (type==1){
+         type="央企"
+       }else if (type==2){
+         type="外企"
+       }else if (type==3){
+         type="国企"
+       }
+        //将遍历出来的值存到数组中
+       arrType.push(type);
+       arrCount.push(maps.data[i].count);
+       arrPercentage.push(maps.data[i].percentage);
+
+       //隐藏加载动画
+       myChart.hideLoading();
+       //覆盖上面的data数据
+       myChart.setOption({
+         yAxis: [
+           {
+             type: "category",
+             inverse: true,
+             data: arrType,
+             // 不显示y轴的线
+             axisLine: {
+               show: false
+             },
+             // 不显示刻度
+             axisTick: {
+               show: false
+             },
+             // 把刻度标签里面的文字颜色设置为白色
+             axisLabel: {
+               color: "#fff"
+             }
+           },
+           {
+             data: arrCount,
+             inverse: true,
+             // 不显示y轴的线
+             axisLine: {
+               show: false
+             },
+             // 不显示刻度
+             axisTick: {
+               show: false
+             },
+             // 把刻度标签里面的文字颜色设置为白色
+             axisLabel: {
+               color: "#fff"
+             }
+           }
+         ],
+         series: [
+           {
+             name: "条",
+             type: "bar",
+             data: arrPercentage,
+             yAxisIndex: 0,
+             // 修改第一组柱子的圆角
+             itemStyle: {
+               barBorderRadius: 20,
+               // 此时的color 可以修改柱子的颜色
+               color: function(params) {
+                 // params 传进来的是柱子对象
+                 // console.log(params);
+                 // dataIndex 是当前柱子的索引号
+                 return myColor[params.dataIndex];
+               }
+             },
+             // 柱子之间的距离
+             barCategoryGap: 50,
+             //柱子的宽度
+             barWidth: 10,
+             // 显示柱子内的文字
+             label: {
+               show: true,
+               position: "inside",
+               // {c} 会自动的解析为 数据  data里面的数据
+               formatter: "{c}%"
+             }
+           },
+           {
+             name: "框",
+             type: "bar",
+             barCategoryGap: 50,
+             barWidth: 15,
+             yAxisIndex: 1,
+             data: [100, 100, 100, 100],
+             itemStyle: {
+               color: "none",
+               borderColor: "#00c1de",
+               borderWidth: 3,
+               barBorderRadius: 15
+             }
+           }
+         ]
+       })
+      }
+    },"json");
+  });
+
 })();
 
 
 // 折线图定制
+
+// 折线图1模块制作
 (function() {
   // 1. 基于准备好的dom，初始化echarts实例
   var myChart = echarts.init(document.querySelector(".line .chart"));
@@ -338,6 +453,7 @@
       }
     ]
   };
+
 
 
   // 3. 把配置给实例对象
@@ -749,6 +865,57 @@
       }
     ]
   };
+  //当页面加载的时候发送ajax请求到后台
+  $(function (){
+    //定义新数组来存储后端发送过来的值
+    var arrName = [];
+    var arrCount = [];
+    //url,data
+    $.get('http://127.0.0.1:8089/api/getCountStu',function (maps){
+      //遍历后端发送过来的值
+      for (var i = 0 ;i<maps.data.length; i++){
+        //将遍历出来的值存到新数组中
+        arrName.push(maps.data[i].tchr_name);
+        arrCount.push(maps.data[i].student_count);
+        //隐藏加载动画
+        myChart.hideLoading();
+        //覆盖上面data数据
+        myChart.setOption({
+          series: [
+            {
+              name: "年龄分布",
+              type: "pie",
+              // 这个radius可以修改饼形图的大小
+              // radius 第一个值是内圆的半径 第二个值是外圆的半径
+              radius: ["40%", "60%"],
+              center: ["50%", "45%"],
+              avoidLabelOverlap: false,
+              // 图形上的文字
+              label: {
+                show: false,
+                position: "center"
+              },
+              // 链接文字和图形的线是否显示
+              labelLine: {
+                show: false
+              },
+              data: [
+                { value: arrCount[0], name: arrName[0] },
+                { value: arrCount[1], name: arrName[1] },
+                { value: arrCount[2], name: arrName[2] },
+                { value: arrCount[3], name: arrName[3] },
+                { value: arrCount[4], name: arrName[4]}
+              ]
+            }
+          ]
+
+        })
+      }
+    },"json");
+  });
+
+
+
 
   // 3. 把配置给实例对象
   myChart.setOption(option);

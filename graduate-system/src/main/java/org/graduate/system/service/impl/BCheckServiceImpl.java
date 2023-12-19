@@ -96,15 +96,26 @@ public class BCheckServiceImpl implements IBCheckService
         return bCheckMapper.deleteBCheckByCkId(ckId);
     }
     /**
-     * 删除签到信息
+     * 统计各个类型的数量
      *
      * @param
      * @return 结果
      */
     @Override
-    public Map<Integer ,Integer> CountCkTpye()
+    public List<Map<String,Object>> CountCkTpye()
     {
         return bCheckMapper.CountCkTpye();
+    }    /**
+     * 统计教师下毕业人数
+     *
+     * @param
+     * @return 结果
+     */
+    @Override
+    public List<Map<String,Object>> countStu()
+    {
+        return bCheckMapper.countStu();
     }
+
 
 }
