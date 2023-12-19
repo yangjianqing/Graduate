@@ -201,17 +201,6 @@
           <el-input v-model="form.sNumbers" placeholder="请输入联系方式" />
         </el-form-item>
 
-        <el-form-item label="学校" prop="schoolId">
-          <el-select v-model="form.schoolId" :data="schools" clearable placeholder="请选择学校">
-            <el-option
-              v-for="item in schools"
-              :key="item.sId"
-              :label="item.sName"
-              :value="item.sId"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-
         <el-form-item label="公司" prop="compenyId">
           <el-select v-model="form.compenyId" :data="companys" clearable placeholder="请选择公司">
             <el-option
@@ -240,6 +229,17 @@
               :key="item.tchrId"
               :label="item.tchrName"
               :value="item.tchrId"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="学校" prop="schoolId">
+          <el-select v-model="form.schoolId" :data="schools" clearable placeholder="请选择学校">
+            <el-option
+              v-for="item in schools"
+              :key="item.sId"
+              :label="item.sName"
+              :value="item.sId"
             ></el-option>
           </el-select>
         </el-form-item>

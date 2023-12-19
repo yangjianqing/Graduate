@@ -249,7 +249,8 @@ public class MobileApiController extends BaseController
         List<Map<String, String>> data = bStudentService.selectBStudentCountMap();
         for (Map<String, String> map : data) {
                 String schoolId = String.valueOf(map.get("school_id"));
-                String name = ibSchoolService.selectSchoolName(schoolId);
+                String abb = ibSchoolService.selectSchoolName(schoolId);
+                String name = abb.replaceAll("职业技术", "");
                 String Count = String.valueOf(map.get("employment_count"));
                 // 将school_id替换为name
                 map.put("name", name);
@@ -276,6 +277,7 @@ public class MobileApiController extends BaseController
         // 在这里可以根据需要进行进一步处理
         return AjaxResult.success("调用成功").put("pes",pes);
     }
+
     /**
      * 折线图-人员变化二
      */
@@ -300,34 +302,7 @@ public class MobileApiController extends BaseController
      * @param
      * @return
      */
-//
-//    @GetMapping("/getCountCktpye")
-//    public AjaxResult countCkTpye(HttpServletResponse response) {
-//        Map<Integer, Integer> countCKTpye = ibCheckService.CountCkTpye();
-//        JSONArray jsonArray = new JSONArray();
-//        for (Map.Entry<Integer, Integer> entry : countCKTpye.entrySet()) {
-//            JSONObject jsonObject = new JSONObject();
-//            // 获取类型
-//            Integer ckCount = entry.getKey();
-//            // 获取总数
-//            Integer ckBai = entry.getValue();
-//            // 通过jsonobject存数据
-//            jsonObject.put("count", ckCount);
-//            jsonObject.put("ckbai", ckBai);
-//            // 发送数据到前端
-//            jsonArray.add(jsonObject);
-//        }
-//        String s = jsonArray.toJSONString();
-//        // 发送编码格式
-//        response.setContentType("text/html;charset=UTF-8");
-//        try (PrintWriter writer = response.getWriter()) {
-//            writer.print(s);
-//            writer.flush();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return AjaxResult.success(countCKTpye);
-//    }
+
 
 }
 

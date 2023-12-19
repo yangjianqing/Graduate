@@ -9,23 +9,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-<!--      <el-form-item label="班级名称" prop="cName">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.cName"-->
-<!--          placeholder="请输入班级名称"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-
-<!--      <el-form-item label="辅导员" prop="teacherId">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.teacherId"-->
-<!--          placeholder="请输入辅导员"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
 
       <el-form-item label="班级" prop="cName">
         <el-select v-model="queryParams.cName" :data="clasei" clearable placeholder="请选择班级" @keyup.enter.native="handleQuery" filterable>
@@ -159,24 +142,9 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
 
-<!--        <el-form-item label="班级名称" prop="cName">-->
-<!--          <el-input v-model="form.cName" placeholder="请输入班级名称" />-->
-<!--        </el-form-item>-->
-
-        <el-form-item label="班级" prop="cName">
-          <el-select v-model="form.cName" :data="clasei" clearable placeholder="请选择班级">
-            <el-option
-              v-for="item in clasei"
-              :key="item.cName"
-              :label="item.cName"
-              :value="item.cName"
-            ></el-option>
-          </el-select>
+        <el-form-item label="班级名称" prop="cName">
+          <el-input v-model="form.cName" placeholder="请输入班级名称" />
         </el-form-item>
-
-<!--        <el-form-item label="辅导员" prop="teacherId">-->
-<!--          <el-input v-model="form.teacherId" placeholder="请输入辅导员" />-->
-<!--        </el-form-item>-->
 
         <el-form-item label="辅导员" prop="teacherId">
           <el-select v-model="form.teacherId" :data="teachers" clearable placeholder="请选择辅导员">
