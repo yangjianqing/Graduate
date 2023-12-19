@@ -1,42 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.graduate.system.mapper.BCompanyMapper">
-    
+
     <resultMap type="BCompany" id="BCompanyResult">
-        <result property="cId"    column="c_id"    />
-        <result property="cName"    column="c_name"    />
-        <result property="cData"    column="c_data"    />
-        <result property="cType"    column="c_type"    />
-        <result property="cAddress"    column="c_address"    />
-        <result property="cPhone"    column="c_phone"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateTime"    column="update_time"    />
-        <result property="cLongitude"    column="c_longitude"    />
-        <result property="cLatitude"    column="c_latitude"    />
+        <result property="cId" column="c_id"/>
+        <result property="cName" column="c_name"/>
+        <result property="cData" column="c_data"/>
+        <result property="cType" column="c_type"/>
+        <result property="cAddress" column="c_address"/>
+        <result property="cPhone" column="c_phone"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="cLongitude" column="c_longitude"/>
+        <result property="cLatitude" column="c_latitude"/>
     </resultMap>
 
     <sql id="selectBCompanyVo">
-        select c_id, c_name, c_data, c_type, c_address, c_phone, create_time, update_time, c_longitude, c_latitude from b_company
+        select c_id,
+               c_name,
+               c_data,
+               c_type,
+               c_address,
+               c_phone,
+               create_time,
+               update_time,
+               c_longitude,
+               c_latitude
+        from b_company
     </sql>
     <sql id="selectPiontVo">
-        SELECT b_company.c_longitude, b_company.c_latitude FROM b_student JOIN b_company ON b_student.compeny_id = b_company.c_id
+        SELECT b_company.c_longitude, b_company.c_latitude
+        FROM b_student
+                 JOIN b_company ON b_student.compeny_id = b_company.c_id
     </sql>
 
     <select id="selectBCompanyList" parameterType="BCompany" resultMap="BCompanyResult">
         <include refid="selectBCompanyVo"/>
-        <where>  
-            <if test="cName != null  and cName != ''"> and c_name like concat('%', #{cName}, '%')</if>
-            <if test="cData != null "> and c_data = #{cData}</if>
-            <if test="cType != null  and cType != ''"> and c_type = #{cType}</if>
-            <if test="cAddress != null  and cAddress != ''"> and  c_address like concat ('%',#{cAddress},'%') </if>
-            <if test="cPhone != null and cPhone!=''" >and c_phone= #{cPhone}</if>
+        <where>
+            <if test="cName != null  and cName != ''">and c_name like concat('%', #{cName}, '%')</if>
+            <if test="cData != null ">and c_data = #{cData}</if>
+            <if test="cType != null  and cType != ''">and c_type = #{cType}</if>
+            <if test="cAddress != null  and cAddress != ''">and c_address like concat ('%',#{cAddress},'%')</if>
+            <if test="cPhone != null and cPhone!=''">and c_phone= #{cPhone}</if>
 
         </where>
     </select>
 
-<!--    查询经纬度-->
+    <!--    查询经纬度-->
     <select id="selectBCompanyByPoint" parameterType="Long" resultMap="BCompanyResult">
         <include refid="selectPiontVo"/>
         WHERE b_student.s_id = #{sId}
@@ -47,17 +59,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where c_id = #{cId}
     </select>
 
-    <select id="selectBCompanyAll"  resultMap="BCompanyResult">
+    <select id="selectBCompanyAll" resultMap="BCompanyResult">
         <include refid="selectBCompanyVo"/>
 
     </select>
 
     <select id="selectBClassListCIds" resultMap="BCompanyResult" parameterType="list">
-    <include refid="selectBCompanyVo"/>
-    where c_id in
-    <foreach item="ClassIds" collection="list" open="(" separator="," close=")">
-        #{ClassIds}
-    </foreach>
+        <include refid="selectBCompanyVo"/>
+        where c_id in
+        <foreach item="ClassIds" collection="list" open="(" separator="," close=")">
+            #{ClassIds}
+        </foreach>
+    </select>
+
+    <select id="selectCompanyBySchoolId" resultMap="BCompanyResult">
+        select *
+        from b_student stu,
+             b_company com
+        where stu.school_id = #{schoolId}
+          and stu.compeny_id = com.c_id
+          and stu.c_status = 0
     </select>
 
 
@@ -73,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null">update_time,</if>
             <if test="cLongitude != null">c_longitude,</if>
             <if test="cLatitude != null">c_latitude,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="cName != null">#{cName},</if>
             <if test="cData != null">#{cData},</if>
@@ -84,7 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null">#{updateTime},</if>
             <if test="cLongitude != null">#{cLongitude},</if>
             <if test="cLatitude != null">#{cLatitude},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateBCompany" parameterType="BCompany">
@@ -104,11 +125,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteBCompanyByCId" parameterType="Long">
-        delete from b_company where c_id = #{cId}
+        delete
+        from b_company
+        where c_id = #{cId}
     </delete>
 
     <delete id="deleteBCompanyByCIds" parameterType="String">
-        delete from b_company where c_id in 
+        delete from b_company where c_id in
         <foreach item="cId" collection="array" open="(" separator="," close=")">
             #{cId}
         </foreach>

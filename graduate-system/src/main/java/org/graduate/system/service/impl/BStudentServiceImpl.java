@@ -5,18 +5,19 @@ import java.util.*;
 import org.graduate.common.utils.DateUtils;
 import org.graduate.system.domain.*;
 import org.graduate.system.mapper.*;
+import org.graduate.system.service.IBCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.graduate.system.service.IBStudentService;
 
 /**
  * 学生管理Service业务层处理
- * 
+ *
  * @author chuan
  * @date 2023-11-24
  */
 @Service
-public class BStudentServiceImpl implements IBStudentService 
+public class BStudentServiceImpl implements IBStudentService
 {
     @Autowired
     private BStudentMapper bStudentMapper;
@@ -31,7 +32,7 @@ public class BStudentServiceImpl implements IBStudentService
 
     /**
      * 查询学生管理
-     * 
+     *
      * @param sId 学生管理主键
      * @return 学生管理
      */
@@ -43,7 +44,7 @@ public class BStudentServiceImpl implements IBStudentService
 
     /**
      * 查询学生管理列表
-     * 
+     *
      * @param b_Student 学生管理
      * @return 学生管理
      */
@@ -140,7 +141,7 @@ public class BStudentServiceImpl implements IBStudentService
 
     /**
      * 新增学生管理
-     * 
+     *
      * @param bStudent 学生管理
      * @return 结果
      */
@@ -152,7 +153,7 @@ public class BStudentServiceImpl implements IBStudentService
 
     /**
      * 修改学生管理
-     * 
+     *
      * @param bStudent 学生管理
      * @return 结果
      */
@@ -164,7 +165,7 @@ public class BStudentServiceImpl implements IBStudentService
 
     /**
      * 批量删除学生管理
-     * 
+     *
      * @param sIds 需要删除的学生管理主键
      * @return 结果
      */
@@ -176,7 +177,7 @@ public class BStudentServiceImpl implements IBStudentService
 
     /**
      * 删除学生管理信息
-     * 
+     *
      * @param sId 学生管理主键
      * @return 结果
      */

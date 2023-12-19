@@ -26,16 +26,19 @@ import org.graduate.common.core.controller.BaseController;
 import org.graduate.common.core.page.TableDataInfo;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 import java.util.concurrent.TimeUnit;
 
 
-
 @RestController
 @RequestMapping("/api")
-public class MobileApiController extends BaseController
-{
+public class MobileApiController extends BaseController {
     @Resource
     private IBPublicInfoService bPublicInfoService;
     @Autowired
@@ -121,10 +124,10 @@ public class MobileApiController extends BaseController
      * @return
      */
     @GetMapping(value = "student/{sId}")
-    public AjaxResult getInfo(@PathVariable("sId") Long sId)
-    {
+    public AjaxResult getInfo(@PathVariable("sId") Long sId) {
         return AjaxResult.success(bStudentService.selectBStudentBySId(sId));
     }
+
     /**
      * 发送手机验证码
      * @param
@@ -132,8 +135,7 @@ public class MobileApiController extends BaseController
      */
     @Anonymous
     @GetMapping("/sendPhoneCode")
-    public AjaxResult sendCode(String phoneNum)
-    {
+    public AjaxResult sendCode(String phoneNum) {
         AjaxResult success = AjaxResult.success();
         /**
          *  1、生成uuid
@@ -144,6 +146,7 @@ public class MobileApiController extends BaseController
 
         return null;
     }
+
     //存储经纬度
     @Anonymous  //该注解取消权限控制
     @PostMapping("/signin")
@@ -151,6 +154,7 @@ public class MobileApiController extends BaseController
         int i = ibCheckService.insertBCheck(bCheck);
         return AjaxResult.success(i);
     }
+
     //把经纬度发送到前端
     @Anonymous // 该注解取消权限控制
     @GetMapping("/locations")
@@ -158,6 +162,7 @@ public class MobileApiController extends BaseController
         List<Location> locations = ibCompanyService.selectBCompanyByPoint();
         return AjaxResult.success(locations);
     }
+
     /**
      * 就业信息页面接口
      **/
@@ -252,9 +257,6 @@ public class MobileApiController extends BaseController
         return  AjaxResult.success(checkInMaps);
     }
 
-
-
-
     /**
      * 柱形图-毕业信息
      */
@@ -263,18 +265,21 @@ public class MobileApiController extends BaseController
     public AjaxResult selectGraduation() {
         List<Map<String, String>> data = bStudentService.selectBStudentCountMap();
         for (Map<String, String> map : data) {
-                String schoolId = String.valueOf(map.get("school_id"));
-                String abb = ibSchoolService.selectSchoolName(schoolId);
-                String name = abb.replaceAll("技术", "");
-                String Count = String.valueOf(map.get("employment_count"));
-                // 将school_id替换为name
-                map.put("name", name);
-                map.remove("school_id");
-                map.put("employment_count", Count);
+            String schoolId = String.valueOf(map.get("school_id"));
+            String abb = ibSchoolService.selectSchoolName(schoolId);
+            String name = abb.replaceAll("技术", "");
+            String Count = String.valueOf(map.get("employment_count"));
+            // 将school_id替换为name
+            map.put("name", name);
+            map.remove("school_id");
+            map.put("employment_count", Count);
         }
         // 在这里可以根据需要进行进一步处理
         return AjaxResult.success("调用成功").put("data",data);
     }
+
+
+
 
     /**
      * 折线图-人员变化一
@@ -311,8 +316,7 @@ public class MobileApiController extends BaseController
     }
 
 
-
-
+    //柱状图
     /**
      * 查询公司地址
      * @return
@@ -335,8 +339,21 @@ public class MobileApiController extends BaseController
     }
 
 
+
+    /**
+     * 学生总数与已就业人数
+     * @return
+     */
+    @Anonymous
+    @GetMapping("/graduatesNumber")
+    public AjaxResult graduatesNumber() {
+        AjaxResult success = AjaxResult.success();
+        BSchool bSchools = new BSchool();
+        bSchools.setsName("泸州职业技术学院");
+        List<BSchool> bSchool = ibSchoolService.selectBSchoolList(bSchools);
+        Map<String, Object> other = ibSchoolService.selectOtherInfo(bSchool.get(0));
+        success.put("school", bSchool);
+        success.put("other", other);
+        return success;
+    }
 }
-
-
-
-

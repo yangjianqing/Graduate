@@ -88,7 +88,7 @@
                     $.ajax({
                         url: baseUrl+'/selectEmpinfo', // 后端接口的 URL
                         method: 'GET', // 请求方法
-                        data: {pageNum: nextPage, pageSize: 5}, // 可能需要传递的参数，例如当前页数
+                        data: {pageNum: nextPage, pageSize: 5, empName: empName}, // 可能需要传递的参数，例如当前页数
                         dataType: 'json', // 响应数据的类型为 JSON
                         success: function(response) {
                             // 处理成功响应的逻辑
