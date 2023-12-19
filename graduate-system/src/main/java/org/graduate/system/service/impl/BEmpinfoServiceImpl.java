@@ -1,6 +1,8 @@
 package org.graduate.system.service.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import org.graduate.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -102,5 +104,14 @@ public class BEmpinfoServiceImpl implements IBEmpinfoService
      */
     public int modifiedBEmpinfoByEmpId(BEmpinfo bEmpinfo) {
         return bEmpinfoMapper.modifiedBEmpinfoByEmpId(bEmpinfo);
+    }
+
+    /**
+     * 查询公司地址
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> getAllCompanyAddresses() {
+        return bEmpinfoMapper.getAllCompanyAddresses();
     }
 }

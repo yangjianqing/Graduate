@@ -1,6 +1,8 @@
 package org.graduate.system.service;
 
 import java.util.List;
+import java.util.Map;
+
 import org.graduate.system.domain.BEmpinfo;
 
 /**
@@ -66,4 +68,10 @@ public interface IBEmpinfoService
      * @return 结果
      */
     public int modifiedBEmpinfoByEmpId(BEmpinfo bEmpinfo);
+
+    /**
+     * 查询公司地址
+     * @return
+     */
+    List<Map<String, Object>> getAllCompanyAddresses();
 }

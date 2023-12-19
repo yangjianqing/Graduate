@@ -118,4 +118,16 @@ public class BCheckServiceImpl implements IBCheckService
     }
 
 
+
+
+    /**
+     * 查询每天签到总数
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> selectCheckInCounts() {
+        return bCheckMapper.selectCheckInCounts();
+    }
+
+
 }

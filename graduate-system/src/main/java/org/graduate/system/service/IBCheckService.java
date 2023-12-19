@@ -76,4 +76,11 @@ public interface IBCheckService
     public List<Map<String,Object>> countStu();
 
 
+
+    /**
+     * 查询每天签到数量
+     *
+     * @return
+     */
+    public List<Map<String, Object>> selectCheckInCounts();
 }

@@ -61,6 +61,7 @@
         where emp_id = #{empId}
     </select>
 
+
     <insert id="insertBEmpinfo" parameterType="BEmpinfo" useGeneratedKeys="true" keyProperty="empId">
         insert into b_empinfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -142,4 +143,15 @@
             #{empId}
         </foreach>
     </delete>
+
+
+
+
+    <select id="getAllCompanyAddresses" resultType="map" parameterType="bEmpinfo">
+        SELECT SUBSTRING_INDEX(c_address, '省', 1) AS province, COUNT(*) AS count
+        FROM b_empinfo
+        WHERE c_address LIKE '%省%'
+        GROUP BY province;
+    </select>
+
 </mapper>

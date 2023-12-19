@@ -80,4 +80,5 @@ public interface BCheckMapper
 
 
 
+    List<Map<String, Object>> selectCheckInCounts();
 }

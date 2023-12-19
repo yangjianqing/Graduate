@@ -10,20 +10,13 @@ import io.swagger.models.auth.In;
 import org.aspectj.weaver.loadtime.Aj;
 import org.graduate.common.annotation.Anonymous;
 import org.graduate.common.core.domain.AjaxResult;
-import org.graduate.common.core.domain.AjaxResult;
 import org.graduate.system.domain.*;
 import org.graduate.common.constant.CacheConstants;
 import org.graduate.common.constant.Constants;
 import org.graduate.common.core.redis.RedisCache;
 import org.graduate.common.utils.uuid.IdUtils;
 import org.graduate.framework.web.service.TokenService;
-import org.graduate.common.core.domain.AjaxResult;
-import org.graduate.common.annotation.Log;
-import org.graduate.common.core.domain.AjaxResult;
-import org.graduate.common.enums.BusinessType;
-import org.graduate.common.utils.poi.ExcelUtil;
 import org.graduate.system.service.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.graduate.system.service.IBStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +26,7 @@ import org.graduate.common.core.controller.BaseController;
 import org.graduate.common.core.page.TableDataInfo;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import java.util.concurrent.TimeUnit;
 
@@ -216,11 +205,11 @@ public class MobileApiController extends BaseController
     }
 
 
-
     /**
      * 查询公告管理列表
+     * @param keyword
+     * @return
      */
-
     @GetMapping("/search")
     public AjaxResult selectAll(@RequestParam("keyword") String keyword) {
         BPublicInfo bPublicInfo = new BPublicInfo();
@@ -235,11 +224,36 @@ public class MobileApiController extends BaseController
      * @param nId
      * @return
      */
-
     @GetMapping("/details")
     public AjaxResult selectById(Long nId) {
         return AjaxResult.success(bPublicInfoService.selectBPublicInfoByNId(nId));
     }
+
+
+    /**
+     * 企业地区分布  饼状图
+     *
+     * @return
+     */
+    @GetMapping("/address")
+    public AjaxResult selectAddress(){
+        List<Map<String, Object>> addressList = bEmpinfoService.getAllCompanyAddresses();
+        return AjaxResult.success(addressList);
+    }
+
+
+    /**
+     * 学生日签到数量  折线图
+     * @return
+     */
+    @GetMapping("/checkins")
+    public AjaxResult selectCheckInCounts(){
+        List<Map<String, Object>> checkInMaps = ibCheckService.selectCheckInCounts();
+        return  AjaxResult.success(checkInMaps);
+    }
+
+
+
 
     /**
      * 柱形图-毕业信息
@@ -296,11 +310,11 @@ public class MobileApiController extends BaseController
         return AjaxResult.success("调用成功").put("pes",peS);
     }
 
-    //柱状图
+
+
+
     /**
-     * 柱状图
-     *
-     * @param
+     * 查询公司地址
      * @return
      */
     @Anonymous
@@ -310,6 +324,7 @@ public class MobileApiController extends BaseController
         System.out.println(maps);
         return AjaxResult.success(maps);
     }
+
     //饼状图-统计教师下毕业人数
     @Anonymous
     @GetMapping("/getCountStu")

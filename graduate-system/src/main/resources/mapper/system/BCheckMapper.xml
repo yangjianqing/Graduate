@@ -112,4 +112,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{ckId}
         </foreach>
     </delete>
+
+    <select id="selectCheckInCounts"   parameterType="bCheck" resultType="map">
+        SELECT DATE(ck_time) AS date, COUNT(*) AS count
+        FROM b_check
+        GROUP BY DATE(ck_time)
+        ORDER BY DATE(ck_time)
+    </select>
+
+
 </mapper>
