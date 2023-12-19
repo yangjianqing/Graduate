@@ -68,8 +68,10 @@
     var distance;
     var geolocation = new BMap.Geolocation();
     //获取浏览器存储的经纬度
-    var latitude = companyList[0].cLatitude;
-    var longitude = companyList[0].cLongitude;
+    var pront= localStorage.getItem("bStudent")
+    pront = JSON.parse(pront);
+    var latitude =pront.companyList[0].cLatitude;
+    var longitude =pront.companyList[0].cLongitude;
 
 
     geolocation.getCurrentPosition(function (r) {
