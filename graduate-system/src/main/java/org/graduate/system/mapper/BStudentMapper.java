@@ -95,4 +95,6 @@ public interface BStudentMapper
      */
     @MapKey("month")
     public List<Map<String,String>> selectBStudentTimesMap();
+
+    List<Map<String, String>> findStudentInfo(Long sId);
 }

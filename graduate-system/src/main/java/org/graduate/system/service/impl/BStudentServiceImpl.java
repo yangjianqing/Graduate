@@ -39,7 +39,17 @@ public class BStudentServiceImpl implements IBStudentService
     @Override
     public BStudent selectBStudentBySId(Long sId)
     {
-        return bStudentMapper.selectBStudentBySId(sId);
+        BStudent student =  bStudentMapper.selectBStudentBySId(sId);
+        try {
+            List<Map<String,String>> list = bStudentMapper.findStudentInfo(sId);
+            Map<String,String> map = list.get(0);
+            student.setCompenyName(map.get("cName"));
+            student.setClassName(map.get("sName"));
+            student.setSchoolName(map.get("clName"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return student;
     }
 
     /**

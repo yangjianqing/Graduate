@@ -65,6 +65,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectBStudentTimesMap" resultType="java.util.Map">
         SELECT MONTH(create_time) AS month, COUNT(*) AS count FROM b_student WHERE c_status=1 GROUP BY MONTH(create_time)
     </select>
+    <select id="findStudentInfo" resultType="java.util.Map">
+        select bc.c_name cName ,bs.s_name sName,cl.c_name clName  from b_school bs,b_teacher bt,b_company bc,b_class cl,b_student stu
+        where stu.class_id=cl.c_id and stu.compeny_id=bc.c_id and stu.school_id=bs.s_id and stu.s_id=1
+   </select>
 
     <insert id="insertBStudent" parameterType="BStudent" useGeneratedKeys="true" keyProperty="sId">
         insert into b_student
