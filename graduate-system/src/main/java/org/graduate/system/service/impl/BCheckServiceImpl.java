@@ -116,10 +116,6 @@ public class BCheckServiceImpl implements IBCheckService
     {
         return bCheckMapper.countStu();
     }
-
-
-
-
     /**
      * 查询每天签到总数
      * @return
@@ -128,6 +124,15 @@ public class BCheckServiceImpl implements IBCheckService
     public List<Map<String, Object>> selectCheckInCounts() {
         return bCheckMapper.selectCheckInCounts();
     }
-
+    /**
+     * 查询学生签到时间
+     *
+     * @param stuId 学生Id
+     * @return 结果
+     */
+    @Override
+    public Long countCheck( Long stuId){
+        return  bCheckMapper.countCheck(stuId);
+    }
 
 }

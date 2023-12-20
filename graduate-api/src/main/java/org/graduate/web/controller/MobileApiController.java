@@ -339,8 +339,13 @@ public class MobileApiController extends BaseController {
         System.out.println(maps);
         return AjaxResult.success(maps);
     }
-
-
+//    学生签到
+    @Anonymous
+    @GetMapping("/getCountCheck")
+    public AjaxResult countCheck(@RequestParam("stuId") Long stuId) {
+        Long countCk = ibCheckService.countCheck(stuId);
+        return AjaxResult.success(countCk);
+    }
 
     /**
      * 学生总数与已就业人数
