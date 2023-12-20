@@ -115,4 +115,17 @@ public class BEmpinfoController extends BaseController
         empinfo.setEmpStatus(empStatus);
         return toAjax(bEmpinfoService.modifiedBEmpinfoByEmpId(empinfo));
     }
+
+
+    /**
+     * 查询就业信息发布列表无分页
+     */
+    @PreAuthorize("@ss.hasPermi('system:empinfo:noPageList')")
+    @GetMapping("/noPageList")
+    public TableDataInfo noPageList(BEmpinfo bEmpinfo)
+    {
+        List<BEmpinfo> list = bEmpinfoService.selectBEmpinfoList(bEmpinfo);
+        return getDataTable(list);
+    }
+
 }

@@ -50,3 +50,12 @@ export function modifiedEmpinfo(empId,empStatus) {
     method: 'put',
   })
 }
+
+// 查询就业信息发布列表不分页
+export function noPageList(query) {
+  return request({
+    url: '/system/empinfo/noPageList',
+    method: 'get',
+    params: query
+  })
+}
