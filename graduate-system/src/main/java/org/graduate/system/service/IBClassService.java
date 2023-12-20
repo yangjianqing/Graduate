@@ -64,4 +64,10 @@ public interface IBClassService
      * @return
      */
     public List<BClass> selectBClassAll();
+
+    /**
+     * 查询学校名称
+     * @return
+     */
+    public String selectClassName(String cId);
 }

@@ -64,7 +64,7 @@
     ],
     series: [
       {
-        name: "直接访问",
+        name: "就业人数",
         type: "bar",
         barWidth: "35%",
         data: [],
@@ -122,7 +122,7 @@
           ],
           series: [
             {
-              name: "毕业人数",
+              name: "就业人数",
               type: "bar",
               barWidth: "35%",
               data: arrCount,
@@ -708,7 +708,7 @@ $(function() {
     },
     series: [
       {
-        name: "年龄分布",
+        name: "就业人数",
         type: "pie",
         // 这个radius可以修改饼形图的大小
         // radius 第一个值是内圆的半径 第二个值是外圆的半径
@@ -752,7 +752,7 @@ $(function() {
         myChart.setOption({
           series: [
             {
-              name: "年龄分布",
+              name: "就业人数",
               type: "pie",
               // 这个radius可以修改饼形图的大小
               // radius 第一个值是内圆的半径 第二个值是外圆的半径

@@ -71,4 +71,10 @@ public interface BClassMapper
      * @return
      */
     public List<BClass> selectBClassAll();
+
+    /**
+     * 查询班级名称
+     * @return
+     */
+    public String selectClassName(String cId);
 }

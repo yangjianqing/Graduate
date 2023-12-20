@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: '蓝桥毕业生管理系统',
+      title: '泸职院毕业生管理系统',
       logo: logoImg
     }
   }

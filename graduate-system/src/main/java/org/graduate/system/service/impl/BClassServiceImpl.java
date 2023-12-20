@@ -129,4 +129,10 @@ public class BClassServiceImpl implements IBClassService
     public List<BClass> selectBClassAll() {
         return bClassMapper.selectBClassAll();
     }
+
+    @Override
+    public String selectClassName(String cId)
+    {
+        return bClassMapper.selectClassName(cId);
+    }
 }

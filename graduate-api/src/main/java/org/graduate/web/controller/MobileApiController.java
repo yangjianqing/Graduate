@@ -57,6 +57,8 @@ public class MobileApiController extends BaseController {
     private IBCompanyService ibCompanyService;
     @Resource
     private IBSchoolService ibSchoolService;
+    @Resource
+    private IBClassService ibClassService;
 
     /**
      * 验证码接口
@@ -267,13 +269,14 @@ public class MobileApiController extends BaseController {
     public AjaxResult selectGraduation() {
         List<Map<String, String>> data = bStudentService.selectBStudentCountMap();
         for (Map<String, String> map : data) {
-            String schoolId = String.valueOf(map.get("school_id"));
-            String abb = ibSchoolService.selectSchoolName(schoolId);
-            String name = abb.replaceAll("技术", "");
+            String classId = String.valueOf(map.get("class_id"));
+            String abb = ibClassService.selectClassName(classId);//根据id获取名称
+            String name = abb.replaceAll("22", "");
             String Count = String.valueOf(map.get("employment_count"));
+
             // 将school_id替换为name
             map.put("name", name);
-            map.remove("school_id");
+            map.remove("class_id");
             map.put("employment_count", Count);
         }
         // 在这里可以根据需要进行进一步处理

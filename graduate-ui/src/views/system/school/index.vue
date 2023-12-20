@@ -99,15 +99,15 @@
       <el-table-column label="学校纬度" align="center" prop="sLatitude" />
       <el-table-column label="学校官网" align="center" prop="sWebsite" />
       <el-table-column label="学校校长" align="center" prop="sRector" />
-      <el-table-column label="联系方式" align="center" prop="sConnection" />
-      <el-table-column label="学校邮箱" align="center" prop="sMailbox" />
+      <el-table-column label="联系方式" align="center" prop="sConnection" width="140"/>
+      <el-table-column label="学校邮箱" align="center" prop="sMailbox"/>
       <el-table-column label="学校备注" align="center" prop="sRemark" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="创建时间" align="center" prop="createTime" width="140">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="最后修改时间" align="center" prop="updateTime" width="180">
+      <el-table-column label="最后修改时间" align="center" prop="updateTime" width="140">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>

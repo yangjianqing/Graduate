@@ -52,6 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+    <select id="selectClassName" resultType="java.lang.String">
+        SELECT c_name FROM b_class WHERE c_id = #{cId}
+    </select>
+
     <insert id="insertBClass" parameterType="BClass" useGeneratedKeys="true" keyProperty="cId">
         insert into b_class
         <trim prefix="(" suffix=")" suffixOverrides=",">
