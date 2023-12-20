@@ -17,6 +17,8 @@ import org.graduate.common.core.redis.RedisCache;
 import org.graduate.common.utils.uuid.IdUtils;
 import org.graduate.framework.web.service.TokenService;
 import org.graduate.system.service.*;
+import org.graduate.util.MyClass;
+import org.graduate.util.SendSms;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.graduate.system.service.IBStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
