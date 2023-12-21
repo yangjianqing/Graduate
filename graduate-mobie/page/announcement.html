@@ -82,6 +82,15 @@
 
 <script src="../js/public.js"></script>
 <script>
+  var total;
+
+  fetch(baseUrl + '/search?keyword=' )
+          .then(response => response.json())
+          .then(data => {
+            // 假设从后端获取到了 joinData 数据
+            total = data.data.length - 5;
+            console.log(total)
+          })
 
   $(document).ready(function() {
     let nextPage = 2; // 初始化下一页页码为2
@@ -119,14 +128,15 @@
                       <span class="font text_15 ml-9" id="nTime">${info.createTime}</span>
                   </div>
               `;
-                listContainer.appendChild(listItem); // 将单条公告信息添加到公告列表容器中
                 listItem.addEventListener('click', () => {
                   // 在这里执行页面跳转逻辑，例如跳转到详情页
                   window.location.href = `../page/announcement_information.html?nId=${info.nId}`;
                 });
+                listContainer.appendChild(listItem); // 将单条公告信息添加到公告列表容器中
               });
               nextPage++; // 更新下一页页码
-              if (response.rows.length < 5) {
+              total -= response.rows.length;
+              if (total === 0) {
                 isLoading = false; // 如果数据不足5条，将加载状态改为 false
                 $(document).off('scroll'); // 停止监听滚动事件
               }
