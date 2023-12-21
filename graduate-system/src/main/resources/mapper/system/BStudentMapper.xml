@@ -59,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectBStudentTimeMap" resultType="java.util.Map">
-        SELECT MONTH(create_time) AS month, COUNT(*) AS count FROM b_student WHERE c_status=0 GROUP BY MONTH(create_time)
+        SELECT MONTH(create_time) AS month, COUNT(*) AS count FROM b_student WHERE c_status=0 GROUP BY MONTH(create_time) ORDER BY month ASC
     </select>
 
     <select id="selectBStudentTimesMap" resultType="java.util.Map">

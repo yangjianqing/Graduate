@@ -444,12 +444,6 @@
         type: 'line',
         stack: 'Total',
         data: []
-      },
-      {
-        name: '未就业生人数',
-        type: 'line',
-        stack: 'Total',
-        data: []
       }
     ]
   };
@@ -508,45 +502,6 @@
               type: 'line',
               stack: 'Total',
               data: arrCount
-            }
-          ]
-        });
-      }
-    },"json")
-  });
-
-  //页面加载的时候发送请求2
-  $(function (){
-    var arrMonth = [];
-    var arCount = [];
-    // 发送AJAX异步请求去Servlet后台获取用户数量的数据
-    $.get("http://localhost:8089/api/PersonnelS",function (peS){
-      for (var i = 0; i<peS.pes.length;i++){
-        arrMonth.push(peS.pes[i].month);
-        arCount.push(peS.pes[i].count);
-        myChart.hideLoading(); //隐藏加载动画
-        myChart.setOption({
-          xAxis: {
-            type: "category",
-            boundaryGap: false,
-            data: arrMonth,
-            axisTick: {
-              show: false // 去除刻度线
-            },
-            axisLabel: {
-              interval:0,//将横轴信息全部显示出来
-              color: "#4c9bfd" // 文本颜色
-            },
-            axisLine: {
-              show: false // 去除轴线
-            }
-          },
-          series: [
-            {
-              name: '未就业生人数',
-              type: 'line',
-              stack: 'Total',
-              data: arCount
             }
           ]
         });

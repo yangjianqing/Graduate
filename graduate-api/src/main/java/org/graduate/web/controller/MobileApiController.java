@@ -263,7 +263,7 @@ public class MobileApiController extends BaseController {
     }
 
     /**
-     * 柱形图-毕业信息
+     * 专业-毕业信息
      */
     @Anonymous
     @GetMapping("/graduation")
@@ -271,14 +271,7 @@ public class MobileApiController extends BaseController {
         List<Map<String, String>> data = bStudentService.selectBStudentCountMap();
         for (Map<String, String> map : data) {
             String classId = String.valueOf(map.get("class_id"));
-            String abb = ibClassService.selectClassName(classId);//根据id获取名称
-            //替换名称为null
-            String name = abb.replaceAll("22", "")
-                        .replaceAll("1班", "")
-                        .replaceAll("2班", "")
-                        .replaceAll("3班", "")
-                        .replaceAll("4班", "")
-                        .replaceAll("5班", "");
+            String name = ibClassService.selectClassName(classId);//根据id获取名称
             String Count = String.valueOf(map.get("employment_count"));
 
             // 将school_id替换为name
@@ -290,11 +283,8 @@ public class MobileApiController extends BaseController {
         return AjaxResult.success("调用成功").put("data",data);
     }
 
-
-
-
     /**
-     * 折线图-人员变化一
+     * 泸职-人员变化
      */
     @Anonymous
     @GetMapping("/Personnel")
@@ -309,24 +299,6 @@ public class MobileApiController extends BaseController {
         // 在这里可以根据需要进行进一步处理
         return AjaxResult.success("调用成功").put("pes",pes);
     }
-
-    /**
-     * 折线图-人员变化二
-     */
-    @Anonymous
-    @GetMapping("/PersonnelS")
-    public AjaxResult selectPersonnelS() {
-        List<Map<String, String>> peS = bStudentService.selectBStudentTimesMap();
-        for (Map<String, String> map : peS) {
-            String month = String.valueOf(map.get("month"));
-            String count = String.valueOf(map.get("count"));
-            map.put("month", month);
-            map.put("count", count);
-        }
-        // 在这里可以根据需要进行进一步处理
-        return AjaxResult.success("调用成功").put("pes",peS);
-    }
-
 
     //柱状图
     /**
