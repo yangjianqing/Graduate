@@ -167,6 +167,7 @@
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 2px 4px 6px  #585757;
+
 }
 .list-item_2:first-child {
   margin-top: 0;
@@ -304,8 +305,19 @@
 
   }
 
-
-
+  #nTitle {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
 
 }
+
+
+
+
+
+
