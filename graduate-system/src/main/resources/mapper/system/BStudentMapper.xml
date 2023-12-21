@@ -52,10 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectBStudentCountMap" resultType="java.util.Map">
-        SELECT school_id, COUNT(*) AS employment_count
+        SELECT class_id, COUNT(*) AS employment_count
         FROM b_student
         WHERE c_status = 0
-        GROUP BY school_id
+        GROUP BY class_id
     </select>
 
     <select id="selectBStudentTimeMap" resultType="java.util.Map">

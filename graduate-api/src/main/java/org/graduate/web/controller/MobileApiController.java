@@ -17,6 +17,8 @@ import org.graduate.common.core.redis.RedisCache;
 import org.graduate.common.utils.uuid.IdUtils;
 import org.graduate.framework.web.service.TokenService;
 import org.graduate.system.service.*;
+import org.graduate.util.MyClass;
+import org.graduate.util.SendSms;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.graduate.system.service.IBStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,8 @@ public class MobileApiController extends BaseController {
     private IBCompanyService ibCompanyService;
     @Resource
     private IBSchoolService ibSchoolService;
+    @Resource
+    private IBClassService ibClassService;
 
     /**
      * 验证码接口
@@ -171,7 +175,7 @@ public class MobileApiController extends BaseController {
     public TableDataInfo selectEmpinfo(BEmpinfo bEmpinfo) {
         startPage();
         List<BEmpinfo> list = bEmpinfoService.selectBEmpinfoList(bEmpinfo);
-//        list = list.stream().filter(e -> e.getEmpStatus().equals("1")).collect(Collectors.toList());
+        list = list.stream().filter(e -> e.getEmpStatus().equals("1")).collect(Collectors.toList());
         return getDataTable(list);
     }
 
@@ -265,13 +269,20 @@ public class MobileApiController extends BaseController {
     public AjaxResult selectGraduation() {
         List<Map<String, String>> data = bStudentService.selectBStudentCountMap();
         for (Map<String, String> map : data) {
-            String schoolId = String.valueOf(map.get("school_id"));
-            String abb = ibSchoolService.selectSchoolName(schoolId);
-            String name = abb.replaceAll("技术", "");
+            String classId = String.valueOf(map.get("class_id"));
+            String abb = ibClassService.selectClassName(classId);//根据id获取名称
+            //替换名称为null
+            String name = abb.replaceAll("22", "")
+                        .replaceAll("1班", "")
+                        .replaceAll("2班", "")
+                        .replaceAll("3班", "")
+                        .replaceAll("4班", "")
+                        .replaceAll("5班", "");
             String Count = String.valueOf(map.get("employment_count"));
+
             // 将school_id替换为name
             map.put("name", name);
-            map.remove("school_id");
+            map.remove("class_id");
             map.put("employment_count", Count);
         }
         // 在这里可以根据需要进行进一步处理
@@ -337,8 +348,13 @@ public class MobileApiController extends BaseController {
         System.out.println(maps);
         return AjaxResult.success(maps);
     }
-
-
+//    学生签到
+    @Anonymous
+    @GetMapping("/getCountCheck")
+    public AjaxResult countCheck(@RequestParam("stuId") Long stuId) {
+        Long countCk = ibCheckService.countCheck(stuId);
+        return AjaxResult.success(countCk);
+    }
 
     /**
      * 学生总数与已就业人数

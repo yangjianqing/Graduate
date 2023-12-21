@@ -83,4 +83,11 @@ public interface IBCheckService
      * @return
      */
     public List<Map<String, Object>> selectCheckInCounts();
+    /**
+     * 查询学生签到时间
+     *
+     * @param stuId 学生Id
+     * @return 结果
+     */
+    public Long countCheck( Long stuId);
 }

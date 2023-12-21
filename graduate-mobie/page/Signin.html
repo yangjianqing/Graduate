@@ -6,6 +6,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <title>Title</title>
     <link rel="stylesheet" href="../css/public.css">
+    <script src="../js/bigdata_js/jquery.js"></script>
     <!-- 引入图标库 -->
     <link rel="stylesheet" href="../lib/iconfont/iconfont.css">
 
@@ -61,7 +62,7 @@
 
     var map = new BMap.Map("allmap");
     // 地图初始化的位置
-    map.centerAndZoom("泸州市", 12);
+    map.centerAndZoom("泸州", 12);
     var myPoint;
     var comPoint;
     var ckTpye;
@@ -72,7 +73,9 @@
     pront = JSON.parse(pront);
     var latitude =pront.companyList[0].cLatitude;
     var longitude =pront.companyList[0].cLongitude;
-
+    var stu= localStorage.getItem("bStudent")
+    // 构造要发送的数据对象
+    stu=JSON.parse(stu);
 
     geolocation.getCurrentPosition(function (r) {
         if (this.getStatus() == BMAP_STATUS_SUCCESS) {
@@ -94,7 +97,7 @@
             });
             map.addOverlay(circle); // 添加范围圈
             map.addOverlay(comPoint); //将考勤点范围添加到地图中
-            map.panTo(comPoint.point); // 移动到制定位置
+            map.panTo(myPoint.point); // 移动到制定位置
             //计算自己和公司距离判断考勤类型
              distance = map.getDistance(myPoint, comPoint.point);
             ckTpye=(distance >singLong)? "1":"2";
@@ -130,9 +133,7 @@
     async function signIn() {
         var address = await getAddress();
         var myDate = new Date();
-        // 构造要发送的数据对象
-        var stu= localStorage.getItem("bStudent")
-        stu=JSON.parse(stu);
+
         var data = {
             phone:stu.sNumbers,
             ckName:stu.sName,
@@ -144,9 +145,9 @@
             ckTime: myDate,
             ckLongitude: myPoint.lng,
             ckLatitude: myPoint.lat
-
+            // 移除按钮的点击事件处理函数
         };
-        // 发送POST请求
+
         fetch(baseUrl+'/signin', {
             method: 'POST',
             headers: {
@@ -157,8 +158,12 @@
             .then(response => {
                 if (response.ok) {
                     // window.location.href="./SigninPage.html"
-                } else {
-                    alert('发送数据到后端失败');
+                    // 修改样式
+                    let singIn = document.getElementById("singIn");
+                    let text = document.getElementById("singin_text");
+                    singIn.classList.add("ok_circle");
+                    text.innerText = "已签到";
+                    document.getElementById("singIn").onclick = null;
                 }
             })
             .catch(error => {
@@ -168,6 +173,32 @@
     }
 
 
+    window.onload=function (){
+        cheack(stu.sId)
+    }
+
+     function cheack (stuId){
+         $.ajax({
+             url: baseUrl + '/getCountCheck?stuId=' + stuId,
+             method: 'GET',
+             data: { stuId: stuId },
+             dataType: 'json',
+             success: function(response) {
+                 console.log(response.data);
+                if (response.data>=1){
+                    let singIn = document.getElementById("singIn");
+                    let text = document.getElementById("singin_text");
+                    singIn.classList.add("ok_circle");
+                    text.innerText = "已签到";
+                    document.getElementById("singIn").onclick = null;
+                }
+             },
+             error: function(error) {
+                 console.error('发生错误:', error);
+             }
+         });
+
+    }
 
 </script>
 </html>

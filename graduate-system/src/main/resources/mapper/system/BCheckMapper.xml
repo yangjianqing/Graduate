@@ -57,6 +57,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ORDER BY student_count DESC
         LIMIT 5;
     </select>
+<!--    //查询学生签到人数-->
+    <select id="countCheck" parameterType="BCheck" resultType="long">
+        SELECT COUNT(*) as count
+        FROM b_check
+        WHERE stu_id= #{stuId}
+          AND DATE(ck_time) = CURDATE()
+    </select>
 
         
     <insert id="insertBCheck" parameterType="BCheck" useGeneratedKeys="true" keyProperty="ckId">

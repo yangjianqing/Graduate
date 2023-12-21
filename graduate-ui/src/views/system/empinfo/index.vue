@@ -285,7 +285,7 @@
 }
 </style>
 <script>
-import {addEmpinfo, getEmpinfo, listEmpinfo, modifiedEmpinfo, updateEmpinfo} from "@/api/system/empinfo";
+import {addEmpinfo, getEmpinfo, listEmpinfo, modifiedEmpinfo, updateEmpinfo,noPageList} from "@/api/system/empinfo";
 import {listCompany} from "@/api/system/company";
 
 export default {
@@ -357,15 +357,13 @@ export default {
       listEmpinfo(this.queryParams).then(response => {
         this.empinfoList = response.rows;
         this.total = response.total;
+        this.pageSize = this.total;
         this.loading = false;
       });
     },
     getAllList(){
-      this.loading = true;
-      listEmpinfo(this.queryParams).then(response => {
+      noPageList(this.queryParams).then(response => {
         this.empinfoList = response.rows;
-        this.total = response.total;
-        this.loading = false;
         /** 公司与地址去重 **/
         const addressSet = new Set();
         const companySet = new Set();
