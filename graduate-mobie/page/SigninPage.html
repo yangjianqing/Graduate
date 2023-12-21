@@ -30,6 +30,7 @@
     var pageNum = 1;
     var pageSize = 15;
     var get_Total = 0;
+    var sId='';
 
     window.onload = function() {
         console.log("页面加载完成");
@@ -50,6 +51,9 @@
                 var res = JSON.parse(xhr.responseText);
                 console.log(res);
                 get_Total = res.total;
+                sId=res.sId;
+                console.log(sId)
+
 
                 var table = document.getElementById("tableBody");
                 var html = table.innerHTML;

@@ -725,3 +725,10 @@ body * {
   height: 11px;
 }
 
+#error{
+  position: fixed;
+  top: 43%;
+  left: 34%;
+  margin: 0 auto;
+  color: red;
+}

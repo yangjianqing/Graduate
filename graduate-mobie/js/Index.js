@@ -15,8 +15,7 @@ function startCountDown() {
     fetch('http://localhost:8089/api/sendCode')
         .then(response => response.json())
         .then(data => {
-            // 接收后端返回的数据
-            console.log(data);
+
 
             // 存储后端发送的验证码uuid
             var uuid = data.uuid;
@@ -65,16 +64,22 @@ function submitForm() {
         .then(data => {
             // 接收后端返回的数据
             console.log(data);
+            var error = document.getElementById("error");
+            error.innerHTML=""
+            if(data.code==200){
+                // 存储后端发送的验证码uuid和bStudent对象数据
+                var token = data.token;
+                var bStudent = data.bStudent;
 
-            // 存储后端发送的验证码uuid和bStudent对象数据
-            var token = data.token;
-            var bStudent = data.bStudent;
+                // 登录成功，存储token和bStudent到localStorage
+                localStorage.setItem('token', token);
+                localStorage.setItem('bStudent', JSON.stringify(bStudent));
 
-            // 登录成功，存储token和bStudent到localStorage
-            localStorage.setItem('token', token);
-            localStorage.setItem('bStudent', JSON.stringify(bStudent));
+                window.location.href = "./page/Signin.html";
+            }else{
+                error.innerHTML=data.msg;
+            }
 
-            window.location.href = "./page/Signin.html";
 
             // TODO:其他需要处理的逻辑
         })
