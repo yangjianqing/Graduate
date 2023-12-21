@@ -80,12 +80,12 @@
 
 <script src="../js/public.js"></script>
 <script>
-  //加载jquery
-  var stuNo = 3;
-
+  var stu= localStorage.getItem("bStudent")
+  stu = JSON.parse(stu);
   window.onload=function(){
+
     //调用 初始数据方法、
-    iniData(stuNo);
+    iniData(stu.sId);
   }
   //初始化数据
   function iniData(stuNo){
