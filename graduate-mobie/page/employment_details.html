@@ -52,11 +52,20 @@
 </body>
 <script src="../js/public.js"></script>
 <script>
-    $(document).ready(function() {
+    var total;
+
+    fetch(baseUrl + '/searchEmpDetails?keyword=')
+        .then(response => response.json())
+        .then(data => {
+            // 假设从后端获取到了 joinData 数据
+            total = data.data.length - 5;
+            console.log(total)
+        })
+
+    $(document).ready(function () {
         let nextPage = 2; // 初始化下一页页码为2
         let isLoading = false; // 初始化加载状态为 false
-
-        $(document).scroll(function() {
+        $(document).scroll(function () {
             var scrollTop = $(window).scrollTop();
             var windowHeight = $(window).height();
             var scrollHeight = $(document).height();
@@ -64,18 +73,16 @@
 
             console.log(distance)
             if (distance < 178 && !isLoading) {
-
                 isLoading = true; // 设置加载状态为 true
                 setTimeout(function () {
                     $.ajax({
-                        url: baseUrl+'/selectEmpinfo', // 后端接口的 URL
+                        url: baseUrl + '/selectEmpinfo', // 后端接口的 URL
                         method: 'GET', // 请求方法
                         data: {pageNum: nextPage, pageSize: 5}, // 可能需要传递的参数，例如当前页数
                         dataType: 'json', // 响应数据的类型为 JSON
-                        success: function(response) {
+                        success: function (response) {
                             // 处理成功响应的逻辑
                             console.log('请求成功');
-                            console.log(nextPage+"  11")
                             console.log(response);
                             // 更新页面内容
                             const infoContainer = document.getElementById("infoContainer");
@@ -138,7 +145,7 @@
                                 empDesP.style.cssText = "padding-left: 2.2rem;";
                                 var empDesSpans = empDes.split(/[，。]/);
                                 var length = 0;
-                                for (var j = 0; j < 5 && j < empDesSpans.length - 1 && length <= 12; j++) {
+                                for (var j = 0; j < 5 && j < empDesSpans.length && length <= 12; j++) {
                                     var span = document.createElement("span");
                                     span.textContent = empDesSpans[j];
                                     length += empDesSpans[j].length;
@@ -168,12 +175,13 @@
                                 infoContainer.appendChild(div);
                             });
                             nextPage++; // 更新下一页页码
-                            if (response.rows.length < 5) {
+                            total -= response.rows.length;
+                            if (total === 0) {
                                 isLoading = false; // 如果数据不足5条，将加载状态改为 false
                                 $(document).off('scroll'); // 停止监听滚动事件
                             }
                         },
-                        error: function(error) {
+                        error: function (error) {
                             // 处理错误响应的逻辑
                             console.log('请求失败');
                             console.log(error);
@@ -184,7 +192,6 @@
             }
         });
     });
-
 
 
 </script>
