@@ -197,6 +197,7 @@ public class MobileApiController extends BaseController {
         BEmpinfo bEmpinfo = new BEmpinfo();
         bEmpinfo.setEmpName(keyword); //
         List<BEmpinfo> bEmpinfos = bEmpinfoService.selectBEmpinfoList(bEmpinfo);
+        bEmpinfos = bEmpinfos.stream().filter(e -> e.getEmpStatus().equals("1")).collect(Collectors.toList());
         return AjaxResult.success(bEmpinfos);
     }
 

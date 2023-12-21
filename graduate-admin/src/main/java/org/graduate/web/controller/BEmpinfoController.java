@@ -2,6 +2,7 @@ package org.graduate.web.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
 import org.graduate.system.domain.BEmpinfo;
 import org.graduate.system.service.IBEmpinfoService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,8 +30,7 @@ import org.graduate.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/system/empinfo")
-public class BEmpinfoController extends BaseController
-{
+public class BEmpinfoController extends BaseController {
     @Autowired
     private IBEmpinfoService bEmpinfoService;
 
@@ -39,8 +39,7 @@ public class BEmpinfoController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:empinfo:list')")
     @GetMapping("/list")
-    public TableDataInfo list(BEmpinfo bEmpinfo)
-    {
+    public TableDataInfo list(BEmpinfo bEmpinfo) {
         startPage();
         List<BEmpinfo> list = bEmpinfoService.selectBEmpinfoList(bEmpinfo);
         return getDataTable(list);
@@ -52,8 +51,7 @@ public class BEmpinfoController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:empinfo:export')")
     @Log(title = "就业信息发布", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, BEmpinfo bEmpinfo)
-    {
+    public void export(HttpServletResponse response, BEmpinfo bEmpinfo) {
         List<BEmpinfo> list = bEmpinfoService.selectBEmpinfoList(bEmpinfo);
         ExcelUtil<BEmpinfo> util = new ExcelUtil<BEmpinfo>(BEmpinfo.class);
         util.exportExcel(response, list, "就业信息发布数据");
@@ -64,8 +62,7 @@ public class BEmpinfoController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:empinfo:query')")
     @GetMapping(value = "/{empId}")
-    public AjaxResult getInfo(@PathVariable("empId") Long empId)
-    {
+    public AjaxResult getInfo(@PathVariable("empId") Long empId) {
         return AjaxResult.success(bEmpinfoService.selectBEmpinfoByEmpId(empId));
     }
 
@@ -75,8 +72,7 @@ public class BEmpinfoController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:empinfo:add')")
     @Log(title = "就业信息发布", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody BEmpinfo bEmpinfo)
-    {
+    public AjaxResult add(@RequestBody BEmpinfo bEmpinfo) {
         return toAjax(bEmpinfoService.insertBEmpinfo(bEmpinfo));
     }
 
@@ -86,8 +82,7 @@ public class BEmpinfoController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:empinfo:edit')")
     @Log(title = "就业信息发布", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody BEmpinfo bEmpinfo)
-    {
+    public AjaxResult edit(@RequestBody BEmpinfo bEmpinfo) {
         return toAjax(bEmpinfoService.updateBEmpinfo(bEmpinfo));
     }
 
@@ -96,9 +91,8 @@ public class BEmpinfoController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:empinfo:remove')")
     @Log(title = "就业信息发布", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{empIds}")
-    public AjaxResult remove(@PathVariable Long[] empIds)
-    {
+    @DeleteMapping("/{empIds}")
+    public AjaxResult remove(@PathVariable Long[] empIds) {
         return toAjax(bEmpinfoService.deleteBEmpinfoByEmpIds(empIds));
     }
 
@@ -108,8 +102,7 @@ public class BEmpinfoController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:empinfo:modified')")
     @Log(title = "就业信息发布", businessType = BusinessType.UPDATE)
     @PutMapping("/{empId}/{empStatus}")
-    public AjaxResult modified(@PathVariable Long empId, @PathVariable String empStatus)
-    {
+    public AjaxResult modified(@PathVariable Long empId, @PathVariable String empStatus) {
         BEmpinfo empinfo = new BEmpinfo();
         empinfo.setEmpId(empId);
         empinfo.setEmpStatus(empStatus);
@@ -122,9 +115,12 @@ public class BEmpinfoController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('system:empinfo:noPageList')")
     @GetMapping("/noPageList")
-    public TableDataInfo noPageList(BEmpinfo bEmpinfo)
-    {
+    public TableDataInfo noPageList(BEmpinfo bEmpinfo) {
         List<BEmpinfo> list = bEmpinfoService.selectBEmpinfoList(bEmpinfo);
+        for (BEmpinfo empinfo : list) {
+            String s = empinfo.getcAddress().split("市")[0] + "市";//下拉列表只展示到市
+            empinfo.setcAddress(s);
+        }
         return getDataTable(list);
     }
 

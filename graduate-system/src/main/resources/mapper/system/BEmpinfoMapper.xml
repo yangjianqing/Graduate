@@ -51,7 +51,7 @@
             <if test="empQuantity != null ">and emp_quantity &gt;= #{empQuantity}</if>
             <if test="empPay != null ">and emp_pay &gt;= #{empPay}</if>
             <if test="empPayMax != null ">and #{empPayMax} &gt;= emp_paymax</if>
-            <if test="cAddress != null  and cAddress != ''">and c_address = #{cAddress}</if>
+            <if test="cAddress != null  and cAddress != ''">and c_address like concat('%', #{cAddress}, '%')</if>
             <if test="empStatus != null  and empStatus != ''">and emp_status = #{empStatus}</if>
         </where>
     </select>

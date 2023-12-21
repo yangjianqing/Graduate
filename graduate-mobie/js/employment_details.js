@@ -45,7 +45,7 @@ fetch(url, {
             workPost.className = "work_post";
             workPost.style.cssText = "display: inline-block;float: left;margin-left: 2rem;font-size: 1.2rem;";
             const empNameSpan = document.createElement("div");
-            empNameSpan.textContent = empName;
+            empNameSpan.textContent = empName.substring(0, 6) < empName ? empName.substring(0, 6) + "..." : empName;
             workPost.appendChild(empNameSpan);
             infomationXinxi.appendChild(workPost);
 
@@ -95,10 +95,10 @@ fetch(url, {
             const companyInfo = document.createElement("div");
             companyInfo.style.width = "100%";
             const cNameSpan = document.createElement("div");
-            cNameSpan.style.cssText = "font-size: 0.7rem; display: inline-block; float: left; margin-left: 2.3rem;";
+            cNameSpan.style.cssText = "font-size: 0.7rem; display: inline-block; float: left; margin-left: 2.3rem; width: 5rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;";
             cNameSpan.textContent = cName;
             const cAddressSpan = document.createElement("div");
-            cAddressSpan.style.cssText = "font-size: 0.7rem; padding-right: 1rem; display: inline-block; float: right; margin-right: 1rem;";
+            cAddressSpan.style.cssText = "font-size: 0.7rem; padding-right: 1rem; display: inline-block; float: right; margin-right: 1rem; width: 5rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;";
             cAddressSpan.textContent = cAddress;
             companyInfo.appendChild(cNameSpan);
             companyInfo.appendChild(cAddressSpan);
@@ -158,9 +158,9 @@ function renderempDetails(empDetails) {
 
         const workPost = document.createElement("p");
         workPost.className = "work_post";
-        workPost.style.cssText = "display: inline-block;float: left;margin-left: 2rem;font-size: 1.5rem;";
+        workPost.style.cssText = "display: inline-block;float: left;margin-left: 2rem;font-size: 1.2rem;";
         const empNameSpan = document.createElement("div");
-        empNameSpan.textContent = empName;
+        empNameSpan.textContent = empName.substring(0, 6) < empName ? empName.substring(0, 6) + "..." : empName;
         workPost.appendChild(empNameSpan);
         infomationXinxi.appendChild(workPost);
 
@@ -210,10 +210,10 @@ function renderempDetails(empDetails) {
         const companyInfo = document.createElement("div");
         companyInfo.style.width = "100%";
         const cNameSpan = document.createElement("div");
-        cNameSpan.style.cssText = "font-size: 0.7rem; display: inline-block; float: left; margin-left: 2.3rem;";
+        cNameSpan.style.cssText = "font-size: 0.7rem; display: inline-block; float: left; margin-left: 2.3rem; width: 5rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;";
         cNameSpan.textContent = cName;
         const cAddressSpan = document.createElement("div");
-        cAddressSpan.style.cssText = "font-size: 0.7rem; padding-right: 1rem; display: inline-block; float: right; margin-right: 1rem;";
+        cAddressSpan.style.cssText = "font-size: 0.7rem; padding-right: 1rem; display: inline-block; float: right; margin-right: 1rem; width: 5rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;";
         cAddressSpan.textContent = cAddress;
         companyInfo.appendChild(cNameSpan);
         companyInfo.appendChild(cAddressSpan);

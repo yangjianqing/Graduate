@@ -24,26 +24,6 @@
                id="search-input">
         <button class="searchBtn" onclick="searchEmpDetails()">搜索</button>
     </div>
-    <!--    &lt;!&ndash; 多选项 &ndash;&gt;-->
-    <!--    <div class="device_hander">-->
-    <!--        <div class="device">-->
-    <!--            <img src="../img/就业详情/定位.png" alt="">-->
-    <!--            <img src="../img/就业详情/时间.png" alt="">-->
-    <!--            <img src="../img/就业详情/袋类.png" alt="">-->
-    <!--            <img src="../img/就业详情/彩色描边图标集3-15.png" alt="">-->
-    <!--            <img src="../img/就业详情/日历.png" alt="">-->
-    <!--        </div>-->
-    <!--        &lt;!&ndash; 职位定制 &ndash;&gt;-->
-    <!--        <div class="device_p">-->
-    <!--            <div class="devicep_p_demo">-->
-    <!--                <p>职位定制&nbsp;<span style="font-size: 0.8rem;color: #E1DCDC;">找工作无需大海捞针</span></p>-->
-
-    <!--                <p class="device_p_one">根据地区/职位类型等推荐更精确职位</p>-->
-    <!--            </div>-->
-    <!--            <button>添加意向</button>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <!-- 简介信息 -->
     <div class="infomation">
         <div id="infoContainer"></div>
         <div style="margin-bottom: 5rem"></div><!--空行保留，避免信息被导航栏遮挡-->
@@ -73,8 +53,9 @@
 <script src="../js/public.js"></script>
 <script>
     $(document).ready(function() {
-        let nextPage = 2; // 初始化下一页页码为2
+        var nextPage = 2; // 初始化下一页页码为2
         let isLoading = false; // 初始化加载状态为 false
+        nextPage++;
         $(document).scroll(function() {
             var scrollTop = $(window).scrollTop();
             var windowHeight = $(window).height();
@@ -83,16 +64,18 @@
 
             console.log(distance)
             if (distance < 1 && !isLoading) {
+
                 isLoading = true; // 设置加载状态为 true
                 setTimeout(function () {
                     $.ajax({
                         url: baseUrl+'/selectEmpinfo', // 后端接口的 URL
                         method: 'GET', // 请求方法
-                        data: {pageNum: nextPage, pageSize: 5, empName: empName}, // 可能需要传递的参数，例如当前页数
+                        data: {pageNum: nextPage, pageSize: 5}, // 可能需要传递的参数，例如当前页数
                         dataType: 'json', // 响应数据的类型为 JSON
                         success: function(response) {
                             // 处理成功响应的逻辑
                             console.log('请求成功');
+                            console.log(nextPage+"  11")
                             console.log(response);
                             // 更新页面内容
                             const infoContainer = document.getElementById("infoContainer");
@@ -119,7 +102,7 @@
                                 workPost.className = "work_post";
                                 workPost.style.cssText = "display: inline-block;float: left;margin-left: 2rem;font-size: 1.2rem;";
                                 var empNameSpan = document.createElement("div");
-                                empNameSpan.textContent = empName;
+                                empNameSpan.textContent = empName.substring(0, 6) < empName ? empName.substring(0, 6) + "..." : empName;
                                 workPost.appendChild(empNameSpan);
                                 infomationXinxi.appendChild(workPost);
 
@@ -169,10 +152,10 @@
                                 var companyInfo = document.createElement("div");
                                 companyInfo.style.width = "100%";
                                 var cNameSpan = document.createElement("div");
-                                cNameSpan.style.cssText = "font-size: 0.7rem; display: inline-block; float: left; margin-left: 2.3rem;";
+                                cNameSpan.style.cssText = "font-size: 0.7rem; display: inline-block; float: left; margin-left: 2.3rem; width: 5rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;";
                                 cNameSpan.textContent = cName;
                                 var cAddressSpan = document.createElement("div");
-                                cAddressSpan.style.cssText = "font-size: 0.7rem; padding-right: 1rem; display: inline-block; float: right; margin-right: 1rem;";
+                                cAddressSpan.style.cssText = "font-size: 0.7rem; padding-right: 1rem; display: inline-block; float: right; margin-right: 1rem; width: 5rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;";
                                 cAddressSpan.textContent = cAddress;
                                 companyInfo.appendChild(cNameSpan);
                                 companyInfo.appendChild(cAddressSpan);

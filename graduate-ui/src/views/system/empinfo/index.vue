@@ -106,7 +106,11 @@
       <el-table-column type="selection" width="50" align="center"/>
       <el-table-column label="序号" align="center" prop="empId"/>
       <el-table-column label="公司名称" align="center" prop="cName"/>
-      <el-table-column label="就业岗位" align="center" prop="empName"/>
+      <el-table-column label="就业岗位" align="center" prop="empName">
+        <template slot-scope="scope">
+          {{scope.row.empName.length > 4 ? (scope.row.empName.substring(0, 4) + '...') : scope.row.empName}}
+        </template>
+      </el-table-column>
 
       <el-table-column label="职位描述" align="center" prop="empDes" tooltip-effect="light">
         <template slot-scope="{ row }">
