@@ -842,14 +842,14 @@ $(function() {
           length2: 8
         },
         data: [
-          { value: 20, name: "云南" },
+          { value: 20, name: "上海" },
           { value: 26, name: "北京" },
           { value: 24, name: "山东" },
           { value: 25, name: "河北" },
           { value: 20, name: "江苏" },
           { value: 25, name: "浙江" },
-          { value: 30, name: "四川" },
-          { value: 42, name: "湖北" }
+          { value: 30, name: "湖北" },
+          { value: 42, name: "四川" }
         ]
       }
     ]
