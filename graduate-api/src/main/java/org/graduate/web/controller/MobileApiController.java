@@ -271,7 +271,13 @@ public class MobileApiController extends BaseController {
         for (Map<String, String> map : data) {
             String classId = String.valueOf(map.get("class_id"));
             String abb = ibClassService.selectClassName(classId);//根据id获取名称
-            String name = abb.replaceAll("22", "");
+            //替换名称为null
+            String name = abb.replaceAll("22", "")
+                        .replaceAll("1班", "")
+                        .replaceAll("2班", "")
+                        .replaceAll("3班", "")
+                        .replaceAll("4班", "")
+                        .replaceAll("5班", "");
             String Count = String.valueOf(map.get("employment_count"));
 
             // 将school_id替换为name
