@@ -81,7 +81,7 @@ fetch(url, {
             empDesP.style.cssText = "padding-left: 2.2rem;";
             const empDesSpans = empDes.split(/[，。]/);
             let length = 0;
-            for (let j = 0; j < 5 && j < empDesSpans.length && length <= 12; j++) {
+            for (let j = 0; j < 5 && j < empDesSpans.length - 1 && length <= 12; j++) {
                 const span = document.createElement("span");
                 span.textContent = empDesSpans[j];
                 length += empDesSpans[j].length;
@@ -196,7 +196,7 @@ function renderempDetails(empDetails) {
         empDesP.style.cssText = "padding-left: 2.2rem;";
         const empDesSpans = empDes.split(/[，。]/);
         let length = 0;
-        for (let j = 0; j < 5 && j < empDesSpans.length && length <= 12; j++) {
+        for (let j = 0; j < 5 && j < empDesSpans.length - 1 && length <= 12; j++) {
             const span = document.createElement("span");
             span.textContent = empDesSpans[j];
             length += empDesSpans[j].length;

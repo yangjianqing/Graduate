@@ -138,7 +138,7 @@
                                 empDesP.style.cssText = "padding-left: 2.2rem;";
                                 var empDesSpans = empDes.split(/[，。]/);
                                 var length = 0;
-                                for (var j = 0; j < 5 && j < empDesSpans.length && length <= 12; j++) {
+                                for (var j = 0; j < 5 && j < empDesSpans.length - 1 && length <= 12; j++) {
                                     var span = document.createElement("span");
                                     span.textContent = empDesSpans[j];
                                     length += empDesSpans[j].length;
