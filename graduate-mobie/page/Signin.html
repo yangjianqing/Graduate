@@ -147,8 +147,6 @@
             ckLatitude: myPoint.lat
             // 移除按钮的点击事件处理函数
         };
-        //获取学生Id
-        const stuId =stu.sId;
 
         fetch(baseUrl+'/signin', {
             method: 'POST',
@@ -187,14 +185,12 @@
              dataType: 'json',
              success: function(response) {
                  console.log(response.data);
-                if (response.data>0){
+                if (response.data>=1){
                     let singIn = document.getElementById("singIn");
                     let text = document.getElementById("singin_text");
                     singIn.classList.add("ok_circle");
                     text.innerText = "已签到";
                     document.getElementById("singIn").onclick = null;
-                }else{
-                    signIn();
                 }
              },
              error: function(error) {
