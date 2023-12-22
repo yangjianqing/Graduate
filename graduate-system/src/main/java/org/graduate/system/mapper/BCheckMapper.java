@@ -91,4 +91,11 @@ public interface BCheckMapper
      * @return 结果
      */
     public Long countCheck( Long stuId);
+    /**
+     * 查询学生签到时间
+     *
+     * @param stuId 学生Id
+     * @return 结果
+     */
+    public List<BCheck> selectStuId(Long stuId);
 }

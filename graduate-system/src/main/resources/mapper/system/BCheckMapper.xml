@@ -64,6 +64,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE stu_id= #{stuId}
           AND DATE(ck_time) = CURDATE()
     </select>
+<!--    根据学生Id查询学生签到记录-->
+    <select id="selectStuId" parameterType="BCheck" resultMap="BCheckResult">
+        <include refid="selectBCheckVo"></include>
+        where stu_id= #{stuId}
+    </select>
 
         
     <insert id="insertBCheck" parameterType="BCheck" useGeneratedKeys="true" keyProperty="ckId">

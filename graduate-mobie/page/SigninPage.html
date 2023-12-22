@@ -27,10 +27,14 @@
 </table>
 <script src="../js/public.js"></script>
 <script>
+    //查询了浏览器存储的学生对象
+    var stu= localStorage.getItem("bStudent")
+    // 构造要发送的数据对象
+    stu=JSON.parse(stu);
+    stuId=stu.sId;
     var pageNum = 1;
     var pageSize = 15;
     var get_Total = 0;
-    var sId='';
 
     window.onload = function() {
         console.log("页面加载完成");
@@ -42,18 +46,14 @@
     function iniData(pageNum, pageSize) {
         // 加载后台数据
         var xhr = new XMLHttpRequest();
-        var url = baseUrl + '/getSignList';
+        var url = baseUrl + '/getSignList/' + stuId;
         url += "?pageNum=" + pageNum + "&pageSize=" + pageSize;
-
         xhr.open("GET", url, true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var res = JSON.parse(xhr.responseText);
                 console.log(res);
                 get_Total = res.total;
-                sId=res.sId;
-                console.log(sId)
-
 
                 var table = document.getElementById("tableBody");
                 var html = table.innerHTML;
@@ -80,6 +80,7 @@
             }
         }
     }
+
 </script>
 </body>
 </html>

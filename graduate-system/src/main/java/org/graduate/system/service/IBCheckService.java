@@ -90,4 +90,11 @@ public interface IBCheckService
      * @return 结果
      */
     public Long countCheck( Long stuId);
+    /**
+     * 根据学生Id查询学生签到记录
+     *
+     * @param stuId 学生Id
+     * @return 结果
+     */
+    public List<BCheck> selectStuId(Long stuId);
 }

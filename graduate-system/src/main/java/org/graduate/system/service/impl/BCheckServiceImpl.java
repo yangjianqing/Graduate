@@ -135,4 +135,9 @@ public class BCheckServiceImpl implements IBCheckService
         return  bCheckMapper.countCheck(stuId);
     }
 
+    @Override
+    public List<BCheck> selectStuId(Long stuId) {
+        return bCheckMapper.selectStuId(stuId);
+    }
+
 }
