@@ -69,12 +69,11 @@ public class MobileApiController extends BaseController {
         try {
             // 保存验证码信息
             String uuid = IdUtils.simpleUUID();//生成uid
-//        String code = MyClass.generateCode();//生成随机4位数验证码
-            String code = "1234";
+            String code = MyClass.generateCode();//生成随机4位数验证码
             String verKey = CacheConstants.PHONE_CODE_KEY + uuid;
             //将verKey添加到redis
             redisCache.setCacheObject(verKey, code, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
-//        SendSms.sendVerCode(code);//调用发送验证码
+            SendSms.sendVerCode(code);//调用发送验证码
             //将验证码唯一标识符放入AjaxResult对象中。
             return AjaxResult.success("验证码发送成功").put("uuid", uuid);
         } catch (Exception e) {
