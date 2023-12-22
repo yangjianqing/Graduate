@@ -34,6 +34,7 @@
             <if test="nMender != null  and nMender != ''"> and n_mender like concat('%', #{nMender}, '%')</if>
             <if test="nRemark != null  and nRemark != ''"> and n_remark = #{nRemark}</if>
         </where>
+        order by n_id desc
     </select>
 
     <select id="selectBPublicInfoByNId" parameterType="Long" resultMap="BPublicInfoResult">
