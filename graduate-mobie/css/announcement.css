@@ -1,3 +1,14 @@
+
+*{
+  margin: 0;
+  padding: 0;
+  /* background-color: #F4F4F5; */
+}
+.background{
+  width: 100%;
+  background-image: linear-gradient(to bottom, #12ACA8, white);
+  float: left;
+}
 .ml-9 {
   margin-left: 0.56rem;
 }
@@ -8,17 +19,7 @@
 .mt-3 {
   margin-top: 0.19rem;
 }
-.page {
-  background-color: #f3f4f6;
-  width: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100%;
-  width: 100%;
-  /*height: 13rem;*/
-  background-color: #FFFFFF;
-  float: left;
-}
+
 .section {
   padding: 0.88rem 1rem;
   background-color: #ffffff;
@@ -58,6 +59,8 @@
   margin-top: 0.88rem;
   padding: 0rem 1rem;
 }
+
+
 .view {
   margin-bottom: 60px; /* 假设导航栏的高度为60px */
    margin-top: -0.6rem;
@@ -227,17 +230,9 @@
 
 
 
-
-
-/* 按钮悬浮时样式 */
-.btnsearch:hover {
-  border: 2px solid #f5f5f5; /* 使用柔和一点的白色边框 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
-}
-
-
 .searchcontainer {
-  background-color: #12ACA8;
+   background-color: #17AEAA;
+  /*padding: 0.15rem 1rem;*/
   height: 10%;
   display: flex;
   justify-content: center;
@@ -245,7 +240,6 @@
 }
 
 .search {
-  width: 100%;
   margin: 15px;
   height: 45px;
   background-image: url(../img/InFo/sousuo.png);
@@ -260,11 +254,7 @@
   font-family: SourceHanSansCN;
   border: 1px solid #51B9BD;
 }
-.search:focus {
-  outline: none;
-  border: 2px solid #f5f5f5; /* 设置白色边框 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
-}
+
 .btnsearch {
   width: 25%;
   max-width: 90px;

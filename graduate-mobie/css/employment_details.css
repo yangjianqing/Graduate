@@ -8,17 +8,22 @@
     background-image: linear-gradient(to bottom, #12ACA8, white);
     float: left;
 }
-.search{
-    margin: 15px;
-}
+
 .Search{
     width: 100%;
-    height: 2rem;
-    border-radius: 10px;
-    color: #E1DCDC;
-    border: 0;
+    margin: 15px;
+    height: 45px;
+    background-image: url(../img/InFo/sousuo.png);
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
     outline: none;
-
+    border-radius: 30px 0 0 30px;
+    padding-left: 50px;
+    background-position: 0.5rem 0.8rem;
+    background-color: #fff;
+    font-size: 1rem;
+    font-family: SourceHanSansCN;
+    border: 1px solid #51B9BD;
 }
 .device_hander{
     margin: 15px;
@@ -165,8 +170,8 @@
 
 
 .searchDiv {
-    /*background-color: #ffffff;*/
-    padding: 0.15rem 1rem;
+    /* background-color: #ffffff; */
+    /*padding: 0.15rem 1rem;*/
     height: 10%;
     display: flex;
     justify-content: center;
@@ -174,51 +179,47 @@
 }
 
 .search {
-    width: 100%;
+    margin: 15px;
     height: 45px;
+    background-image: url(../img/InFo/sousuo.png);
     background-size: 20px 20px;
     background-repeat: no-repeat;
     outline: none;
     border-radius: 30px 0 0 30px;
     padding-left: 50px;
     background-position: 0.5rem 0.8rem;
+    background-color: #fff;
     font-size: 1rem;
     font-family: SourceHanSansCN;
-    /* background-color: transparent; */
     border: 1px solid #51B9BD;
 }
-/* 搜索框获得焦点时样式 */
-.search:focus {
-    outline: coral solid 1px;
-    /*添加外边框*/
-}
+
 .searchBtn {
     width: 25%;
     max-width: 90px;
-    height: 45px;
+    height: 47px;
     border: none;
-    background-color: #51B9BD;
+    background-color:#51B9BD;
     color: #fff;
     border-radius: 0 20px 20px 0;
     font-size: 0.86rem;
     font-family: SourceHanSansCN;
     cursor: pointer;
 }
-
 /* 媒体查询 */
 @media screen and (max-width: 768px) {
-    .searchDiv {
+    .searchcontainer {
         height: auto; /* 在较小的屏幕上取消固定高度 */
     }
 
     .search {
-        width: 79%;
+        width: 70%;
         max-width: none; /* 移除最大宽度限制 */
-        padding-left: 30px; /* 减小左边距 */
+        padding-left: 37px; /* 减小左边距 */
     }
 
     .searchBtn {
-        width: 30%;
+        width: 18%;
         max-width: none; /* 移除最大宽度限制 */
     }
 }

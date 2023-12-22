@@ -1,3 +1,9 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    /* background-color: #F4F4F5; */
+}
 .toolbar {
     background-color: #fbfdfd;
     position: fixed;
@@ -9,6 +15,7 @@
     justify-content: space-around;
     align-items: center;
     text-align: center;
+    line-height: 1.4rem;
 }
 
 .toolbar a {
