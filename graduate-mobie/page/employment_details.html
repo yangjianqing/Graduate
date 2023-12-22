@@ -59,7 +59,6 @@
         .then(data => {
             // 假设从后端获取到了 joinData 数据
             total = data.data.length - 5;
-            console.log(total)
         })
 
     $(document).ready(function () {
@@ -71,7 +70,6 @@
             var scrollHeight = $(document).height();
             var distance = scrollHeight - scrollTop - windowHeight;
 
-            console.log(distance)
             if (distance < 178 && !isLoading) {
                 isLoading = true; // 设置加载状态为 true
                 setTimeout(function () {
@@ -145,7 +143,7 @@
                                 empDesP.style.cssText = "padding-left: 2.2rem;";
                                 var empDesSpans = empDes.split(/[，。]/);
                                 var length = 0;
-                                for (var j = 0; j < 5 && j < empDesSpans.length && length <= 12; j++) {
+                                for (var j = 0; j < 5 && j < empDesSpans.length && empDesSpans[j].length > 0 && length <= 12; j++) {
                                     var span = document.createElement("span");
                                     span.textContent = empDesSpans[j];
                                     length += empDesSpans[j].length;

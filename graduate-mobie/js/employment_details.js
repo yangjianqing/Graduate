@@ -1,11 +1,11 @@
-var baseUrl="http://127.0.0.1:8089/api";
+var baseUrl = "http://127.0.0.1:8089/api";
 
 // 获取公告数据的页数和每页数量
 const pageNum = 1; // 页数
 const pageSize = 5; // 每页数量
 
 // 构建带有查询参数的URL
-const url = new URL(baseUrl+"/selectEmpinfo");
+const url = new URL(baseUrl + "/selectEmpinfo");
 url.searchParams.append('pageNum', pageNum);
 url.searchParams.append('pageSize', pageSize);
 
@@ -81,7 +81,7 @@ fetch(url, {
             empDesP.style.cssText = "padding-left: 2.2rem;";
             const empDesSpans = empDes.split(/[，。]/);
             let length = 0;
-            for (let j = 0; j < 5 && j < empDesSpans.length - 1 && length <= 12; j++) {
+            for (let j = 0; j < 5 && j < empDesSpans.length && empDesSpans[j].length > 0 && length <= 12; j++) {
                 const span = document.createElement("span");
                 span.textContent = empDesSpans[j];
                 length += empDesSpans[j].length;
@@ -121,7 +121,7 @@ function searchEmpDetails() {
     var searchText = document.getElementById('search-input').value;
 
     // 发送搜索请求给后端
-    fetch(baseUrl+'/searchEmpDetails?keyword=' + searchText)
+    fetch(baseUrl + '/searchEmpDetails?keyword=' + searchText)
         .then(response => response.json())
         .then(data => {
             // 假设从后端获取到了 joinData 数据
@@ -196,7 +196,7 @@ function renderempDetails(empDetails) {
         empDesP.style.cssText = "padding-left: 2.2rem;";
         const empDesSpans = empDes.split(/[，。]/);
         let length = 0;
-        for (let j = 0; j < 5 && j < empDesSpans.length - 1 && length <= 12; j++) {
+        for (let j = 0; j < 5 && j < empDesSpans.length && empDesSpans[j].length > 0 && length <= 12; j++) {
             const span = document.createElement("span");
             span.textContent = empDesSpans[j];
             length += empDesSpans[j].length;
@@ -225,7 +225,6 @@ function renderempDetails(empDetails) {
 
         infoContainer.appendChild(div);
     });
-
 
 
     if (empDetails.length === 0) {
