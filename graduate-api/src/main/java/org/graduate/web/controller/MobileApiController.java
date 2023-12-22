@@ -69,11 +69,12 @@ public class MobileApiController extends BaseController {
         try {
             // 保存验证码信息
             String uuid = IdUtils.simpleUUID();//生成uid
-            String code = MyClass.generateCode();//生成随机4位数验证码
+//        String code = MyClass.generateCode();//生成随机4位数验证码
+            String code = "1234";
             String verKey = CacheConstants.PHONE_CODE_KEY + uuid;
             //将verKey添加到redis
             redisCache.setCacheObject(verKey, code, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
-            SendSms.sendVerCode(code);//调用发送验证码
+//        SendSms.sendVerCode(code);//调用发送验证码
             //将验证码唯一标识符放入AjaxResult对象中。
             return AjaxResult.success("验证码发送成功").put("uuid", uuid);
         } catch (Exception e) {
@@ -313,7 +314,7 @@ public class MobileApiController extends BaseController {
     @Anonymous
     @GetMapping("/getCountCktpye")
     public AjaxResult countCkTpye() {
-       List<Map<String, Object>> maps = ibCheckService.CountCkTpye();
+        List<Map<String, Object>> maps = ibCheckService.CountCkTpye();
         System.out.println(maps);
         return AjaxResult.success(maps);
     }
@@ -326,7 +327,7 @@ public class MobileApiController extends BaseController {
         System.out.println(maps);
         return AjaxResult.success(maps);
     }
-//    学生签到
+    //    学生签到
     @Anonymous
     @GetMapping("/getCountCheck")
     public AjaxResult countCheck(@RequestParam("stuId") Long stuId) {

@@ -54,7 +54,6 @@
             <if test="cAddress != null  and cAddress != ''">and c_address like concat('%', #{cAddress}, '%')</if>
             <if test="empStatus != null  and empStatus != ''">and emp_status = #{empStatus}</if>
         </where>
-        order by  emp_id desc
     </select>
 
     <select id="selectBEmpinfoByEmpId" parameterType="Long" resultMap="BEmpinfoResult">
