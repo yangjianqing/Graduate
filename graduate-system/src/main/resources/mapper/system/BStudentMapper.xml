@@ -56,6 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM b_student
         WHERE c_status = 0
         GROUP BY class_id
+        ORDER BY class_id ASC
     </select>
 
     <select id="selectBStudentTimeMap" resultType="java.util.Map">
