@@ -104,8 +104,8 @@
         <p>收藏</p>
 
     </div>
-    <div class="shoucang">
-        <button class="my-button">联系</button>
+    <div class="shoucang" id="phoneNumber">
+
     </div>
 </div>
 
@@ -143,6 +143,10 @@
         var EmpReq = document.getElementById("empReq");//empReq
         var EmpBonus = document.getElementById("empBonus");//empBonus
         var EmpInfo = document.getElementById("empInfo");//empInfo
+        let phoneNumber = document.getElementById("phoneNumber");
+        phoneNumber.innerHTML = `<a href="tel:${cPhone}">
+        <button class="my-button">联系</button>
+        </a>`
 
         showInfo(empName, EmpName);//empName
         showInfo(empQuantity, EmpQuantity);//empQuantity
