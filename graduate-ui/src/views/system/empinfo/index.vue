@@ -108,7 +108,7 @@
       <el-table-column label="公司名称" align="center" prop="cName"/>
       <el-table-column label="就业岗位" align="center" prop="empName">
         <template slot-scope="scope">
-          {{scope.row.empName.length > 4 ? (scope.row.empName.substring(0, 4) + '...') : scope.row.empName}}
+          {{ scope.row.empName.length > 4 ? (scope.row.empName.substring(0, 4) + '...') : scope.row.empName }}
         </template>
       </el-table-column>
 
@@ -140,7 +140,8 @@
 
       <el-table-column label="工作内容" align="center" prop="empConten" tooltip-effect="light">
         <template slot-scope="{ row }">
-          <el-tooltip class="item" effect="light" :content="row.empConten" placement="left" popper-class="tooltip-width">
+          <el-tooltip class="item" effect="light" :content="row.empConten" placement="left"
+                      popper-class="tooltip-width">
             <div
               style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; max-width: 200px; overflow: hidden;">
               {{ row.empConten }}
@@ -161,9 +162,14 @@
       </el-table-column>
 
       <el-table-column label="联系方式" align="center" :min-width="100" prop="cPhone"/>
-      <el-table-column label="公司地址" align="center" prop="cAddress">
-        <template slot-scope="scope">
-          {{ scope.row.cAddress.length > 4 ? (scope.row.cAddress.substring(0, 4) + '...') : scope.row.cAddress }}
+      <el-table-column label="公司地址" align="center" prop="cAddress" tooltip-effect="light">
+        <template slot-scope="{row}">
+          <el-tooltip class="item" effect="light" :content="row.cAddress" placement="left" popper-class="tooltip-width">
+            <div
+              style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; max-width: 200px; overflow: hidden;">
+              {{ row.cAddress }}
+            </div>
+          </el-tooltip>
         </template>
       </el-table-column>
       <el-table-column label="添加时间" align="center" prop="createTime" width="100">
@@ -243,7 +249,8 @@
           <el-input v-model="form.empName" placeholder="请输入就业岗位"/>
         </el-form-item>
         <el-form-item label="职位描述" prop="empDes">
-          <el-input v-model="form.empDes" placeholder="请输入职位描述"/>
+          <el-input v-model="form.empDes" type="textarea" :autosize="{ minRows: 1, maxRows: 12 }"
+                    placeholder="请输入职位描述"/>
         </el-form-item>
         <el-form-item label="招聘人数" prop="empQuantity">
           <el-input v-model="form.empQuantity" placeholder="请输入招聘人数"/>
@@ -263,13 +270,16 @@
           </el-col>
         </el-row>
         <el-form-item label="福利待遇" prop="empBonus">
-          <el-input v-model="form.empBonus" placeholder="请输入福利待遇"/>
+          <el-input v-model="form.empBonus" type="textarea" :autosize="{ minRows: 1, maxRows: 12 }"
+                    placeholder="请输入福利待遇"/>
         </el-form-item>
         <el-form-item label="工作内容" prop="empConten">
-          <el-input v-model="form.empConten" placeholder="请输入工作内容"/>
+          <el-input v-model="form.empConten" type="textarea" :autosize="{ minRows: 1, maxRows: 12 }"
+                    placeholder="请输入工作内容"/>
         </el-form-item>
         <el-form-item label="上岗需求" prop="empReq">
-          <el-input v-model="form.empReq" placeholder="请输入上岗需求"/>
+          <el-input v-model="form.empReq" type="textarea" :autosize="{ minRows: 1, maxRows: 12 }"
+                    placeholder="请输入上岗需求"/>
         </el-form-item>
         <el-form-item label="公司信息" prop="empInfo">
           <el-input v-model="form.empInfo" type="textarea" :autosize="{ minRows: 2, maxRows: 12 }" placeholder="请输入内容"/>
@@ -291,7 +301,7 @@
 }
 </style>
 <script>
-import {addEmpinfo, getEmpinfo, listEmpinfo, modifiedEmpinfo, updateEmpinfo,noPageList} from "@/api/system/empinfo";
+import {addEmpinfo, getEmpinfo, listEmpinfo, modifiedEmpinfo, updateEmpinfo, noPageList} from "@/api/system/empinfo";
 import {listCompany} from "@/api/system/company";
 
 export default {
@@ -368,7 +378,7 @@ export default {
         this.loading = false;
       });
     },
-    getAllList(){
+    getAllList() {
       noPageList(this.queryParams).then(response => {
         this.addressList = response.rows;
         /** 公司与地址去重 **/
