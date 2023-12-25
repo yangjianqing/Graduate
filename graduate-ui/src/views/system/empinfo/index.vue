@@ -256,7 +256,9 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="" prop="empPayMax">
+              —
               <el-input v-model="form.empPayMax" placeholder="最高薪资" style="width: 100px;"/>
+              K
             </el-form-item>
           </el-col>
         </el-row>
@@ -311,6 +313,7 @@ export default {
       total: 0,
       // 就业信息发布表格数据
       empinfoList: [],
+      addressList: [],
       AllAddressList: [],
       AllCompanyList: [],
       // 弹出层标题
@@ -367,11 +370,11 @@ export default {
     },
     getAllList(){
       noPageList(this.queryParams).then(response => {
-        this.empinfoList = response.rows;
+        this.addressList = response.rows;
         /** 公司与地址去重 **/
         const addressSet = new Set();
         const companySet = new Set();
-        this.empinfoList.forEach(empinfo => {
+        this.addressList.forEach(empinfo => {
           addressSet.add(empinfo.cAddress);
           companySet.add(empinfo.cName);
         });
