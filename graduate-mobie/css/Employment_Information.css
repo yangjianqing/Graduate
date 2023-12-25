@@ -115,23 +115,23 @@ body {
   justify-content: space-between;
   bottom: 0;
   left: 0;
+  line-height: 62px;
 }
 .share{
   display: flex;
   justify-content: space-evenly;
-
+  line-height: 33px;
 }
 .share p{
   padding-left: 28px;
 }
 .shoucang{
-  padding-top: 6px;
   padding-right: 10px;
 }
 .shoucang .my-button {
   background-color: #00BFBF;
   color: white;
-  padding: 10px 76px;
+  padding: 12px 76px;
   font-size: 16px;
   border: none;
   border-radius: 4px;

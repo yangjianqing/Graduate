@@ -1,9 +1,13 @@
 
-*{
-    margin: 0;
-    padding: 0;
-    /* background-color: #F4F4F5; */
+/**{*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    !* background-color: #F4F4F5; *!*/
+/*}*/
+ul li{
+    list-style: none;
 }
+
 .toolbar {
     background-color: #fbfdfd;
     position: fixed;
@@ -36,12 +40,12 @@
     color: #1DB0AC;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
+/*body {*/
+/*    font-family: Arial, sans-serif;*/
+/*    background-color: #f4f4f4;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*}*/
 
 .container {
     width: 80%;
