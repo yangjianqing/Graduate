@@ -112,7 +112,7 @@
                let text = document.getElementById("singin_text");
                text.innerText="内勤";
            }
-
+            cheack(stu.sId)
         } else {
             alert('failed' + this.getStatus());
         }
@@ -156,7 +156,6 @@
         })
             .then(response => {
                 if (response.ok) {
-                    // window.location.href="./SigninPage.html"
                     // 修改样式
                     let singIn = document.getElementById("singIn");
                     let text = document.getElementById("singin_text");
