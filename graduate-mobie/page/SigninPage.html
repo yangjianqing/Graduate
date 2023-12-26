@@ -62,22 +62,31 @@
                     html += "</tr>";
                 }
                 table.innerHTML = html;
+
+                loadMoreData(); // 添加此行以触发滑动事件检测
             }
         };
         xhr.send();
     }
 
-    function handleScroll(event) {
+    function loadMoreData() {
         var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
         var scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
         if (scrollTop + clientHeight >= scrollHeight) {
             pageNum += pageSize;
-            if (pageNum < get_Total) {
+            if (pageNum <= get_Total) {
                 iniData(pageNum, pageSize);
             }
         }
     }
+
+    function handleScroll(event) {
+        clearTimeout(timer);
+        timer = setTimeout(loadMoreData, 100);
+    }
+
+    var timer;
 </script>
 </body>
 </html>
