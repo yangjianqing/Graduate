@@ -10,28 +10,25 @@
     <script src="../js/bigdata_js/jquery.js"></script>
 </head>
 <body>
-    <header>
-    <a style="position: fixed;left: 1rem;font-size: 1rem" onclick="javascript:history.back(-1);">返回</a>
+<header>
+    <a style="position: absolute;left: 1rem;font-size: 1rem" onclick="javascript:history.back(-1);">返回</a>
     <span>签到记录</span>
-    </header>
+</header>
 <table>
-
     <tr>
+        <th>序号</th>
         <th>签到时间</th>
         <th>签到地点</th>
     </tr>
-    </header>
-    <tbody id="tableBody">
-
-    </tbody>
+    <tbody id="tableBody"></tbody>
 </table>
 <script src="../js/public.js"></script>
 <script>
     //查询了浏览器存储的学生对象
-    var stu= localStorage.getItem("bStudent")
+    var stu = localStorage.getItem("bStudent");
     // 构造要发送的数据对象
-    stu=JSON.parse(stu);
-    stuId=stu.sId;
+    stu = JSON.parse(stu);
+    stuId = stu.sId;
     var pageNum = 1;
     var pageSize = 20;
     var get_Total = 0;
@@ -59,8 +56,9 @@
                 var html = table.innerHTML;
                 for (var i = 0; i < res.rows.length; i++) {
                     html += "<tr>";
-                    html += "<th>" + res.rows[i].ckTime + "</th>";
-                    html += "<th>" + res.rows[i].ckAddress + "</th>";
+                    html += "<td>" + (pageNum + i) + "</td>";
+                    html += "<td>" + res.rows[i].ckTime + "</td>";
+                    html += "<td>" + res.rows[i].ckAddress + "</td>";
                     html += "</tr>";
                 }
                 table.innerHTML = html;
@@ -80,7 +78,6 @@
             }
         }
     }
-
 </script>
 </body>
 </html>
