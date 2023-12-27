@@ -96,5 +96,10 @@ public interface BStudentMapper
     @MapKey("month")
     public List<Map<String,String>> selectBStudentTimesMap();
 
-    List<Map<String, String>> findStudentInfo(Long sId);
+    public List<Map<String, String>> findStudentInfo(Long sId);
+
+    /**
+     * 查询全部邮箱
+     */
+    public List<String> AllMailbox();
 }

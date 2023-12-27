@@ -117,6 +117,10 @@ public class BStudent extends BaseEntity
     @Excel(name = "班级")
     private String className;
 
+    /** 邮箱 */
+    @Excel(name = "邮箱")
+    private String sMailbox;
+
     public void setsId(Long sId)
     {
         this.sId = sId;
@@ -208,6 +212,14 @@ public class BStudent extends BaseEntity
         return classId;
     }
 
+    public String getsMailbox() {
+        return sMailbox;
+    }
+
+    public void setsMailbox(String sMailbox) {
+        this.sMailbox = sMailbox;
+    }
+
     public String getToken() {
         return token;
     }
@@ -215,19 +227,20 @@ public class BStudent extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("sId", getsId())
-            .append("sNumber", getsNumber())
-            .append("sName", getsName())
-            .append("sGender", getsGender())
-            .append("sNumbers", getsNumbers())
-            .append("schoolId", getSchoolId())
-            .append("compenyId", getCompenyId())
-            .append("cStatus", getcStatus())
-            .append("teacherId", getTeacherId())
-            .append("classId", getClassId())
-            .append("createTime", getCreateTime())
-            .append("updateTime", getUpdateTime())
-            .toString();
+                .append("sId", getsId())
+                .append("sNumber", getsNumber())
+                .append("sName", getsName())
+                .append("sGender", getsGender())
+                .append("sNumbers", getsNumbers())
+                .append("schoolId", getSchoolId())
+                .append("compenyId", getCompenyId())
+                .append("cStatus", getcStatus())
+                .append("teacherId", getTeacherId())
+                .append("classId", getClassId())
+                .append("sMailbox", getsMailbox())
+                .append("createTime", getCreateTime())
+                .append("updateTime", getUpdateTime())
+                .toString();
     }
 
     public void setToken(String token) {

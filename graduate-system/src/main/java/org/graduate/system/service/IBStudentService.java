@@ -92,4 +92,9 @@ public interface IBStudentService
      */
     @MapKey("month")
     public List<Map<String,String>> selectBStudentTimesMap();
+
+    /**
+     * 查询全部邮箱
+     */
+    public List<String> AllMailbox();
 }

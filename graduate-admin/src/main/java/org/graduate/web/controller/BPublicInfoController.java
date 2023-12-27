@@ -1,7 +1,11 @@
 package org.graduate.web.controller;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import javax.servlet.http.HttpServletResponse;
+
+import org.graduate.common.utils.MailUtil;
+import org.graduate.system.service.IBStudentService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +37,8 @@ public class BPublicInfoController extends BaseController
 {
     @Autowired
     private IBPublicInfoService bPublicInfoService;
+    @Autowired
+    private IBStudentService studentService;
 
     /**
      * 查询公告管理列表
@@ -75,10 +81,20 @@ public class BPublicInfoController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:info:add')")
     @Log(title = "公告管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody BPublicInfo bPublicInfo)
-    {
+    public AjaxResult add(@RequestBody BPublicInfo bPublicInfo) {
+        CompletableFuture.runAsync(() -> {
+            List<String> strings = studentService.AllMailbox();
+            try {
+                MailUtil.batchSendTextMail(bPublicInfo.getnTitle(), bPublicInfo.getnContent(),strings);
+                } catch (Exception e) {
+                // 其他异常处理
+                e.printStackTrace();
+            }
+        });
         return toAjax(bPublicInfoService.insertBPublicInfo(bPublicInfo));
     }
+
+
 
     /**
      * 修改公告管理

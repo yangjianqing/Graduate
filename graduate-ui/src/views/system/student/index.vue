@@ -126,7 +126,7 @@
 
     <el-table v-loading="loading" :data="studentList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="学生ID" align="center" prop="sId" width="60"/>
+      <el-table-column label="学生ID" align="center" prop="sId" />
       <el-table-column label="学生学号" align="center" prop="sNumber" />
       <el-table-column label="学生姓名" align="center" prop="sName" />
       <el-table-column label="性别" align="center" prop="sGender">
@@ -144,12 +144,13 @@
       </el-table-column>
       <el-table-column label="辅导员" align="center" prop="teacherName" />
       <el-table-column label="班级" align="center" prop="className" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="150">
+      <el-table-column label="邮箱" align="center" prop="sMailbox" />
+      <el-table-column label="创建时间" align="center" prop="createTime" width="100">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="修改时间" align="center" prop="updateTime" width="150">
+      <el-table-column label="修改时间" align="center" prop="updateTime" width="100">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>
@@ -253,6 +254,10 @@
               :value="item.cId"
             ></el-option>
           </el-select>
+        </el-form-item>
+
+        <el-form-item label="邮箱" prop="sMailbox">
+          <el-input v-model="form.sMailbox" placeholder="请输入邮箱" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -358,6 +363,7 @@ export default {
         cStatus: 0,
         teacherId: null,
         classId: null,
+        sMailbox: null,
         createTime: null,
         updateTime: null
       };

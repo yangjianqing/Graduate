@@ -229,4 +229,10 @@ public class BStudentServiceImpl implements IBStudentService
     {
         return bStudentMapper.selectBStudentTimesMap();
     }
+
+    @Override
+    public List<String> AllMailbox()
+    {
+        return bStudentMapper.AllMailbox();
+    }
 }
