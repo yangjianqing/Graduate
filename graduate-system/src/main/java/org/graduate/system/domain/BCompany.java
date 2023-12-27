@@ -38,6 +38,11 @@ public class BCompany extends BaseEntity
     @Excel(name = "公司地址")
     private String cAddress;
 
+    /** 公司地址 */
+    @Excel(name = "公司地址")
+    private String cSheng;
+
+
     /** 联系方式 */
     @Excel(name = "联系方式")
     private String cPhone;
@@ -80,6 +85,15 @@ public class BCompany extends BaseEntity
     public void setcType(String cType) 
     {
         this.cType = cType;
+    }
+
+    public String getcSheng()
+    {
+        return cSheng;
+    }
+    public void setcSheng(String cSheng)
+    {
+        this.cSheng = cSheng;
     }
 
     public String getcType() 
@@ -136,6 +150,7 @@ public class BCompany extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("cLongitude", getcLongitude())
             .append("cLatitude", getcLatitude())
+            .append("cSheng",getcSheng())
             .toString();
     }
 }

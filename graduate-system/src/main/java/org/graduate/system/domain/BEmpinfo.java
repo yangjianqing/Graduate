@@ -91,6 +91,7 @@ public class BEmpinfo extends BaseEntity {
     @Excel(name = "就业信息详情")
     private String empInfo;
 
+
     /**
      * 发布状态
      */

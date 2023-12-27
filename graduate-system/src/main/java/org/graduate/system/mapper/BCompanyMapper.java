@@ -87,4 +87,10 @@ public interface BCompanyMapper {
      * @return
      */
     List<BCompany> selectCompanyBySchoolId(Long schoolId);
+    /**
+     * 查询公司地址
+     *
+     * @return
+     */
+    List<Map<String, Object>> getAllCompanyAddresses();
 }

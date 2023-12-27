@@ -15,6 +15,7 @@
         <result property="updateTime" column="update_time"/>
         <result property="cLongitude" column="c_longitude"/>
         <result property="cLatitude" column="c_latitude"/>
+        <result property="cSheng" column="c_sheng" />
     </resultMap>
 
     <sql id="selectBCompanyVo">
@@ -136,4 +137,12 @@
             #{cId}
         </foreach>
     </delete>
+
+
+    <select id="getAllCompanyAddresses" resultType="map" parameterType="bCompany">
+        SELECT SUBSTRING_INDEX(c_sheng, '省', 1) AS province, COUNT(*) AS count
+        FROM b_company
+        WHERE c_sheng LIKE '%省%'
+        GROUP BY province;
+    </select>
 </mapper>

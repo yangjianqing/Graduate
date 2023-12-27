@@ -112,6 +112,15 @@ public class BCompanyServiceImpl implements IBCompanyService
     public List<Location> selectBCompanyByPoint() {
         return bCompanyMapper.selectBCompanyByPoint();
     }
+
+    /**
+     * 查询公司地址
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> getAllCompanyAddresses() {
+        return bCompanyMapper.getAllCompanyAddresses();
+    }
 }
 
 

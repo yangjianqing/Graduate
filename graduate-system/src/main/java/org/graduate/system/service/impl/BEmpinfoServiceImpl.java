@@ -106,12 +106,5 @@ public class BEmpinfoServiceImpl implements IBEmpinfoService
         return bEmpinfoMapper.modifiedBEmpinfoByEmpId(bEmpinfo);
     }
 
-    /**
-     * 查询公司地址
-     * @return
-     */
-    @Override
-    public List<Map<String, Object>> getAllCompanyAddresses() {
-        return bEmpinfoMapper.getAllCompanyAddresses();
-    }
+
 }

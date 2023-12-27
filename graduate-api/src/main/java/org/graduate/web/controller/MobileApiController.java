@@ -253,7 +253,7 @@ public class MobileApiController extends BaseController {
      */
     @GetMapping("/address")
     public AjaxResult selectAddress(){
-        List<Map<String, Object>> addressList = bEmpinfoService.getAllCompanyAddresses();
+        List<Map<String, Object>> addressList = ibCompanyService.getAllCompanyAddresses();
         return AjaxResult.success(addressList);
     }
 

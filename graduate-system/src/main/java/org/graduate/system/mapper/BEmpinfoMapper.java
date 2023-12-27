@@ -70,10 +70,5 @@ public interface BEmpinfoMapper
     public int modifiedBEmpinfoByEmpId(BEmpinfo bEmpinfo);
 
 
-    /**
-     * 查询公司地址
-     *
-     * @return
-     */
-    List<Map<String, Object>> getAllCompanyAddresses();
+
 }

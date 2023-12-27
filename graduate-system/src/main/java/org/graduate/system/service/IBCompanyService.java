@@ -73,4 +73,11 @@ public interface IBCompanyService
      * @return 公司坐标列表
      */
     List<Location> selectBCompanyByPoint();
+
+
+    /**
+     * 查询公司地址
+     * @return
+     */
+    List<Map<String, Object>> getAllCompanyAddresses();
 }
