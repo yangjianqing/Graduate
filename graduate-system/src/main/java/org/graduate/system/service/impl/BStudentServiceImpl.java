@@ -204,10 +204,10 @@ public class BStudentServiceImpl implements IBStudentService
      */
     @Override
     public BStudent selectBStudentPhone(String sNumbers) {
-        BCompany company = new BCompany();
-        company.setcPhone(sNumbers);
-        List<BCompany> bCompanies = bCompanyMapper.selectBCompanyList(company); //学生对应的公司
         BStudent bStudent = bStudentMapper.selectBStudentPhone(sNumbers);
+        BCompany company = new BCompany();
+        company.setcId(bStudent.getCompenyId());
+        List<BCompany> bCompanies = bCompanyMapper.selectBCompanyList(company); //学生对应的公司
         bStudent.setCompanyList(bCompanies);
         return bStudent;
     }
