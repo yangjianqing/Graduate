@@ -521,11 +521,22 @@ $(function() {
     // 处理返回的数据
     var xAxisData = [];
     var seriesData = [];
+    var currentDate = new Date(); // 当前日期
+    var oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(currentDate.getMonth() - 1); // 获取一个月前的日期
+
     for (var i = 0; i < data.data.length; i++) {
-      var day = data.data[i].date.split("-")[2];
-      xAxisData.push(day);
-      seriesData.push(data.data[i].count);
+      var dateParts = data.data[i].date.split("-");
+      var dataDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]); // 构建日期对象
+
+      // 只取一个月内的数据
+      if (dataDate >= oneMonthAgo && dataDate <= currentDate) {
+        var day = dateParts[2];
+        xAxisData.push(day);
+        seriesData.push(data.data[i].count);
+      }
     }
+
     // 配置Echarts图表
     var option = {
       tooltip: {

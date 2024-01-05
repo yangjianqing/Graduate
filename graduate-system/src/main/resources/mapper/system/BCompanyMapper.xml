@@ -140,9 +140,10 @@
 
 
     <select id="getAllCompanyAddresses" resultType="map" parameterType="bCompany">
-        SELECT SUBSTRING_INDEX(c_sheng, '省', 1) AS province, COUNT(*) AS count
+        SELECT c_address AS province, COUNT(*) AS count
         FROM b_company
-        WHERE c_sheng LIKE '%省%'
-        GROUP BY province;
+        GROUP BY c_address
+        ORDER BY count DESC
+        LIMIT 5;
     </select>
 </mapper>
