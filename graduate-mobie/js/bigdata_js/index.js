@@ -749,9 +749,6 @@ $(function() {
     },"json");
   });
 
-
-
-
   // 3. 把配置给实例对象
   myChart.setOption(option);
   // 4. 让图表跟随屏幕自动的去适应

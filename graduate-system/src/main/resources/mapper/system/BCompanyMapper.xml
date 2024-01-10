@@ -40,6 +40,7 @@
     <select id="selectBCompanyList" parameterType="BCompany" resultMap="BCompanyResult">
         <include refid="selectBCompanyVo"/>
         <where>
+            <if test="cId != null  and cId != ''">and c_id =#{cId}</if>
             <if test="cName != null  and cName != ''">and c_name like concat('%', #{cName}, '%')</if>
             <if test="cData != null ">and c_data = #{cData}</if>
             <if test="cType != null  and cType != ''">and c_type = #{cType}</if>
